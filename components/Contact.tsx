@@ -57,7 +57,7 @@ export const Contact: React.FC = () => {
         details: 'Inquiry Details',
         submit: 'Send Inquiry',
         disclaimer: 'Information collected via this form is used for consultation purposes only.',
-        ph_name: 'John Doe',
+        ph_name: 'HONG GILDONG',
         ph_company: 'Geonix Co.',
         ph_details: 'Please provide details like interested items, expected volume, and destination port for a more accurate consultation.'
       }
