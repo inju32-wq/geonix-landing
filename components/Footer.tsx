@@ -30,7 +30,7 @@ export const Footer: React.FC = () => {
       ],
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
-      rights: '© 2024 Geonix Mining & Trading. All rights reserved.'
+      rights: '© 2026 Geonix Mining & Trading. All rights reserved.'
     }
   };
 
