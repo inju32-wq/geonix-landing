@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle2, Loader2 } from 'lucide-react';
+import React, { useRef } from 'react';
+import { Mail, Phone, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
-import emailjs from '@emailjs/browser';
 
 export const Contact: React.FC = () => {
   const { language } = useLanguage();
   const formRef = useRef<HTMLFormElement>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const content = {
     ko: {
@@ -75,41 +73,22 @@ export const Contact: React.FC = () => {
 
   const t = content[language];
 
-  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     if (!formRef.current) return;
 
-    // TODO: [중요] EmailJS(https://www.emailjs.com/)에 가입 후 아래 값을 본인의 ID로 교체하세요.
-    // 서비스가 없다면 테스트 시에는 'alert'만 작동하거나 에러가 발생할 수 있습니다.
-    const SERVICE_ID = 'YOUR_SERVICE_ID';     // 예: 'service_xyz123'
-    const TEMPLATE_ID = 'YOUR_TEMPLATE_ID';   // 예: 'template_abc456'
-    const PUBLIC_KEY = 'YOUR_PUBLIC_KEY';     // 예: 'user_123456789'
+    const formData = new FormData(formRef.current);
+    const name = formData.get('name') as string;
+    const company = formData.get('company') as string;
+    const phone = formData.get('phone') as string;
+    const email = formData.get('email') as string;
+    const details = formData.get('details') as string;
 
-    // 키가 설정되지 않은 경우 (개발 단계 안내용)
-    if (SERVICE_ID === 'YOUR_SERVICE_ID') {
-      alert('EmailJS 설정이 필요합니다. 코드를 열어 SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY를 입력해주세요.');
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    emailjs
-      .sendForm(SERVICE_ID, TEMPLATE_ID, formRef.current, {
-        publicKey: PUBLIC_KEY,
-      })
-      .then(
-        () => {
-          alert(t.form.success);
-          setIsSubmitting(false);
-          formRef.current?.reset();
-        },
-        (error) => {
-          console.error('FAILED...', error);
-          alert(`${t.form.fail} (${error.text})`);
-          setIsSubmitting(false);
-        },
-      );
+    const subject = `[Geonix Inquiry] ${company} - ${name}`;
+    const body = `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nPhone: ${phone}\n\nInquiry Details:\n${details}`;
+    
+    window.location.href = `mailto:geonix_official@geonix.co.kr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   return (
@@ -181,7 +160,7 @@ export const Contact: React.FC = () => {
 
           <div className="lg:w-1/2 bg-zinc-950 rounded-2xl p-8 border border-zinc-800">
              <h4 className="text-xl font-bold text-white mb-6">{t.form.title}</h4>
-             <form ref={formRef} className="space-y-6" onSubmit={sendEmail}>
+             <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-6">
                    <div className="flex flex-col gap-2">
                       <label htmlFor="contact-name" className="text-sm font-medium text-zinc-400">{t.form.name}</label>
@@ -210,24 +189,10 @@ export const Contact: React.FC = () => {
 
                 <button 
                   type="submit" 
-                  disabled={isSubmitting}
-                  className={`w-full font-bold py-4 rounded-lg flex items-center justify-center gap-2 mt-4 transition-colors ${
-                    isSubmitting 
-                      ? 'bg-zinc-700 text-zinc-400 cursor-not-allowed' 
-                      : 'bg-white text-zinc-950 hover:bg-zinc-200'
-                  }`}
+                  className="w-full font-bold py-4 rounded-lg flex items-center justify-center gap-2 mt-4 transition-colors bg-white text-zinc-950 hover:bg-zinc-200"
                 >
-                   {isSubmitting ? (
-                     <>
-                       <Loader2 size={18} className="animate-spin" />
-                       {t.form.sending}
-                     </>
-                   ) : (
-                     <>
-                       {t.form.submit}
-                       <ArrowRight size={18} />
-                     </>
-                   )}
+                   {t.form.submit}
+                   <ArrowRight size={18} />
                 </button>
                 <p className="text-xs text-zinc-600 text-center mt-4">
                    {t.form.disclaimer}
