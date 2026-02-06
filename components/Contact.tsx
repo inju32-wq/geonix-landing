@@ -77,7 +77,7 @@ export const Contact: React.FC = () => {
       details: formData.get('details') as string,
     };
 
-    const recipients = "roman@geonix.co.kr,geonix_official@geonix.co.kr";
+    const recipients = "geonix_official@geonix.co.kr";
     const subject = `[Geonix Inquiry] ${data.company} - ${data.name}`;
     const body = `Name: ${data.name}
 Company: ${data.company}
