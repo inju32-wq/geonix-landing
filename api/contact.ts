@@ -116,7 +116,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     res.status(200).json({ ok: true });
-  } catch (e) {
-    res.status(500).json({ ok: false, error: "send_failed" });
+  } catch (e: any) {
+  return res.status(500).json({
+    ok: false,
+    error: "send_failed",
+    message: e?.message || String(e),
+    code: e?.code,
+    stack: e?.stack,
+  });
   }
 }
