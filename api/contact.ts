@@ -103,7 +103,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       from: `"Website Contact" <${user}>`, // 발송 계정 = MAIL_USER
       to,                                  // 수신자 = MAIL_TO
       replyTo: email,                      // 답장은 사용자에게
-      subject: `[웹문의] ${safeName} (${safeEmail})`,
+      subject: `[GEONIX 웹문의] ${safeName} (${safeEmail})`,
       text: [
         `Name: ${name}`,
         `Email: ${email}`,
@@ -117,12 +117,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     res.status(200).json({ ok: true });
   } catch (e: any) {
-  return res.status(500).json({
-    ok: false,
-    error: "send_failed",
-    message: e?.message || String(e),
-    code: e?.code,
-    stack: e?.stack,
-  });
+  console.error("CONTACT_API_ERROR:", e?.message || e);
+  return res.status(500).json({ ok: false, error: "send_failed" });
   }
 }
