@@ -27,6 +27,15 @@ function escapeHeaderText(s: string) {
   return String(s || "").replace(/[\r\n]+/g, " ").trim();
 }
 
+function makeTicket(prefix = "GEONIX") {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const rand = Math.random().toString(36).slice(2, 8).toUpperCase(); // 6 chars
+  return `${prefix}-${y}${m}${day}-${rand}`; // 예: GEONIX-20260210-7F3KQ9
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== "POST") {
@@ -60,7 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const message = String(body?.message || "").trim(); // details
     const company = String(body?.company || "").trim();
     const website = String(body?.website || "").trim();
-    const phone = String(body?.phone || "").trim(); // ✅ 추가
+    const phone = String(body?.phone || "").trim();
 
     if (!name || !email || !message) {
       res.status(400).json({ ok: false, error: "missing_fields" });
@@ -101,12 +110,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const safeName = escapeHeaderText(name);
     const safeEmail = escapeHeaderText(email);
 
+    // ✅ 접수번호 생성
+    const ticket = makeTicket("GEONIX");
+
+    // 1) 관리자 메일 (접수번호가 첫 줄)
     await transporter.sendMail({
       from: `"Website Contact" <${user}>`, // 발송 계정 = MAIL_USER
       to, // 수신자 = MAIL_TO
       replyTo: email, // 답장은 사용자에게
       subject: `[GEONIX 웹문의] ${safeName} (${safeEmail})`,
       text: [
+        `[접수번호] ${ticket}`, // ✅ 첫 줄
+        "",
         `Name: ${name}`,
         `Email: ${email}`,
         company ? `Company: ${company}` : "",
@@ -120,7 +135,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .join("\n"),
     });
 
-    res.status(200).json({ ok: true });
+    // 2) 사용자 자동회신 (한글/영어 한 통)
+    // - 본문에 전체 message를 그대로 재전송하면 민감정보 리스크가 생길 수 있어서 요약만 넣음(원하면 전체로 바꿔도 됨)
+    const summary = message.length > 220 ? `${message.slice(0, 220)}...` : message;
+
+    await transporter.sendMail({
+      from: `"GEONIX" <${user}>`,
+      to: email,
+      replyTo: to, // ✅ 사용자가 회신하면 관리자에게
+      subject: `문의가 접수되었습니다 / We’ve received your inquiry (Ticket: ${ticket})`,
+      text: [
+        `안녕하세요 ${name}님,`,
+        `문의가 정상적으로 접수되었습니다.`,
+        "",
+        `- 접수번호: ${ticket}`,
+        company ? `- Company: ${company}` : `- Company: -`,
+        phone ? `- Phone: ${phone}` : `- Phone: -`,
+        `- 접수내용(요약): ${summary}`,
+        "",
+        `담당자가 확인 후 회신드리겠습니다. 감사합니다.`,
+        "",
+        "------------------------------",
+        "",
+        `Hello ${name},`,
+        `We’ve received your inquiry successfully.`,
+        "",
+        `- Ticket: ${ticket}`,
+        company ? `- Company: ${company}` : `- Company: -`,
+        phone ? `- Phone: ${phone}` : `- Phone: -`,
+        `- Message (summary): ${summary}`,
+        "",
+        `Our team will get back to you as soon as possible. Thank you.`,
+      ].join("\n"),
+    });
+
+    res.status(200).json({ ok: true, ticket });
   } catch (e: any) {
     console.error("CONTACT_API_ERROR:", e?.message || e);
     return res.status(500).json({ ok: false, error: "send_failed" });
