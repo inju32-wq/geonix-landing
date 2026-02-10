@@ -87,18 +87,6 @@ export const Contact: React.FC = () => {
       return;
     }
 
-    // ✅ phone을 포함해서 message에 합치기 (TS6133 방지 + 운영상 유용)
-    const composedMessage = [
-      company ? `Company: ${company}` : '',
-      email ? `Email: ${email}` : '',
-      phone ? `Phone: ${phone}` : '',
-      '',
-      'Message:',
-      details,
-    ]
-      .filter(Boolean)
-      .join('\n');
-
     setSending(true);
     try {
       const res = await fetch('/api/contact', {
@@ -107,10 +95,10 @@ export const Contact: React.FC = () => {
         body: JSON.stringify({
           name,
           email,
-          message: details, // 서버는 message만 메일 본문에 넣어줌
+          message: details, // ✅ 문의 내용만 전송 (서버에서 템플릿 1번만 생성)
           company,
           website: '',
-          phone,
+          phone,            // ✅ phone은 분리 전송 (서버가 한 줄로 넣어줌)
           hp,
         }),
       });
