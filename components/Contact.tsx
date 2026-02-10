@@ -14,9 +14,9 @@ export const Contact: React.FC = () => {
       title: '비즈니스 파트너십 문의',
       desc: '원자재 수급 계획부터 물류 최적화까지, 귀사의 비즈니스 성공을 위한\n맞춤형 솔루션을 제안해 드립니다. 지금 바로 문의해 보세요.',
       bullets: [
-        { title: "철저한 비밀 유지 (Confidentiality)", desc: "모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.", color: "text-green-500" },
-        { title: "전문가 1:1 매칭 (Expert Consultation)", desc: "문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.", color: "text-blue-500" },
-        { title: "24시간 내 신속 응답 (Fast Response)", desc: "영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.", color: "text-purple-500" }
+        { title: '철저한 비밀 유지 (Confidentiality)', desc: '모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.', color: 'text-green-500' },
+        { title: '전문가 1:1 매칭 (Expert Consultation)', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.', color: 'text-blue-500' },
+        { title: '24시간 내 신속 응답 (Fast Response)', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.', color: 'text-purple-500' },
       ],
       contact: { email: '이메일', phone: '연락처', address: '주소' },
       form: {
@@ -33,17 +33,17 @@ export const Contact: React.FC = () => {
         disclaimer: '본 양식을 통해 수집된 정보는 상담 목적으로만 사용됩니다.',
         ph_name: '홍길동',
         ph_company: '지오니스',
-        ph_details: '관심 품목, 예상 물량, 도착항 등 구체적인 내용을 적어주시면 더 정확한 상담이 가능합니다.'
-      }
+        ph_details: '관심 품목, 예상 물량, 도착항 등 구체적인 내용을 적어주시면 더 정확한 상담이 가능합니다.',
+      },
     },
     en: {
       section: 'Get in Touch',
       title: 'Business Partnership Inquiry',
       desc: 'From raw material sourcing to logistics optimization, we propose customized solutions for your business success.\nContact us today.',
       bullets: [
-        { title: "Strict Confidentiality", desc: "All consultations and corporate information are managed under strict security.", color: "text-green-500" },
-        { title: "1:1 Expert Matching", desc: "A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.", color: "text-blue-500" },
-        { title: "Fast Response Within 24 Hours", desc: "Our representative will contact you directly within 24 business hours.", color: "text-purple-500" }
+        { title: 'Strict Confidentiality', desc: 'All consultations and corporate information are managed under strict security.', color: 'text-green-500' },
+        { title: '1:1 Expert Matching', desc: 'A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.', color: 'text-blue-500' },
+        { title: 'Fast Response Within 24 Hours', desc: 'Our representative will contact you directly within 24 business hours.', color: 'text-purple-500' },
       ],
       contact: { email: 'Email', phone: 'Phone', address: 'Address' },
       form: {
@@ -60,9 +60,10 @@ export const Contact: React.FC = () => {
         disclaimer: 'Information collected via this form is used for consultation purposes only.',
         ph_name: 'HONG GILDONG',
         ph_company: 'Geonix Co.',
-        ph_details: 'Please provide details like interested items, expected volume, and destination port for a more accurate consultation.'
-      }
-    }
+        ph_details:
+          'Please provide details like interested items, expected volume, and destination port for a more accurate consultation.',
+      },
+    },
   };
 
   const t = content[language];
@@ -73,6 +74,7 @@ export const Contact: React.FC = () => {
     if (!formRef.current) return;
 
     const formData = new FormData(formRef.current);
+
     const name = String(formData.get('name') || '').trim();
     const company = String(formData.get('company') || '').trim();
     const phone = String(formData.get('phone') || '').trim();
@@ -85,6 +87,18 @@ export const Contact: React.FC = () => {
       return;
     }
 
+    // ✅ phone을 포함해서 message에 합치기 (TS6133 방지 + 운영상 유용)
+    const composedMessage = [
+      company ? `Company: ${company}` : '',
+      email ? `Email: ${email}` : '',
+      phone ? `Phone: ${phone}` : '',
+      '',
+      'Message:',
+      details,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
     setSending(true);
     try {
       const res = await fetch('/api/contact', {
@@ -93,7 +107,7 @@ export const Contact: React.FC = () => {
         body: JSON.stringify({
           name,
           email,
-          message: details, // 서버 API는 message 필드를 사용
+          message: composedMessage, // 서버는 message만 메일 본문에 넣어줌
           company,
           website: '',
           hp,
@@ -118,7 +132,6 @@ export const Contact: React.FC = () => {
     <section id="contact" className="py-24 bg-zinc-950">
       <div className="container mx-auto px-6">
         <div className="bg-zinc-900 rounded-3xl p-8 md:p-16 border border-zinc-800 flex flex-col lg:flex-row gap-16">
-
           {/* LEFT */}
           <div className="lg:w-1/2">
             <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-2">{t.section}</h2>
@@ -141,19 +154,27 @@ export const Contact: React.FC = () => {
 
             <div className="space-y-6 border-t border-zinc-800 pt-8">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white shrink-0">
                   <Mail size={20} />
                 </div>
                 <div>
                   <div className="text-xs text-zinc-500 uppercase font-semibold">{t.contact.email}</div>
-                  <a href="mailto:geonix_official@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline">
-                    geonix_official@geonix.co.kr
-                  </a>
+                  <div className="flex flex-col gap-1">
+                    <a href="mailto:roman@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors">
+                      roman@geonix.co.kr
+                    </a>
+                    <a
+                      href="mailto:geonix_official@geonix.co.kr"
+                      className="text-zinc-300 hover:text-white hover:underline transition-colors"
+                    >
+                      geonix_official@geonix.co.kr
+                    </a>
+                  </div>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white shrink-0">
                   <Phone size={20} />
                 </div>
                 <div>
@@ -163,7 +184,7 @@ export const Contact: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white shrink-0">
                   <MapPin size={20} />
                 </div>
                 <div>
@@ -184,46 +205,90 @@ export const Contact: React.FC = () => {
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-medium text-zinc-400">{t.form.name}</label>
-                  <input name="name" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder={t.form.ph_name} />
+                  <label htmlFor="contact-name" className="text-sm font-medium text-zinc-400">
+                    {t.form.name}
+                  </label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    required
+                    className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                    placeholder={t.form.ph_name}
+                  />
                 </div>
+
                 <div className="flex flex-col gap-2">
-                  <label className="text-sm font-medium text-zinc-400">{t.form.company}</label>
-                  <input name="company" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder={t.form.ph_company} />
+                  <label htmlFor="contact-company" className="text-sm font-medium text-zinc-400">
+                    {t.form.company}
+                  </label>
+                  <input
+                    id="contact-company"
+                    name="company"
+                    type="text"
+                    required
+                    className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                    placeholder={t.form.ph_company}
+                  />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-zinc-400">{t.form.email}</label>
-                <input name="email" type="email" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder="email@company.com" />
+                <label htmlFor="contact-email" className="text-sm font-medium text-zinc-400">
+                  {t.form.email}
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                  placeholder="email@company.com"
+                />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-zinc-400">{t.form.phone}</label>
-                <input name="phone" type="tel" className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder="010-1234-5678" />
+                <label htmlFor="contact-phone" className="text-sm font-medium text-zinc-400">
+                  {t.form.phone}
+                </label>
+                <input
+                  id="contact-phone"
+                  name="phone"
+                  type="tel"
+                  className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                  placeholder="010-1234-5678"
+                />
               </div>
 
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-medium text-zinc-400">{t.form.details}</label>
-                <textarea name="details" rows={4} required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder={t.form.ph_details} />
+                <label htmlFor="contact-details" className="text-sm font-medium text-zinc-400">
+                  {t.form.details}
+                </label>
+                <textarea
+                  id="contact-details"
+                  name="details"
+                  required
+                  rows={4}
+                  className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors"
+                  placeholder={t.form.ph_details}
+                />
               </div>
 
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full font-bold py-4 rounded-lg flex items-center justify-center gap-2 mt-4 bg-white text-zinc-950 hover:bg-zinc-200 disabled:opacity-60"
+                className="w-full font-bold py-4 rounded-lg flex items-center justify-center gap-2 mt-4 transition-colors bg-white text-zinc-950 hover:bg-zinc-200 disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {sending ? t.form.sending : t.form.submit}
                 {!sending && <ArrowRight size={18} />}
               </button>
 
-              {status === 'success' && <p className="text-sm text-green-400 text-center">{t.form.success}</p>}
-              {status === 'fail' && <p className="text-sm text-red-400 text-center">{t.form.fail}</p>}
+              {status === 'success' && <p className="text-sm text-green-400 text-center mt-3">{t.form.success}</p>}
+              {status === 'fail' && <p className="text-sm text-red-400 text-center mt-3">{t.form.fail}</p>}
 
-              <p className="text-xs text-zinc-600 text-center mt-2">{t.form.disclaimer}</p>
+              <p className="text-xs text-zinc-600 text-center mt-4">{t.form.disclaimer}</p>
             </form>
           </div>
-
         </div>
       </div>
     </section>
