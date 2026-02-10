@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
 export const Contact: React.FC = () => {
   const { language } = useLanguage();
   const formRef = useRef<HTMLFormElement>(null);
+  const [sending, setSending] = useState(false);
+  const [status, setStatus] = useState<null | 'success' | 'fail'>(null);
 
   const content = {
     ko: {
@@ -16,11 +18,7 @@ export const Contact: React.FC = () => {
         { title: "전문가 1:1 매칭 (Expert Consultation)", desc: "문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.", color: "text-blue-500" },
         { title: "24시간 내 신속 응답 (Fast Response)", desc: "영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.", color: "text-purple-500" }
       ],
-      contact: {
-        email: '이메일',
-        phone: '연락처',
-        address: '주소'
-      },
+      contact: { email: '이메일', phone: '연락처', address: '주소' },
       form: {
         title: '상담 신청서 작성',
         name: '담당자 성명',
@@ -47,11 +45,7 @@ export const Contact: React.FC = () => {
         { title: "1:1 Expert Matching", desc: "A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.", color: "text-blue-500" },
         { title: "Fast Response Within 24 Hours", desc: "Our representative will contact you directly within 24 business hours.", color: "text-purple-500" }
       ],
-      contact: {
-        email: 'Email',
-        phone: 'Phone',
-        address: 'Address'
-      },
+      contact: { email: 'Email', phone: 'Phone', address: 'Address' },
       form: {
         title: 'Fill out Inquiry Form',
         name: 'Contact Name',
@@ -73,131 +67,161 @@ export const Contact: React.FC = () => {
 
   const t = content[language];
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+    setStatus(null);
     if (!formRef.current) return;
 
     const formData = new FormData(formRef.current);
-    const name = formData.get('name') as string;
-    const company = formData.get('company') as string;
-    const phone = formData.get('phone') as string;
-    const email = formData.get('email') as string;
-    const details = formData.get('details') as string;
+    const name = String(formData.get('name') || '').trim();
+    const company = String(formData.get('company') || '').trim();
+    const phone = String(formData.get('phone') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const details = String(formData.get('details') || '').trim();
+    const hp = String(formData.get('hp') || '');
 
-    const subject = `[Geonix Inquiry] ${company} - ${name}`;
-    const body = `Name: ${name}\nCompany: ${company}\nEmail: ${email}\nPhone: ${phone}\n\nInquiry Details:\n${details}`;
-    
-    window.location.href = `mailto:geonix_official@geonix.co.kr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    if (!name || !company || !email || !details) {
+      setStatus('fail');
+      return;
+    }
+
+    setSending(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          message: details, // 서버 API는 message 필드를 사용
+          company,
+          website: '',
+          hp,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.ok) {
+        setStatus('success');
+        formRef.current.reset();
+      } else {
+        setStatus('fail');
+      }
+    } catch {
+      setStatus('fail');
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
     <section id="contact" className="py-24 bg-zinc-950">
       <div className="container mx-auto px-6">
         <div className="bg-zinc-900 rounded-3xl p-8 md:p-16 border border-zinc-800 flex flex-col lg:flex-row gap-16">
-          
+
+          {/* LEFT */}
           <div className="lg:w-1/2">
-             <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-2">{t.section}</h2>
-             <h3 className="text-3xl md:text-5xl font-bold text-white mb-6">
-               {t.title}
-             </h3>
-             <p className="text-zinc-400 text-lg mb-10 leading-relaxed whitespace-pre-line">
-               {t.desc}
-             </p>
+            <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-2">{t.section}</h2>
+            <h3 className="text-3xl md:text-5xl font-bold text-white mb-6">{t.title}</h3>
+            <p className="text-zinc-400 text-lg mb-10 leading-relaxed whitespace-pre-line">{t.desc}</p>
 
-             {/* Expectation Bullets */}
-             <div className="space-y-6 mb-12">
-                {t.bullets.map((item, idx) => (
-                  <div key={idx} className="flex gap-4">
-                    <div className={`mt-1 bg-zinc-800 p-1 rounded ${item.color} shrink-0 h-fit`}>
-                      <CheckCircle2 size={16} />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold mb-1">{item.title}</h4>
-                      <p className="text-sm text-zinc-500">{item.desc}</p>
-                    </div>
+            <div className="space-y-6 mb-12">
+              {t.bullets.map((item, idx) => (
+                <div key={idx} className="flex gap-4">
+                  <div className={`mt-1 bg-zinc-800 p-1 rounded ${item.color} shrink-0 h-fit`}>
+                    <CheckCircle2 size={16} />
                   </div>
-                ))}
-             </div>
-
-             <div className="space-y-6 border-t border-zinc-800 pt-8">
-                <div className="flex items-center gap-4">
-                   <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white shrink-0">
-                      <Mail size={20} />
-                   </div>
-                   <div>
-                      <div className="text-xs text-zinc-500 uppercase font-semibold">{t.contact.email}</div>
-                      <div className="flex flex-col gap-1">
-                        <a href="mailto:roman@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors">roman@geonix.co.kr</a>
-                        <a href="mailto:geonix_official@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors">geonix_official@geonix.co.kr</a>
-                      </div>
-                   </div>
+                  <div>
+                    <h4 className="text-white font-semibold mb-1">{item.title}</h4>
+                    <p className="text-sm text-zinc-500">{item.desc}</p>
+                  </div>
                 </div>
+              ))}
+            </div>
 
-                <div className="flex items-center gap-4">
-                   <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white shrink-0">
-                      <Phone size={20} />
-                   </div>
-                   <div>
-                      <div className="text-xs text-zinc-500 uppercase font-semibold">{t.contact.phone}</div>
-                      <div className="text-zinc-300">
-                        -
-                      </div>
-                   </div>
+            <div className="space-y-6 border-t border-zinc-800 pt-8">
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white">
+                  <Mail size={20} />
                 </div>
+                <div>
+                  <div className="text-xs text-zinc-500 uppercase font-semibold">{t.contact.email}</div>
+                  <a href="mailto:geonix_official@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline">
+                    geonix_official@geonix.co.kr
+                  </a>
+                </div>
+              </div>
 
-                <div className="flex items-center gap-4">
-                   <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white shrink-0">
-                      <MapPin size={20} />
-                   </div>
-                   <div>
-                      <div className="text-xs text-zinc-500 uppercase font-semibold">{t.contact.address}</div>
-                      <div className="text-zinc-300">-</div>
-                   </div>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white">
+                  <Phone size={20} />
                 </div>
-             </div>
+                <div>
+                  <div className="text-xs text-zinc-500 uppercase font-semibold">{t.contact.phone}</div>
+                  <div className="text-zinc-300">-</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded bg-zinc-800 flex items-center justify-center text-white">
+                  <MapPin size={20} />
+                </div>
+                <div>
+                  <div className="text-xs text-zinc-500 uppercase font-semibold">{t.contact.address}</div>
+                  <div className="text-zinc-300">-</div>
+                </div>
+              </div>
+            </div>
           </div>
 
+          {/* RIGHT */}
           <div className="lg:w-1/2 bg-zinc-950 rounded-2xl p-8 border border-zinc-800">
-             <h4 className="text-xl font-bold text-white mb-6">{t.form.title}</h4>
-             <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 gap-6">
-                   <div className="flex flex-col gap-2">
-                      <label htmlFor="contact-name" className="text-sm font-medium text-zinc-400">{t.form.name}</label>
-                      <input id="contact-name" name="name" type="text" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors" placeholder={t.form.ph_name} />
-                   </div>
-                   <div className="flex flex-col gap-2">
-                      <label htmlFor="contact-company" className="text-sm font-medium text-zinc-400">{t.form.company}</label>
-                      <input id="contact-company" name="company" type="text" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors" placeholder={t.form.ph_company} />
-                   </div>
-                </div>
+            <h4 className="text-xl font-bold text-white mb-6">{t.form.title}</h4>
 
+            <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
+              {/* honeypot */}
+              <input type="text" name="hp" className="hidden" tabIndex={-1} autoComplete="off" />
+
+              <div className="grid grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                   <label htmlFor="contact-email" className="text-sm font-medium text-zinc-400">{t.form.email}</label>
-                   <input id="contact-email" name="email" type="email" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors" placeholder="email@company.com" />
+                  <label className="text-sm font-medium text-zinc-400">{t.form.name}</label>
+                  <input name="name" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder={t.form.ph_name} />
                 </div>
-
                 <div className="flex flex-col gap-2">
-                   <label htmlFor="contact-phone" className="text-sm font-medium text-zinc-400">{t.form.phone}</label>
-                   <input id="contact-phone" name="phone" type="tel" className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors" placeholder="010-1234-5678" />
+                  <label className="text-sm font-medium text-zinc-400">{t.form.company}</label>
+                  <input name="company" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder={t.form.ph_company} />
                 </div>
+              </div>
 
-                <div className="flex flex-col gap-2">
-                   <label htmlFor="contact-details" className="text-sm font-medium text-zinc-400">{t.form.details}</label>
-                   <textarea id="contact-details" name="details" required rows={4} className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white focus:border-zinc-500 focus:outline-none transition-colors" placeholder={t.form.ph_details} />
-                </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-zinc-400">{t.form.email}</label>
+                <input name="email" type="email" required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder="email@company.com" />
+              </div>
 
-                <button 
-                  type="submit" 
-                  className="w-full font-bold py-4 rounded-lg flex items-center justify-center gap-2 mt-4 transition-colors bg-white text-zinc-950 hover:bg-zinc-200"
-                >
-                   {t.form.submit}
-                   <ArrowRight size={18} />
-                </button>
-                <p className="text-xs text-zinc-600 text-center mt-4">
-                   {t.form.disclaimer}
-                </p>
-             </form>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-zinc-400">{t.form.phone}</label>
+                <input name="phone" type="tel" className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder="010-1234-5678" />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-zinc-400">{t.form.details}</label>
+                <textarea name="details" rows={4} required className="bg-zinc-900 border border-zinc-800 rounded-lg p-3 text-white" placeholder={t.form.ph_details} />
+              </div>
+
+              <button
+                type="submit"
+                disabled={sending}
+                className="w-full font-bold py-4 rounded-lg flex items-center justify-center gap-2 mt-4 bg-white text-zinc-950 hover:bg-zinc-200 disabled:opacity-60"
+              >
+                {sending ? t.form.sending : t.form.submit}
+                {!sending && <ArrowRight size={18} />}
+              </button>
+
+              {status === 'success' && <p className="text-sm text-green-400 text-center">{t.form.success}</p>}
+              {status === 'fail' && <p className="text-sm text-red-400 text-center">{t.form.fail}</p>}
+
+              <p className="text-xs text-zinc-600 text-center mt-2">{t.form.disclaimer}</p>
+            </form>
           </div>
 
         </div>
