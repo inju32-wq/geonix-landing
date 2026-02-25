@@ -36,11 +36,6 @@ function escapeHtml(s: string) {
     .replace(/'/g, "&#039;");
 }
 
-function toBool(v?: string) {
-  if (!v) return false;
-  return ["true", "1", "yes", "y"].includes(v.toLowerCase());
-}
-
 function makeTicket(prefix = "GEONIX") {
   const d = new Date();
   const y = d.getFullYear();
@@ -78,7 +73,6 @@ function detectLang(input: string): "ko" | "en" | "both" {
 }
 
 function row(label: string, value: string) {
-  // ✅ 라벨 한 줄 유지 + 폭 확대(문의 접수일/Submitted at 같은 긴 라벨용)
   const labelStyle =
     "padding:10px 0; width:170px; color:#666; border-bottom:1px solid #efefef; white-space:nowrap;";
   const valueStyle = "padding:10px 0; color:#111; border-bottom:1px solid #efefef;";
@@ -93,10 +87,6 @@ function row(label: string, value: string) {
 
 /**
  * 공통 템플릿
- * - 라인 색상: #f43e38
- * - 상단 로고 텍스트 색상: #4A4A4A
- * - 상단 타이틀(문의사항 접수) 색상: #4A4A4A
- * - 하단 저작권 위에도 동일 라인(2px) 추가
  */
 function buildMailplugStyleBase(params: {
   brandText: string;
@@ -139,7 +129,6 @@ function buildMailplugStyleBase(params: {
       <tr>
         <td align="center" style="padding:24px 12px;">
           <table width="680" cellpadding="0" cellspacing="0" style="border-collapse:collapse; width:680px; max-width:680px;">
-            <!-- header -->
             <tr>
               <td style="padding:0 0 10px 0;">
                 <div style="font-family:Arial, sans-serif; font-size:20px; font-weight:800; color:${brandTextColor};">
@@ -148,10 +137,8 @@ function buildMailplugStyleBase(params: {
               </td>
             </tr>
 
-            <!-- top line -->
             <tr><td style="border-top:2px solid ${brandLineColor}; padding:0;"></td></tr>
 
-            <!-- title -->
             <tr>
               <td style="padding:22px 0 12px 0; font-family:Arial, sans-serif; text-align:center;">
                 <div style="font-size:18px; font-weight:800; color:${titleTextColor};">${escapeHtml(titleKo)}</div>
@@ -165,7 +152,6 @@ function buildMailplugStyleBase(params: {
               </td>
             </tr>
 
-            <!-- intro -->
             <tr>
               <td style="padding:0 0 14px 0; font-family:Arial, sans-serif; font-size:13px; color:#333; line-height:1.7;">
                 ${introKo ? `<div>${introKo}</div>` : ""}
@@ -175,7 +161,6 @@ function buildMailplugStyleBase(params: {
 
             <tr><td style="border-top:1px solid #e6e6e6; padding:0;"></td></tr>
 
-            <!-- table -->
             <tr>
               <td style="padding:14px 0 0 0;">
                 <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; font-family:Arial, sans-serif; font-size:13px;">
@@ -184,7 +169,6 @@ function buildMailplugStyleBase(params: {
               </td>
             </tr>
 
-            <!-- message -->
             <tr>
               <td style="padding:12px 0 0 0;">
                 <div style="font-family:Arial, sans-serif; font-size:13px; color:#333; padding:10px 0 6px 0; font-weight:800;">
@@ -203,7 +187,6 @@ function buildMailplugStyleBase(params: {
               </td>
             </tr>
 
-            <!-- footer -->
             <tr>
               <td style="padding:16px 0 0 0; font-family:Arial, sans-serif; font-size:12px; color:#777; line-height:1.6;">
                 ${footerKo ? `<div>${footerKo}</div>` : ""}
@@ -212,8 +195,6 @@ function buildMailplugStyleBase(params: {
             </tr>
 
             <tr><td style="padding:18px 0 0 0; border-top:1px solid #efefef;"></td></tr>
-
-            <!-- bottom line (above copyright) -->
             <tr><td style="border-top:2px solid ${brandLineColor}; padding:0;"></td></tr>
 
             <tr>
@@ -242,7 +223,6 @@ function buildAdminHtml(params: {
   email: string;
   company?: string;
   phone?: string;
-  // ✅ website 제거됨
   message: string;
 }) {
   const {
@@ -373,7 +353,6 @@ function buildUserHtml(params: {
     });
   }
 
-  // both
   return buildMailplugStyleBase({
     brandText,
     brandLineColor,
@@ -423,7 +402,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const email = String(body?.email || "").trim();
     const message = String(body?.message || "").trim();
     const company = String(body?.company || "").trim();
-    const website = String(body?.website || "").trim(); // ✅ 수집은 하되, 관리자메일/표에서는 미사용
+    const website = String(body?.website || "").trim(); // 수집은 하되, 표에서는 미사용
     const phone = String(body?.phone || "").trim();
 
     if (!name || !email || !message) {
@@ -443,25 +422,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
+    // ✅ Mailplug + 465(SSL) 표준 고정
     const host = process.env.MAIL_HOST || "smtp.mailplug.co.kr";
-const user = process.env.MAIL_USER;
-const pass = process.env.MAIL_PASS;
-const to = process.env.MAIL_TO;
+    const user = process.env.MAIL_USER;
+    const pass = process.env.MAIL_PASS; // ⭐ 앱 비밀번호
+    const to = process.env.MAIL_TO;
 
-if (!user || !pass || !to) {
-  res.status(500).json({ ok: false, error: "server_not_configured" });
-  return;
-}
+    if (!user || !pass || !to) {
+      res.status(500).json({ ok: false, error: "server_not_configured" });
+      return;
+    }
 
-const transporter = nodemailer.createTransport({
-  host,
-  port: 465,
-  secure: true, // ⭐ 465는 무조건 true
-  auth: {
-    user,
-    pass, // ⭐ 앱 비밀번호
-  },
-});
+    const transporter = nodemailer.createTransport({
+      host,
+      port: 465,
+      secure: true,
+      auth: { user, pass },
+    });
 
     const safeName = escapeHeaderText(name);
     const safeEmail = escapeHeaderText(email);
@@ -469,14 +446,12 @@ const transporter = nodemailer.createTransport({
     const ticket = makeTicket("GEONIX");
     const submittedAt = formatKST(new Date());
 
-    // ✅ 스타일 공통
-    const brandText = "GEONIX";      // (공통) 상단 로고 텍스트
+    const brandText = "GEONIX";
     const brandLineColor = "#f43e38";
     const brandTextColor = "#4A4A4A";
     const titleTextColor = "#4A4A4A";
 
     // 1) 관리자 메일
-    // (1) 제목에서 [GEONIX][CONTACT] 접두어 제거 → ticket + name/email 중심으로
     const adminSubject = `TICKET:${ticket} | ${safeName} <${safeEmail}>`;
 
     const adminText = [
@@ -519,7 +494,6 @@ const transporter = nodemailer.createTransport({
     const lang = detectLang(`${name} ${company} ${message}`);
     const summary = message.length > 400 ? `${message.slice(0, 400)}...` : message;
 
-    // (2) 제목도 한/영 비율(감지 결과)에 맞춰서 분기
     const userSubject =
       lang === "en"
         ? `We’ve received your inquiry (Ticket: ${ticket})`
@@ -575,7 +549,6 @@ const transporter = nodemailer.createTransport({
     });
 
     await transporter.sendMail({
-      // (1) From 표시 이름 'geonix' → 'GEONIX'
       from: `"GEONIX" <${user}>`,
       to: email,
       replyTo: to,
