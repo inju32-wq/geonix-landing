@@ -443,24 +443,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    const host = process.env.MAIL_HOST;
-    const port = Number(process.env.MAIL_PORT || 465);
-    const secure = toBool(process.env.MAIL_SECURE || "true");
-    const user = process.env.MAIL_USER;
-    const pass = process.env.MAIL_PASS;
-    const to = process.env.MAIL_TO;
+    const host = process.env.MAIL_HOST || "smtp.mailplug.co.kr";
+const user = process.env.MAIL_USER;
+const pass = process.env.MAIL_PASS;
+const to = process.env.MAIL_TO;
 
-    if (!host || !user || !pass || !to) {
-      res.status(500).json({ ok: false, error: "server_not_configured" });
-      return;
-    }
+if (!user || !pass || !to) {
+  res.status(500).json({ ok: false, error: "server_not_configured" });
+  return;
+}
 
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: { user, pass },
-    });
+const transporter = nodemailer.createTransport({
+  host,
+  port: 465,
+  secure: true, // ⭐ 465는 무조건 true
+  auth: {
+    user,
+    pass, // ⭐ 앱 비밀번호
+  },
+});
 
     const safeName = escapeHeaderText(name);
     const safeEmail = escapeHeaderText(email);
