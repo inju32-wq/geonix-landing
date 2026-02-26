@@ -402,7 +402,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const email = String(body?.email || "").trim();
     const message = String(body?.message || "").trim();
     const company = String(body?.company || "").trim();
-    const website = String(body?.website || "").trim(); // 수집은 하되, 표에서는 미사용
+    const website = String(body?.website || "").trim();
     const phone = String(body?.phone || "").trim();
 
     if (!name || !email || !message) {
@@ -422,10 +422,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    // ✅ Mailplug + 465(SSL) 표준 고정
+    // ✅ Mailplug 465(SSL) "표준" 고정: env 꼬임 제거
     const host = process.env.MAIL_HOST || "smtp.mailplug.co.kr";
-    const user = process.env.MAIL_USER;
-    const pass = process.env.MAIL_PASS; // ⭐ 앱 비밀번호
+    const user = process.env.MAIL_USER; // 전체 이메일 주소
+    const pass = process.env.MAIL_PASS; // ⭐ Mailplug 앱 비밀번호
     const to = process.env.MAIL_TO;
 
     if (!user || !pass || !to) {
@@ -438,7 +438,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       port: 465,
       secure: true,
       auth: { user, pass },
+      // 일부 환경에서 인증서/협상 이슈를 줄이는 옵션 (안전)
+      tls: { servername: host },
     });
+
+    // ✅ 10분 안에 원인 잡는 핵심: verify로 로그인 단계에서 바로 터뜨리기
+    await transporter.verify();
 
     const safeName = escapeHeaderText(name);
     const safeEmail = escapeHeaderText(email);
@@ -532,7 +537,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     ].join("\n");
 
     const userText =
-      lang === "ko" ? userTextKo : lang === "en" ? userTextEn : `${userTextKo}\n\n------------------------------\n\n${userTextEn}`;
+      lang === "ko"
+        ? userTextKo
+        : lang === "en"
+        ? userTextEn
+        : `${userTextKo}\n\n------------------------------\n\n${userTextEn}`;
 
     const userHtml = buildUserHtml({
       brandText,
@@ -559,7 +568,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     res.status(200).json({ ok: true, ticket });
   } catch (e: any) {
-    console.error("CONTACT_API_ERROR:", e?.message || e);
+    // ✅ 여기에서 "정확히 무엇이 실패했는지" 1번에 잡자
+    console.error("CONTACT_API_ERROR_FULL:", {
+      name: e?.name,
+      code: e?.code,
+      message: e?.message,
+      responseCode: e?.responseCode,
+      response: e?.response,
+      command: e?.command,
+      stack: e?.stack,
+    });
+
     return res.status(500).json({ ok: false, error: "send_failed" });
   }
 }
