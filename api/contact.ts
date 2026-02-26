@@ -21,14 +21,12 @@ export default async function handler(req: any, res: any) {
     }
 
     const transporter = nodemailer.createTransport({
-      host: MAIL_HOST,
-      port: Number(MAIL_PORT),
-      secure: true, // ✅ 465면 true 고정
-      auth: {
-        user: MAIL_USER,
-        pass: MAIL_PASS,
-      },
-    });
+  host: MAIL_HOST,
+  port: 587,
+  secure: false,           // ✅ 587은 false
+  auth: { user: MAIL_USER, pass: MAIL_PASS },
+  requireTLS: true,        // ✅ STARTTLS 강제
+});
 
     // 2) SMTP 연결/인증 확인
     await transporter.verify();
