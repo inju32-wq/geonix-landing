@@ -1,3 +1,4 @@
+// src/components/Services.tsx
 import React from 'react';
 import { Globe, ShieldCheck, Ship, Handshake } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -58,26 +59,26 @@ export const Services: React.FC = () => {
   const icons = [Globe, ShieldCheck, Ship, Handshake];
 
   return (
-    <section id="services" className="py-24 bg-zinc-900">
+    <section id="services" className="py-20 md:py-32 bg-zinc-900">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-2">{t.section}</h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">{t.title}</h3>
-          <p className="text-zinc-400 max-w-2xl mx-auto text-lg">
+        <div className="text-center mb-16 md:mb-24">
+          <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
+          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 break-keep leading-tight">{t.title}</h3>
+          <p className="text-zinc-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed break-keep opacity-90">
             {t.desc}
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
-              <div key={idx} className="bg-zinc-950 p-10 rounded-2xl border border-zinc-800 hover:border-zinc-600 transition-all group flex flex-col items-start text-left">
-                <div className="w-14 h-14 bg-zinc-900 rounded-xl flex items-center justify-center text-white mb-6 group-hover:bg-white group-hover:text-zinc-950 transition-colors shadow-lg shadow-black/50">
-                  <Icon size={28} />
+              <div key={idx} className="bg-zinc-950 p-8 md:p-12 rounded-[2rem] border border-zinc-800/50 hover:border-zinc-500 transition-all duration-300 group flex flex-col items-start text-left shadow-2xl">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-zinc-900 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300 border border-zinc-800 shadow-inner">
+                  <Icon size={28} className="md:w-8 md:h-8" />
                 </div>
-                <h4 className="text-2xl font-bold text-white mb-4">{item.title}</h4>
-                <p className="text-zinc-400 leading-relaxed text-lg">
+                <h4 className="text-xl md:text-2xl font-bold text-white mb-4 break-keep leading-tight">{item.title}</h4>
+                <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep opacity-80">
                   {item.description}
                 </p>
               </div>
