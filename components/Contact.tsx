@@ -1,4 +1,3 @@
-// src/components/Contact.tsx
 import React, { useRef, useState } from 'react';
 import { Mail, Phone, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -10,16 +9,15 @@ export const Contact: React.FC = () => {
   const [status, setStatus] = useState<null | 'success' | 'fail'>(null);
 
   const content = {
-  ko: {
-    section: 'Get in Touch',
-    title: '비즈니스 파트너십 문의',
-    // 요청하신 위치에 \n을 넣어 줄바꿈을 적용했습니다.
-    desc: '원자재 수급 계획부터 물류 최적화까지,\n귀사의 비즈니스 성공을 위한 맞춤형 솔루션을 제안해 드립니다.\n지금 바로 문의해 보세요.',
-    bullets: [
-      { title: '철저한 비밀 유지', desc: '모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.', color: 'text-green-500' },
-      { title: '전문가 1:1 매칭', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.', color: 'text-blue-500' },
-      { title: '신속한 응답 서비스', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.', color: 'text-purple-500' },
-    ],
+    ko: {
+      section: 'Get in Touch',
+      title: '비즈니스 파트너십 문의',
+      desc: '원자재 수급 계획부터 물류 최적화까지,\n귀사의 비즈니스 성공을 위한 맞춤형 솔루션을 제안해 드립니다.\n지금 바로 문의해 보세요.',
+      bullets: [
+        { title: '철저한 비밀 유지', desc: '모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.', color: 'text-green-600' },
+        { title: '전문가 1:1 매칭', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.', color: 'text-blue-600' },
+        { title: '신속한 응답 서비스', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.', color: 'text-purple-600' },
+      ],
       contact: { email: '이메일', phone: '연락처', address: '주소' },
       form: {
         title: '상담 신청서 작성',
@@ -39,15 +37,14 @@ export const Contact: React.FC = () => {
       },
     },
     en: {
-    section: 'Get in Touch',
-    title: 'Business Partnership Inquiry',
-    // 영어 버전도 의미에 맞춰 3단 줄바꿈을 적용했습니다.
-    desc: 'From raw material sourcing to logistics optimization,\nwe propose customized solutions for your business success.\nContact us today.',
-    bullets: [
-      { title: 'Strict Confidentiality', desc: 'All consultations and corporate information are managed under strict security.', color: 'text-green-500' },
-      { title: '1:1 Expert Matching', desc: 'A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.', color: 'text-blue-500' },
-      { title: 'Fast Response', desc: 'Our representative will contact you directly within 24 business hours.', color: 'text-purple-500' },
-    ],
+      section: 'Get in Touch',
+      title: 'Business Partnership Inquiry',
+      desc: 'From raw material sourcing to logistics optimization,\nwe propose customized solutions for your business success.\nContact us today.',
+      bullets: [
+        { title: 'Strict Confidentiality', desc: 'All consultations and corporate information are managed under strict security.', color: 'text-green-600' },
+        { title: '1:1 Expert Matching', desc: 'A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.', color: 'text-blue-600' },
+        { title: 'Fast Response', desc: 'Our representative will contact you directly within 24 business hours.', color: 'text-purple-600' },
+      ],
       contact: { email: 'Email', phone: 'Phone', address: 'Address' },
       form: {
         title: 'Inquiry Form',
@@ -111,161 +108,104 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-zinc-950">
+    <section id="contact" className="py-24 md:py-36 bg-white">
       <div className="container mx-auto px-6">
-        <div className="bg-zinc-900/50 rounded-[2.5rem] p-8 md:p-16 border border-zinc-800/50 flex flex-col lg:flex-row gap-16 lg:gap-24 shadow-2xl">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
           
-          {/* LEFT: Info */}
+          {/* LEFT: Info (White Background Area) */}
           <div className="lg:w-[45%]">
-            <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 break-keep leading-tight">{t.title}</h3>
-            <p className="text-zinc-400 text-lg mb-12 leading-relaxed whitespace-pre-line break-keep opacity-90">{t.desc}</p>
+            <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
+            <h3 className="text-3xl md:text-5xl font-extrabold text-[#2A2A2A] mb-8 break-keep leading-tight">{t.title}</h3>
+            <p className="text-zinc-500 text-lg mb-12 leading-relaxed whitespace-pre-line break-keep font-medium opacity-90">{t.desc}</p>
 
-            <div className="space-y-8 mb-16">
+            <div className="space-y-10 mb-16">
               {t.bullets.map((item, idx) => (
-                <div key={idx} className="flex gap-5 group">
-                  <div className={`mt-1 bg-zinc-800/50 p-1.5 rounded-lg ${item.color} shrink-0 h-fit border border-zinc-700/50 group-hover:scale-110 transition-all duration-300`}>
-                    <CheckCircle2 size={18} />
+                <div key={idx} className="flex gap-6 group">
+                  <div className={`mt-1 bg-zinc-50 p-2 rounded-xl border border-zinc-100 ${item.color} shrink-0 h-fit group-hover:scale-110 transition-all shadow-sm`}>
+                    <CheckCircle2 size={20} />
                   </div>
                   <div>
-                    <h4 className="text-white font-bold mb-1.5 text-lg break-keep">{item.title}</h4>
-                    <p className="text-zinc-500 text-sm leading-relaxed break-keep opacity-80">{item.desc}</p>
+                    <h4 className="text-[#2A2A2A] font-bold mb-2 text-xl break-keep tracking-tight">{item.title}</h4>
+                    <p className="text-zinc-500 text-base leading-relaxed break-keep font-medium opacity-80">{item.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="space-y-6 border-t border-zinc-800/50 pt-10">
-              <div className="flex items-center gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg border border-zinc-700/50">
+            <div className="space-y-8 border-t border-zinc-100 pt-10">
+              <div className="flex items-center gap-6">
+                <div className="w-12 h-12 rounded-2xl bg-zinc-50 flex items-center justify-center text-[#2A2A2A] shrink-0 border border-zinc-100 shadow-sm">
                   <Mail size={22} />
                 </div>
                 <div>
-                  <div className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1">{t.contact.email}</div>
-                  <div className="flex flex-col gap-0.5">
-                    <a href="mailto:roman@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors text-sm md:text-base font-medium">
+                  <div className="text-[10px] text-zinc-400 uppercase font-black tracking-widest mb-1">{t.contact.email}</div>
+                  <div className="flex flex-col">
+                    <a href="mailto:roman@geonix.co.kr" className="text-[#2A2A2A] hover:text-[#FACC15] transition-colors text-base font-bold underline underline-offset-4 decoration-zinc-200">
                       roman@geonix.co.kr
                     </a>
-                    <a href="mailto:geonix_official@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors text-sm md:text-base font-medium">
+                    <a href="mailto:geonix_official@geonix.co.kr" className="text-[#2A2A2A] hover:text-[#FACC15] transition-colors text-base font-bold underline underline-offset-4 decoration-zinc-200">
                       geonix_official@geonix.co.kr
                     </a>
                   </div>
                 </div>
               </div>
-
-              <div className="flex items-center gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg border border-zinc-700/50">
-                  <Phone size={22} />
-                </div>
-                <div>
-                  <div className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1">{t.contact.phone}</div>
-                  <div className="text-zinc-300 text-sm md:text-base font-medium">-</div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-5">
-                <div className="w-12 h-12 rounded-2xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg border border-zinc-700/50">
-                  <MapPin size={22} />
-                </div>
-                <div>
-                  <div className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1">{t.contact.address}</div>
-                  <div className="text-zinc-300 text-sm md:text-base font-medium">-</div>
-                </div>
-              </div>
             </div>
           </div>
 
-          {/* RIGHT: Form */}
-          <div className="lg:w-[55%] bg-zinc-950/50 rounded-[2rem] p-6 md:p-10 border border-zinc-800/50 shadow-2xl relative overflow-hidden">
-            <h4 className="text-xl font-bold text-white mb-8 border-b border-zinc-800/50 pb-5 tracking-tight">{t.form.title}</h4>
+          {/* RIGHT: Form (Light Gray Background Area) */}
+          <div className="lg:w-[55%] bg-[#F8FAFC] rounded-[3rem] p-8 md:p-14 border border-zinc-100 shadow-xl shadow-zinc-200/50">
+            <h4 className="text-2xl font-black text-[#2A2A2A] mb-10 tracking-tight">{t.form.title}</h4>
 
-            <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
+            <form ref={formRef} className="space-y-8" onSubmit={handleSubmit}>
               <input type="text" name="hp" className="hidden" tabIndex={-1} autoComplete="off" />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2.5">
-                  <label htmlFor="contact-name" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
-                    {t.form.name}
-                  </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="flex flex-col gap-3">
+                  <label className="text-xs font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.name}</label>
                   <input
-                    id="contact-name"
-                    name="name"
-                    type="text"
-                    required
-                    className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
+                    name="name" type="text" required
+                    className="bg-white border border-zinc-200 rounded-2xl p-4.5 text-[#2A2A2A] focus:border-[#FACC15] focus:outline-none transition-all placeholder:text-zinc-300 text-base shadow-sm"
                     placeholder={t.form.ph_name}
                   />
                 </div>
-
-                <div className="flex flex-col gap-2.5">
-                  <label htmlFor="contact-company" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
-                    {t.form.company}
-                  </label>
+                <div className="flex flex-col gap-3">
+                  <label className="text-xs font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.company}</label>
                   <input
-                    id="contact-company"
-                    name="company"
-                    type="text"
-                    required
-                    className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
+                    name="company" type="text" required
+                    className="bg-white border border-zinc-200 rounded-2xl p-4.5 text-[#2A2A2A] focus:border-[#FACC15] focus:outline-none transition-all placeholder:text-zinc-300 text-base shadow-sm"
                     placeholder={t.form.ph_company}
                   />
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2.5">
-                <label htmlFor="contact-email" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
-                  {t.form.email}
-                </label>
+              <div className="flex flex-col gap-3">
+                <label className="text-xs font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.email}</label>
                 <input
-                  id="contact-email"
-                  name="email"
-                  type="email"
-                  required
-                  className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
+                  name="email" type="email" required
+                  className="bg-white border border-zinc-200 rounded-2xl p-4.5 text-[#2A2A2A] focus:border-[#FACC15] focus:outline-none transition-all placeholder:text-zinc-300 text-base shadow-sm"
                   placeholder="email@company.com"
                 />
               </div>
 
-              <div className="flex flex-col gap-2.5">
-                <label htmlFor="contact-phone" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
-                  {t.form.phone}
-                </label>
-                <input
-                  id="contact-phone"
-                  name="phone"
-                  type="tel"
-                  className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
-                  placeholder="010-1234-5678"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2.5">
-                <label htmlFor="contact-details" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
-                  {t.form.details}
-                </label>
+              <div className="flex flex-col gap-3">
+                <label className="text-xs font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.details}</label>
                 <textarea
-                  id="contact-details"
-                  name="details"
-                  required
-                  rows={5}
-                  className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm resize-none"
+                  name="details" required rows={6}
+                  className="bg-white border border-zinc-200 rounded-2xl p-4.5 text-[#2A2A2A] focus:border-[#FACC15] focus:outline-none transition-all placeholder:text-zinc-300 text-base resize-none shadow-sm"
                   placeholder={t.form.ph_details}
                 />
               </div>
 
               <button
-                type="submit"
-                disabled={sending}
-                className="w-full font-bold py-4.5 rounded-xl flex items-center justify-center gap-3 mt-6 transition-all bg-white text-zinc-950 hover:bg-zinc-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-xl active:scale-[0.98] uppercase tracking-tight"
+                type="submit" disabled={sending}
+                className="w-full font-black py-5 rounded-2xl flex items-center justify-center gap-3 mt-10 transition-all bg-[#2A2A2A] text-white hover:bg-black disabled:opacity-60 shadow-2xl active:scale-[0.98] uppercase tracking-tighter text-lg"
               >
-                <span className="text-base">{sending ? t.form.sending : t.form.submit}</span>
-                {!sending && <ArrowRight size={20} />}
+                <span>{sending ? t.form.sending : t.form.submit}</span>
+                {!sending && <ArrowRight size={22} />}
               </button>
 
-              {status === 'success' && <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-sm text-green-400 text-center animate-in fade-in slide-in-from-top-2 break-keep">{t.form.success}</div>}
-              {status === 'fail' && <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-400 text-center animate-in fade-in slide-in-from-top-2 break-keep">{t.form.fail}</div>}
-
-              <p className="text-[11px] text-zinc-600 text-center mt-6 leading-relaxed break-keep opacity-80">{t.form.disclaimer}</p>
+              {status === 'success' && <div className="p-5 bg-green-50 text-green-600 border border-green-100 rounded-2xl text-center font-bold animate-in fade-in slide-in-from-top-2">{t.form.success}</div>}
+              {status === 'fail' && <div className="p-5 bg-red-50 text-red-600 border border-red-100 rounded-2xl text-center font-bold animate-in fade-in slide-in-from-top-2">{t.form.fail}</div>}
             </form>
           </div>
         </div>
