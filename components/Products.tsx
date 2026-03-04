@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Factory, Mountain, Pickaxe } from 'lucide-react';
+import { Flame, Factory, Droplets, Ship } from 'lucide-react'; // 아이콘 변경
 import { useLanguage } from '../LanguageContext';
 
 export const Products: React.FC = () => {
@@ -9,61 +9,54 @@ export const Products: React.FC = () => {
     ko: {
       section: '핵심 역량',
       title: '취급 품목 포트폴리오',
-      desc: '글로벌 주요 생산지와의 파트너십을 통해 고객사의 요구 조건에 부합하는\n최적의 원자재를 안정적으로 공급합니다.',
+      desc: 'GEONIX는 글로벌 에너지 및 산업 자원 공급망의 핵심 파트너로서,\n엄격한 품질 기준을 통과한 최적의 자원을 안정적으로 공급합니다.',
       items: [
         {
-          title: "제철용 원자재",
-          description: "강점결탄(Hard Coking Coal), PCI, 다양한 등급의 코크스(Met Coke) 등 철강 산업의 핵심 원료를 글로벌 주요 광산으로부터 소싱합니다."
+          title: "광물 및 석탄 (Minerals & Coal)",
+          description: "제철용 점결탄(Coking Coal), 발전용 연료탄(Thermal Coal) 및 코크스를 취급합니다. 러시아, 인도네시아 등 글로벌 소싱 네트워크와 SGS 품질 인증을 통해 산업의 근간이 되는 에너지를 공급합니다."
         },
         {
-          title: "발전 및 에너지용 원자재",
-          description: "고열량탄(High GCV)부터 발전소 및 산업용 보일러에 최적화된 경제적인 저열량탄까지 폭넓은 스펙트럼의 연료탄을 취급합니다."
+          title: "천연가스 (LNG)",
+          description: "글로벌 에너지 파트너들과의 협력 및 혁신적인 액화 기술력을 바탕으로, 혹독한 환경에서도 중단 없는 에너지 공급을 실현하며 글로벌 탄소 중립 시대를 선도합니다."
         },
         {
-          title: "산업용 무연탄",
-          description: "높은 고정탄소와 낮은 휘발분을 요구하는 정밀 화학, 필터, 제련 산업을 위한 고품위 무연탄 및 탄소 소재를 공급합니다."
-        },
-        {
-          title: "기타 광물 자원",
-          description: "철광석(Iron Ore), 망간(Manganese) 등 고객의 요청에 따라 신뢰할 수 있는 공급처를 발굴하여 맞춤형 소싱 서비스를 제공합니다."
+          title: "팜오일 글리세린 (Refined Glycerin)",
+          description: "말레이시아산 최상급 팜유를 원료로 한 99.7% 이상의 초고순도 식물성 글리세린을 공급합니다. USP/BP/EP 기준을 충족하며 제약, 식품, 화장품 산업에 필수적인 친환경 솔루션을 제공합니다."
         }
       ],
       disclaimer: {
         label: '면책 조항 (Disclaimer)',
-        text: '지오니스는 전문 무역 중개 법인으로 제조사가 아닙니다. 상기 품목은 대표적인 취급 카테고리이며, 실제 공급 물량 및 세부 성분(열량, 회분, 황분 등)은 구체적인 주문 내역과 광산 상황에 따라 맞춤 제안됩니다.'
+        text: '지오니스는 전문 무역 중개 법인으로 제조사가 아닙니다. 상기 품목은 대표적인 취급 카테고리이며, 실제 공급 물량 및 세부 성분은 구체적인 주문 내역과 글로벌 시장 상황에 따라 맞춤 제안됩니다.'
       }
     },
     en: {
       section: 'Capabilities',
       title: 'Our Product Portfolio',
-      desc: 'Through partnerships with major global producers, we stably supply\noptimal raw materials meeting customer requirements.',
+      desc: 'As a key partner in the global energy and industrial resource supply chain,\nGEONIX stably supplies optimal resources meeting strict quality standards.',
       items: [
         {
-          title: "Metallurgical Raw Materials",
-          description: "Sourcing core steel industry materials including Hard Coking Coal, PCI, and various grades of Met Coke from major global mines."
+          title: "Minerals & Coal",
+          description: "Handling Coking Coal, Thermal Coal, and Met Coke. We supply core industrial energy through a global sourcing network and SGS quality certification across Russia and Indonesia."
         },
         {
-          title: "Thermal Energy Materials",
-          description: "Handling a broad spectrum from High GCV to economic low-calorific thermal coal optimized for power plants and industrial boilers."
+          title: "Natural Gas (LNG)",
+          description: "Based on cooperation with global energy partners and innovative liquefaction technology, we realize uninterrupted energy supply even in harsh environments, leading the era of global carbon neutrality."
         },
         {
-          title: "Industrial Anthracite",
-          description: "Supplying high-grade anthracite and carbon materials for precision chemical, filter, and smelting industries requiring high fixed carbon."
-        },
-        {
-          title: "Other Mineral Resources",
-          description: "Providing customized sourcing for Iron Ore, Manganese, and other minerals, identifying reliable sources tailored to customer requests."
+          title: "Refined Glycerin",
+          description: "Supplying 99.7% high-purity vegetable glycerin derived from premium Malaysian palm oil. Meeting USP/BP/EP standards, we provide essential eco-friendly solutions for pharmaceutical, food, and cosmetic industries."
         }
       ],
       disclaimer: {
         label: 'Disclaimer',
-        text: 'Geonix is a specialized trading brokerage, not a manufacturer. The above items are representative categories; actual supply volumes and detailed specifications are proposed based on specific orders and mine conditions.'
+        text: 'Geonix is a specialized trading brokerage, not a manufacturer. The above items are representative categories; actual supply volumes and specifications are proposed based on specific orders and global market conditions.'
       }
     }
   };
 
   const t = content[language];
-  const icons = [Factory, Flame, Mountain, Pickaxe];
+  // 아이콘 배열을 3개로 조정 (Factory: 석탄, Ship: LNG, Droplets: 글리세린)
+  const icons = [Factory, Ship, Droplets];
 
   return (
     <section id="products" className="py-24 bg-zinc-950">
@@ -76,7 +69,8 @@ export const Products: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {/* 3개 항목이므로 grid-cols-3으로 유지 또는 조정 */}
+        <div className="grid md:grid-cols-3 gap-8 mb-16 max-w-6xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
