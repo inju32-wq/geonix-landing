@@ -1,3 +1,4 @@
+// src/components/Operations.tsx
 import React from 'react';
 import { FileCheck, Users, Globe2, Activity } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -8,7 +9,7 @@ export const Operations: React.FC = () => {
   const content = {
     ko: {
       section: '운영 인프라',
-      title: '체계적인 운영 시스템',
+      title: '체계적인 글로벌 운영 시스템',
       desc: '지오니스는 비즈니스 성공을 위한 검증된 프로세스와 체계적인 운영 시스템을 보유하고 있습니다.\n복잡한 국제 무역 환경 속에서도 안정성과 신뢰를 보장합니다.',
       items: [
         {
@@ -31,7 +32,7 @@ export const Operations: React.FC = () => {
     },
     en: {
       section: 'Operational Infrastructure',
-      title: 'Systematic Operations',
+      title: 'Systematic Global Operations',
       desc: 'Geonix possesses proven processes and systematic operational systems for business success.\nWe guarantee stability and trust amidst complex international trade environments.',
       items: [
         {
@@ -59,29 +60,29 @@ export const Operations: React.FC = () => {
   const colors = ["text-blue-400", "text-green-400", "text-purple-400", "text-orange-400"];
 
   return (
-    <section id="infrastructure" className="py-24 bg-zinc-900">
+    <section id="infrastructure" className="py-20 md:py-32 bg-zinc-900">
        <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-2">{t.section}</h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-6">
+        <div className="text-center mb-16 md:mb-24">
+          <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
+          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 break-keep leading-tight">
              {t.title}
           </h3>
-          <p className="text-zinc-400 text-lg max-w-3xl mx-auto whitespace-pre-line">
+          <p className="text-zinc-400 text-base md:text-lg max-w-3xl mx-auto whitespace-pre-line break-keep leading-relaxed opacity-90">
              {t.desc}
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
-              <div key={idx} className="bg-zinc-950 p-8 rounded-2xl border border-zinc-800 flex gap-6 hover:border-zinc-600 transition-colors">
-                <div className={`shrink-0 w-16 h-16 bg-zinc-900 rounded-xl flex items-center justify-center ${colors[idx]}`}>
-                  <Icon size={32} />
+              <div key={idx} className="bg-zinc-950 p-8 md:p-10 rounded-[2rem] border border-zinc-800 flex flex-col sm:flex-row gap-6 md:gap-8 hover:border-zinc-500 transition-all duration-300 group">
+                <div className={`shrink-0 w-14 h-14 md:w-16 md:h-16 bg-zinc-900 rounded-2xl flex items-center justify-center border border-zinc-800 group-hover:bg-zinc-800 transition-colors shadow-lg ${colors[idx]}`}>
+                  <Icon size={28} className="md:w-8 md:h-8" />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
-                  <p className="text-zinc-400 leading-relaxed">
+                  <h4 className="text-xl font-bold text-white mb-3 break-keep">{item.title}</h4>
+                  <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep">
                     {item.description}
                   </p>
                 </div>
