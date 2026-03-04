@@ -15,24 +15,25 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLabels = {
-    ko: {
-      about: '회사 소개',
-      services: '서비스',
-      products: '취급 품목',
-      infrastructure: '인프라',
-      sustainability: '지속 가능성',
-      contact: '문의하기'
-    },
-    en: {
-      about: 'About',
-      services: 'Services',
-      products: 'Products',
-      infrastructure: 'Infrastructure',
-      sustainability: 'Sustainability',
-      contact: 'Contact'
-    }
-  };
+  // Navbar.tsx 내부 navLabels 부분만 교체하세요
+const navLabels = {
+  ko: {
+    about: '회사 소개',
+    services: '핵심 서비스',
+    products: '에너지 및 산업 자원', // '취급 품목'에서 변경
+    infrastructure: '물류 인프라',
+    sustainability: '지속 가능성',
+    contact: '문의하기'
+  },
+  en: {
+    about: 'About Us',
+    services: 'Services',
+    products: 'Energy & Resources', // 'Products'에서 변경
+    infrastructure: 'Logistics',
+    sustainability: 'Sustainability',
+    contact: 'Contact'
+  }
+};
 
   const t = navLabels[language];
 
