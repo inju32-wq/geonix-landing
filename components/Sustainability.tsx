@@ -1,5 +1,5 @@
 import React from 'react';
-import { Leaf, ShieldCheck, Infinity } from 'lucide-react';
+import { Leaf, ShieldCheck, Heart } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
 export const Sustainability: React.FC = () => {
@@ -7,48 +7,48 @@ export const Sustainability: React.FC = () => {
 
   const content = {
     ko: {
-      section: '기업의 책임',
+      section: 'ESG 경영',
       title: '지속 가능한 가치와 신뢰',
-      desc: '지오니스에게 지속 가능성이란 단순한 구호를 넘어선 비즈니스의 핵심 원칙입니다.\n우리는 책임 있는 소싱과 투명한 거래를 통해 파트너와 함께 성장하는 장기적인 미래를 약속합니다.',
+      desc: '지오니스는 에너지 및 산업 자원의 유통 과정에서 환경과 안전을 최우선으로 고려합니다.\n우리는 엄격한 글로벌 기준을 준수하는 파트너사들과 함께 지속 가능한 공급망을 구축해 나갑니다.',
       items: [
         {
-          title: "책임 있는 자원 조달",
-          description: "환경 규제와 노동 안전 기준을 준수하는 검증된 광산과 협력하여, 공급망 전반의 윤리적 리스크를 철저히 관리하고 배제합니다."
+          title: "환경 정책 및 기준 준수",
+          description: "환경 영향을 최소화하기 위한 국제 표준을 준수하며, 지속 가능한 자원 관리 정책을 보유한 생산 기지 및 물류 파트너들과 협력하여 공급망의 친환경성을 관리합니다."
         },
         {
-          title: "투명한 거래 프로세스",
-          description: "모든 거래 단계에서 정보를 투명하게 공유하고 공정한 비즈니스 관행을 준수하여, 모든 이해관계자가 신뢰할 수 있는 건전한 생태계를 조성합니다."
+          title: "공급망 안전 관리",
+          description: "자원의 소싱부터 인도에 이르기까지 전 과정에서 작업자 안전과 운영 무결성을 최우선시하며, 검증된 안전 프로토콜을 갖춘 인프라를 통해 안정적인 서비스를 제공합니다."
         },
         {
-          title: "장기적 파트너십",
-          description: "단기적인 이익보다는 공급의 안정성과 파트너사와의 동반 성장을 최우선 가치로 삼으며, 시장 변동성 속에서도 변치 않는 견고한 협력 관계를 유지합니다."
+          title: "투명한 윤리 경영",
+          description: "모든 비즈니스 단계에서 투명성과 정직을 바탕으로 책임 있는 중개 서비스를 제공하며, 지역사회와 산업 생태계 전반에 긍정적인 가치를 전달합니다."
         }
       ]
     },
     en: {
-      section: 'Corporate Responsibility',
-      title: 'Sustainable Value & Trust',
-      desc: 'For Geonix, sustainability is a core business principle beyond a slogan.\nWe promise a long-term future growing with partners through responsible sourcing and transparent transactions.',
+      section: 'ESG Management',
+      title: 'Sustainability & Trust',
+      desc: 'GEONIX prioritizes environmental stewardship and safety in the distribution of resources.\nWe build sustainable supply chains by collaborating with partners who adhere to rigorous global standards.',
       items: [
         {
-          title: "Responsible Sourcing",
-          description: "Cooperating with verified mines adhering to environmental and safety standards, thoroughly managing and eliminating ethical risks."
+          title: "Environmental Standards",
+          description: "We work with production and logistics partners committed to international environmental standards, ensuring that our supply chain supports sustainable resource management."
         },
         {
-          title: "Transparent Process",
-          description: "Sharing information transparently at every stage and adhering to fair business practices to create a trusted ecosystem."
+          title: "Supply Chain Safety",
+          description: "We prioritize operational integrity and safety throughout the sourcing and delivery process, utilizing infrastructure with proven safety protocols to ensure reliable service."
         },
         {
-          title: "Long-term Partnerships",
-          description: "Prioritizing supply stability and mutual growth over short-term profits, maintaining solid relationships despite market volatility."
+          title: "Integrity & Responsibility",
+          description: "We provide responsible brokerage services based on transparency and honesty at every stage, delivering positive value to local communities and the industrial ecosystem."
         }
       ]
     }
   };
 
   const t = content[language];
-  const icons = [Leaf, ShieldCheck, Infinity];
-  const iconColors = ["text-green-500", "text-blue-500", "text-purple-500"];
+  const icons = [Leaf, ShieldCheck, Heart];
+  const iconColors = ["text-green-500", "text-blue-500", "text-red-500"];
 
   return (
     <section id="sustainability" className="py-24 bg-zinc-950 border-t border-zinc-800">
@@ -64,7 +64,7 @@ export const Sustainability: React.FC = () => {
              {t.items.map((item, idx) => {
                const Icon = icons[idx];
                return (
-                 <div key={idx} className="p-8 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-600 transition-all flex flex-col items-center group">
+                 <div key={idx} className="p-8 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-green-600/50 transition-all flex flex-col items-center group">
                     <div className={`w-16 h-16 bg-zinc-950 rounded-full flex items-center justify-center mb-6 border border-zinc-800 group-hover:bg-zinc-800 transition-colors ${iconColors[idx]}`}>
                        <Icon size={32} />
                     </div>
