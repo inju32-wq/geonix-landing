@@ -183,7 +183,7 @@ export const Products: React.FC = () => {
               onClick={() => setSelectedProduct(null)}
               className="w-full mt-12 py-4.5 bg-white text-zinc-950 font-black rounded-2xl hover:bg-zinc-200 transition-all shadow-xl active:scale-[0.98] uppercase tracking-tighter"
             >
-              Close Window
+              Close
             </button>
           </div>
         </div>
