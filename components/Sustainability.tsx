@@ -1,3 +1,4 @@
+// src/components/Sustainability.tsx
 import React from 'react';
 import { Leaf, ShieldCheck, Heart } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -51,25 +52,25 @@ export const Sustainability: React.FC = () => {
   const iconColors = ["text-green-500", "text-blue-500", "text-red-500"];
 
   return (
-    <section id="sustainability" className="py-24 bg-zinc-950 border-t border-zinc-800">
+    <section id="sustainability" className="py-20 md:py-32 bg-zinc-950 border-t border-zinc-900">
        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-sm font-semibold text-green-600 uppercase tracking-widest mb-2">{t.section}</h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-6">{t.title}</h3>
+          <h2 className="text-sm font-semibold text-green-600 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
+          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 break-keep leading-tight">{t.title}</h3>
           
-          <p className="text-zinc-400 text-lg max-w-3xl mx-auto mb-16 whitespace-pre-line">
+          <p className="text-zinc-400 text-base md:text-lg max-w-3xl mx-auto mb-16 md:mb-24 whitespace-pre-line break-keep leading-relaxed opacity-90">
             {t.desc}
           </p>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-6xl mx-auto">
              {t.items.map((item, idx) => {
                const Icon = icons[idx];
                return (
-                 <div key={idx} className="p-8 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-green-600/50 transition-all flex flex-col items-center group">
-                    <div className={`w-16 h-16 bg-zinc-950 rounded-full flex items-center justify-center mb-6 border border-zinc-800 group-hover:bg-zinc-800 transition-colors ${iconColors[idx]}`}>
-                       <Icon size={32} />
+                 <div key={idx} className="p-10 rounded-[2.5rem] bg-zinc-900/50 border border-zinc-800 flex flex-col items-center group hover:border-green-600/30 transition-all duration-300 shadow-2xl">
+                    <div className={`w-20 h-20 bg-zinc-950 rounded-3xl flex items-center justify-center mb-8 border border-zinc-800 group-hover:bg-zinc-800 group-hover:scale-110 transition-all duration-300 shadow-inner ${iconColors[idx]}`}>
+                       <Icon size={36} />
                     </div>
-                    <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
-                    <p className="text-zinc-500 leading-relaxed">
+                    <h4 className="text-xl font-bold text-white mb-4 break-keep">{item.title}</h4>
+                    <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep opacity-80">
                        {item.description}
                     </p>
                  </div>
