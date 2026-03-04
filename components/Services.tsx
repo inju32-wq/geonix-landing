@@ -1,4 +1,3 @@
-// src/components/Services.tsx
 import React from 'react';
 import { Globe, ShieldCheck, Ship, Handshake } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -8,7 +7,7 @@ export const Services: React.FC = () => {
 
   const content = {
     ko: {
-      section: '우리의 서비스',
+      section: 'Our Services',
       title: '글로벌 원자재 중개 솔루션',
       desc: '지오니스는 단순 중개를 넘어, 신뢰할 수 있는 공급망 구축과\n리스크 없는 안전한 거래를 위한 전략적 파트너십을 제공합니다.',
       items: [
@@ -62,9 +61,9 @@ export const Services: React.FC = () => {
     <section id="services" className="py-24 md:py-36 bg-white relative">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20 md:mb-28">
-          <h2 className="text-sm font-black text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
+          <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
           <h3 className="text-3xl md:text-5xl font-extrabold text-[#2A2A2A] mb-10 break-keep leading-tight">{t.title}</h3>
-          <p className="text-[#555555] max-w-2xl mx-auto text-base md:text-lg whitespace-pre-line break-keep leading-relaxed font-medium">
+          <p className="text-zinc-500 max-w-2xl mx-auto text-base md:text-lg whitespace-pre-line break-keep leading-relaxed font-medium">
             {t.desc}
           </p>
         </div>
@@ -73,12 +72,12 @@ export const Services: React.FC = () => {
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
-              <div key={idx} className="bg-[#F8F9FA] p-10 md:p-12 rounded-[2.5rem] border border-zinc-100 hover:border-[#FACC15]/50 transition-all duration-500 group flex flex-col items-start text-left shadow-sm hover:shadow-xl">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center text-[#2A2A2A] mb-8 group-hover:bg-[#FACC15] transition-all duration-300 shadow-md border border-zinc-50">
+              <div key={idx} className="bg-[#F8FAFC] p-10 md:p-12 rounded-[2.5rem] border border-zinc-100 hover:border-[#FACC15]/50 transition-all duration-500 group flex flex-col items-start text-left shadow-sm hover:shadow-xl">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-white rounded-2xl flex items-center justify-center text-[#2A2A2A] mb-8 group-hover:bg-[#FACC15] group-hover:text-white transition-all duration-300 shadow-md border border-zinc-50">
                   <Icon size={28} />
                 </div>
                 <h4 className="text-xl md:text-2xl font-bold text-[#2A2A2A] mb-4 break-keep tracking-tight">{item.title}</h4>
-                <p className="text-[#666666] text-sm md:text-base leading-relaxed break-keep font-medium">
+                <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep font-medium">
                   {item.description}
                 </p>
               </div>
