@@ -1,3 +1,4 @@
+// src/components/Products.tsx
 import React, { useState } from 'react';
 import { Factory, Droplets, Ship, X, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -111,69 +112,78 @@ export const Products: React.FC = () => {
   const icons = [Factory, Ship, Droplets];
 
   return (
-    <section id="products" className="py-24 bg-zinc-950 relative">
+    <section id="products" className="py-20 md:py-32 bg-zinc-950 relative">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-2">{t.section}</h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">{t.title}</h3>
-          <p className="text-zinc-400 max-w-2xl mx-auto text-lg whitespace-pre-line">{t.desc}</p>
+        <div className="text-center mb-16 md:mb-24">
+          <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
+          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 break-keep leading-tight">{t.title}</h3>
+          <p className="text-zinc-400 max-w-2xl mx-auto text-base md:text-lg whitespace-pre-line break-keep leading-relaxed opacity-90">{t.desc}</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-16 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16 max-w-6xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
               <div 
                 key={idx} 
                 onClick={() => setSelectedProduct(idx)}
-                className="bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 hover:border-white transition-all group cursor-pointer"
+                className="bg-zinc-900/40 p-8 md:p-10 rounded-[2rem] border border-zinc-800/50 hover:border-zinc-500 transition-all duration-300 group cursor-pointer flex flex-col items-start"
               >
-                <div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center text-white mb-6 group-hover:bg-white group-hover:text-zinc-950 transition-colors">
-                  <Icon size={24} />
+                <div className="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300 shadow-xl">
+                  <Icon size={26} />
                 </div>
-                <h4 className="text-xl font-bold text-white mb-3">{item.title}</h4>
-                <p className="text-zinc-400 text-sm leading-relaxed mb-6">{item.description}</p>
-                <span className="text-xs font-bold text-zinc-500 uppercase tracking-tighter group-hover:text-white transition-colors">Click for details →</span>
+                <h4 className="text-xl md:text-2xl font-bold text-white mb-4 break-keep leading-tight">{item.title}</h4>
+                <p className="text-zinc-500 text-sm md:text-base leading-relaxed mb-8 break-keep opacity-80">{item.description}</p>
+                <div className="mt-auto flex items-center gap-2 text-[10px] md:text-xs font-black text-zinc-600 uppercase tracking-widest group-hover:text-white transition-colors">
+                  <span>View Details</span>
+                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                </div>
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* --- 팝업 모달 (SelectedProduct가 있을 때만 표시) --- */}
+      {/* --- 팝업 모달 --- */}
       {selectedProduct !== null && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm" onClick={() => setSelectedProduct(null)} />
-          <div className="relative bg-zinc-900 border border-zinc-800 w-full max-w-2xl rounded-3xl p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
+          <div className="absolute inset-0 bg-zinc-950/90 backdrop-blur-md transition-opacity" onClick={() => setSelectedProduct(null)} />
+          <div className="relative bg-zinc-900 border border-zinc-800 w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-y-auto max-h-[92vh] animate-in zoom-in-95 duration-200">
             <button 
               onClick={() => setSelectedProduct(null)}
-              className="absolute top-6 right-6 text-zinc-400 hover:text-white transition-colors"
+              className="absolute top-8 right-8 text-zinc-500 hover:text-white transition-colors p-2 hover:bg-zinc-800 rounded-full"
             >
               <X size={24} />
             </button>
 
-            <div className="flex items-center gap-4 mb-6">
-              {React.createElement(icons[selectedProduct], { className: "text-white", size: 32 })}
-              <h2 className="text-2xl font-bold text-white">{t.items[selectedProduct].title}</h2>
+            <div className="flex items-center gap-5 mb-10">
+              <div className="w-16 h-16 bg-zinc-800 rounded-2xl flex items-center justify-center text-white border border-zinc-700 shadow-lg">
+                {React.createElement(icons[selectedProduct], { size: 32 })}
+              </div>
+              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight break-keep">{t.items[selectedProduct].title}</h2>
             </div>
 
-            <p className="text-lg font-medium text-white mb-4">{t.items[selectedProduct].details.headline}</p>
-            <p className="text-zinc-400 mb-8 leading-relaxed">{t.items[selectedProduct].details.fullDesc}</p>
+            <div className="space-y-8">
+              <div>
+                <p className="text-lg md:text-xl font-bold text-white mb-4 break-keep leading-snug">{t.items[selectedProduct].details.headline}</p>
+                <p className="text-zinc-400 text-base md:text-lg leading-relaxed break-keep opacity-90">{t.items[selectedProduct].details.fullDesc}</p>
+              </div>
 
-            <div className="space-y-4">
-              {t.items[selectedProduct].details.features.map((feature, fIdx) => (
-                <div key={fIdx} className="flex items-start gap-3">
-                  <CheckCircle2 className="text-white mt-1 shrink-0" size={18} />
-                  <span className="text-zinc-300">{feature}</span>
-                </div>
-              ))}
+              <div className="space-y-4 bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/50">
+                {t.items[selectedProduct].details.features.map((feature, fIdx) => (
+                  <div key={fIdx} className="flex items-start gap-4">
+                    <CheckCircle2 className="text-zinc-400 mt-1 shrink-0" size={18} />
+                    <span className="text-zinc-300 text-sm md:text-base break-keep leading-relaxed">{feature}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <button 
               onClick={() => setSelectedProduct(null)}
-              className="w-full mt-10 py-4 bg-white text-zinc-950 font-bold rounded-xl hover:bg-zinc-200 transition-colors"
+              className="w-full mt-12 py-4.5 bg-white text-zinc-950 font-black rounded-2xl hover:bg-zinc-200 transition-all shadow-xl active:scale-[0.98] uppercase tracking-tighter"
             >
-              Close
+              Close Window
             </button>
           </div>
         </div>
