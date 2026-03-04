@@ -59,61 +59,52 @@ export const About: React.FC = () => {
   const icons = [Globe, ShieldCheck, TrendingUp, Users];
 
   return (
-    <section id="about" className="py-20 md:py-32 bg-zinc-950 relative overflow-hidden">
-      {/* Decorative Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+    <section id="about" className="py-24 md:py-36 bg-[#111827] relative overflow-hidden border-t border-white/5">
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          
-          {/* LEFT: Text & Stats */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           <div className="max-w-2xl">
-            <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
-            <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 break-keep leading-[1.15]">
+            <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
+            <h3 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white mb-10 break-keep leading-[1.2]">
               {t.title} <br />
-              <span className="font-serif italic text-zinc-500">{t.subtitle}</span>
+              <span className="text-white/40 font-serif italic">{t.subtitle}</span>
             </h3>
             
-            <div className="space-y-8 text-zinc-400 text-base md:text-lg leading-relaxed break-keep">
-              <div className="border-l-2 border-zinc-800 pl-6 py-1">
-                <strong className="text-white block text-xl mb-3">{t.vision.title}</strong>
-                <p className="opacity-80">{t.vision.desc}</p>
+            <div className="space-y-10 text-white/70 text-base md:text-lg leading-relaxed break-keep">
+              <div className="border-l-4 border-[#FACC15] pl-8 py-2">
+                <strong className="text-white block text-2xl mb-4 font-bold tracking-tight">{t.vision.title}</strong>
+                <p className="font-medium opacity-80">{t.vision.desc}</p>
               </div>
               
-              <div className="border-l-2 border-zinc-800 pl-6 py-1">
-                <strong className="text-white block text-xl mb-3">{t.mission.title}</strong>
-                <p className="opacity-80">{t.mission.desc}</p>
+              <div className="border-l-4 border-white/10 pl-8 py-2">
+                <strong className="text-white block text-2xl mb-4 font-bold tracking-tight">{t.mission.title}</strong>
+                <p className="font-medium opacity-80">{t.mission.desc}</p>
               </div>
             </div>
 
-            {/* Revised Stats Section */}
-            <div className="grid grid-cols-2 gap-6 md:gap-12 border-t border-zinc-900 pt-10 mt-12">
+            <div className="grid grid-cols-2 gap-8 border-t border-white/10 pt-12 mt-16">
               <div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{t.stats.network.value}</div>
-                <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest leading-tight break-keep">
-                  {t.stats.network.label}
-                </div>
+                <div className="text-4xl md:text-5xl font-black text-[#FACC15] mb-2">{t.stats.network.value}</div>
+                <div className="text-[11px] text-white/50 uppercase font-black tracking-widest leading-tight">{t.stats.network.label}</div>
               </div>
               <div>
-                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{t.stats.quality.value}</div>
-                <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest leading-tight break-keep">
-                  {t.stats.quality.label}
-                </div>
+                <div className="text-4xl md:text-5xl font-black text-[#FACC15] mb-2">{t.stats.quality.value}</div>
+                <div className="text-[11px] text-white/50 uppercase font-black tracking-widest leading-tight">{t.stats.quality.label}</div>
               </div>
             </div>
           </div>
 
-          {/* RIGHT: Features Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-10 lg:mt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 lg:mt-0">
             {t.features.map((feature, idx) => {
               const Icon = icons[idx];
               return (
-                <div key={idx} className="p-7 rounded-2xl bg-zinc-900/50 border border-zinc-800/50 hover:border-zinc-500 transition-all duration-300 group">
-                  <div className="w-11 h-11 bg-zinc-800 rounded-xl flex items-center justify-center text-white mb-5 group-hover:bg-white group-hover:text-zinc-950 transition-colors shadow-xl">
-                    <Icon size={22} />
+                <div key={idx} className="p-8 rounded-3xl bg-[#0A0F1A] border border-white/5 hover:border-[#FACC15]/30 transition-all duration-500 group shadow-2xl">
+                  <div className="w-12 h-12 bg-[#111827] rounded-2xl flex items-center justify-center text-[#FACC15] mb-6 group-hover:bg-[#FACC15] group-hover:text-[#0A0F1A] transition-all duration-300 shadow-xl border border-white/5">
+                    <Icon size={24} />
                   </div>
-                  <h4 className="text-lg font-bold text-white mb-3 break-keep">{feature.title}</h4>
-                  <p className="text-zinc-500 text-sm leading-relaxed break-keep">{feature.description}</p>
+                  <h4 className="text-xl font-black text-white mb-4 break-keep tracking-tight">{feature.title}</h4>
+                  <p className="text-white/50 text-sm leading-relaxed break-keep font-medium">{feature.description}</p>
                 </div>
               );
             })}
