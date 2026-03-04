@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame, Factory, Droplets, Ship } from 'lucide-react'; // 아이콘 변경
+import { Factory, Droplets, Ship } from 'lucide-react'; // 'Flame' 제거됨
 import { useLanguage } from '../LanguageContext';
 
 export const Products: React.FC = () => {
@@ -55,7 +55,6 @@ export const Products: React.FC = () => {
   };
 
   const t = content[language];
-  // 아이콘 배열을 3개로 조정 (Factory: 석탄, Ship: LNG, Droplets: 글리세린)
   const icons = [Factory, Ship, Droplets];
 
   return (
@@ -69,7 +68,6 @@ export const Products: React.FC = () => {
           </p>
         </div>
 
-        {/* 3개 항목이므로 grid-cols-3으로 유지 또는 조정 */}
         <div className="grid md:grid-cols-3 gap-8 mb-16 max-w-6xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
