@@ -1,3 +1,4 @@
+// src/components/Hero.tsx
 import React from 'react';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -7,19 +8,19 @@ export const Hero: React.FC = () => {
 
   const content = {
     ko: {
-      badge: '글로벌 공급망 가동 중',
-      title1: '프리미엄 석탄을 위한',
-      title2: '신뢰할 수 있는 파트너.',
-      desc: '세계적 수준의 제철용 점결탄, 발전용 연료탄, 코크스를 최고의 정밀도와 신뢰성으로 일관되게 공급합니다.',
-      cta1: '제품 보기',
+      badge: '글로벌 에너지 공급망 가동 중',
+      title1: '산업의 동력을 공급하는',
+      title2: '글로벌 자원 파트너.',
+      desc: '세계적 수준의 에너지 자원과 산업용 원자재를 최고의 정밀도와 신뢰성으로 전 세계 공급망에 일관되게 전달합니다.',
+      cta1: '솔루션 보기',
       cta2: '파트너십 문의'
     },
     en: {
       badge: 'Global Supply Chain Active',
-      title1: 'Your Trusted Partner for',
-      title2: 'Premium Coal Solutions.',
-      desc: 'Consistently delivering world-class metallurgical coal, thermal coal, and coke with maximum precision and reliability.',
-      cta1: 'View Products',
+      title1: 'Fueling Industry with',
+      title2: 'Global Resource Solutions.',
+      desc: 'Consistently delivering world-class energy resources and industrial raw materials with maximum precision and reliability to the global market.',
+      cta1: 'View Solutions',
       cta2: 'Inquire Now'
     }
   };
