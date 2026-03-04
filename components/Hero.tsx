@@ -4,6 +4,7 @@ import { useLanguage } from '../LanguageContext';
 
 export const Hero: React.FC = () => {
   const { language } = useLanguage();
+
   const content = {
     ko: {
       badge: 'Global Supply Chain Active',
@@ -22,6 +23,7 @@ export const Hero: React.FC = () => {
       cta2: 'Inquire Now'
     }
   };
+
   const t = content[language];
 
   return (
