@@ -10,15 +10,16 @@ export const Contact: React.FC = () => {
   const [status, setStatus] = useState<null | 'success' | 'fail'>(null);
 
   const content = {
-    ko: {
-      section: 'Get in Touch',
-      title: '비즈니스 파트너십 문의',
-      desc: '원자재 수급 계획부터 물류 최적화까지, 귀사의 비즈니스 성공을 위한\n맞춤형 솔루션을 제안해 드립니다. 지금 바로 문의해 보세요.',
-      bullets: [
-        { title: '철저한 비밀 유지', desc: '모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.', color: 'text-green-500' },
-        { title: '전문가 1:1 매칭', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.', color: 'text-blue-500' },
-        { title: '신속한 응답 서비스', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.', color: 'text-purple-500' },
-      ],
+  ko: {
+    section: 'Get in Touch',
+    title: '비즈니스 파트너십 문의',
+    // 요청하신 위치에 \n을 넣어 줄바꿈을 적용했습니다.
+    desc: '원자재 수급 계획부터 물류 최적화까지,\n귀사의 비즈니스 성공을 위한 맞춤형 솔루션을 제안해 드립니다.\n지금 바로 문의해 보세요.',
+    bullets: [
+      { title: '철저한 비밀 유지', desc: '모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.', color: 'text-green-500' },
+      { title: '전문가 1:1 매칭', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.', color: 'text-blue-500' },
+      { title: '신속한 응답 서비스', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.', color: 'text-purple-500' },
+    ],
       contact: { email: '이메일', phone: '연락처', address: '주소' },
       form: {
         title: '상담 신청서 작성',
@@ -38,14 +39,15 @@ export const Contact: React.FC = () => {
       },
     },
     en: {
-      section: 'Get in Touch',
-      title: 'Business Partnership Inquiry',
-      desc: 'From raw material sourcing to logistics optimization, we propose customized solutions for your business success.\nContact us today.',
-      bullets: [
-        { title: 'Strict Confidentiality', desc: 'All consultations and corporate information are managed under strict security.', color: 'text-green-500' },
-        { title: '1:1 Expert Matching', desc: 'A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.', color: 'text-blue-500' },
-        { title: 'Fast Response', desc: 'Our representative will contact you directly within 24 business hours.', color: 'text-purple-500' },
-      ],
+    section: 'Get in Touch',
+    title: 'Business Partnership Inquiry',
+    // 영어 버전도 의미에 맞춰 3단 줄바꿈을 적용했습니다.
+    desc: 'From raw material sourcing to logistics optimization,\nwe propose customized solutions for your business success.\nContact us today.',
+    bullets: [
+      { title: 'Strict Confidentiality', desc: 'All consultations and corporate information are managed under strict security.', color: 'text-green-500' },
+      { title: '1:1 Expert Matching', desc: 'A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.', color: 'text-blue-500' },
+      { title: 'Fast Response', desc: 'Our representative will contact you directly within 24 business hours.', color: 'text-purple-500' },
+    ],
       contact: { email: 'Email', phone: 'Phone', address: 'Address' },
       form: {
         title: 'Inquiry Form',
