@@ -1,4 +1,3 @@
-// src/components/Sustainability.tsx
 import React from 'react';
 import { Leaf, ShieldCheck, Heart } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -8,7 +7,7 @@ export const Sustainability: React.FC = () => {
 
   const content = {
     ko: {
-      section: 'ESG 경영',
+      section: 'ESG Management',
       title: '지속 가능한 가치와 신뢰',
       desc: '지오니스는 에너지 및 산업 자원의 유통 과정에서 환경과 안전을 최우선으로 고려합니다.\n우리는 엄격한 글로벌 기준을 준수하는 파트너사들과 함께 지속 가능한 공급망을 구축해 나갑니다.',
       items: [
@@ -49,16 +48,15 @@ export const Sustainability: React.FC = () => {
 
   const t = content[language];
   const icons = [Leaf, ShieldCheck, Heart];
-  // 에너지 테마인 골드와 환경의 그린을 믹스한 색상 포인트
-  const iconColors = ["text-[#22C55E]", "text-[#FACC15]", "text-[#F87171]"];
+  const iconColors = ["text-green-600", "text-[#FACC15]", "text-red-500"];
 
   return (
-    <section id="sustainability" className="py-24 md:py-36 bg-[#0D1A1A] border-t border-white/5">
+    <section id="sustainability" className="py-24 md:py-36 bg-[#F0FDF4] border-y border-zinc-100">
        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-sm font-black text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
-          <h3 className="text-3xl md:text-5xl font-extrabold text-white mb-10 break-keep leading-tight">{t.title}</h3>
+          <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
+          <h3 className="text-3xl md:text-5xl font-extrabold text-[#2A2A2A] mb-10 break-keep leading-tight">{t.title}</h3>
           
-          <p className="text-white/60 text-base md:text-lg max-w-3xl mx-auto mb-20 whitespace-pre-line break-keep leading-relaxed font-medium">
+          <p className="text-zinc-600 text-base md:text-lg max-w-3xl mx-auto mb-20 whitespace-pre-line break-keep leading-relaxed font-medium">
             {t.desc}
           </p>
 
@@ -66,12 +64,12 @@ export const Sustainability: React.FC = () => {
              {t.items.map((item, idx) => {
                const Icon = icons[idx];
                return (
-                 <div key={idx} className="p-10 rounded-[2.5rem] bg-[#142626] border border-white/5 flex flex-col items-center group hover:border-[#FACC15]/30 transition-all duration-500 shadow-2xl">
-                    <div className={`w-20 h-20 bg-[#0D1A1A] rounded-3xl flex items-center justify-center mb-10 border border-white/5 group-hover:bg-[#142626] group-hover:scale-110 transition-all duration-300 shadow-inner ${iconColors[idx]}`}>
+                 <div key={idx} className="p-10 rounded-[2.5rem] bg-white border border-zinc-100 flex flex-col items-center group hover:border-[#FACC15]/30 transition-all duration-500 shadow-sm hover:shadow-xl">
+                    <div className={`w-20 h-20 bg-zinc-50 rounded-3xl flex items-center justify-center mb-10 border border-zinc-100 group-hover:scale-110 transition-all duration-300 shadow-inner ${iconColors[idx]}`}>
                        <Icon size={36} />
                     </div>
-                    <h4 className="text-xl font-bold text-white mb-4 break-keep tracking-tight">{item.title}</h4>
-                    <p className="text-white/40 text-sm md:text-base leading-relaxed break-keep font-medium opacity-80">
+                    <h4 className="text-xl font-bold text-[#2A2A2A] mb-4 break-keep tracking-tight">{item.title}</h4>
+                    <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep font-medium opacity-90">
                        {item.description}
                     </p>
                  </div>
