@@ -111,23 +111,23 @@ export const Contact: React.FC = () => {
   return (
     <section id="contact" className="py-20 md:py-32 bg-zinc-950">
       <div className="container mx-auto px-6">
-        <div className="bg-zinc-900/50 rounded-[2rem] p-8 md:p-16 border border-zinc-800/50 flex flex-col lg:flex-row gap-16 lg:gap-24">
+        <div className="bg-zinc-900/50 rounded-[2.5rem] p-8 md:p-16 border border-zinc-800/50 flex flex-col lg:flex-row gap-16 lg:gap-24 shadow-2xl">
           
           {/* LEFT: Info */}
           <div className="lg:w-[45%]">
             <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
             <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 break-keep leading-tight">{t.title}</h3>
-            <p className="text-zinc-400 text-lg mb-12 leading-relaxed whitespace-pre-line break-keep">{t.desc}</p>
+            <p className="text-zinc-400 text-lg mb-12 leading-relaxed whitespace-pre-line break-keep opacity-90">{t.desc}</p>
 
             <div className="space-y-8 mb-16">
               {t.bullets.map((item, idx) => (
                 <div key={idx} className="flex gap-5 group">
-                  <div className={`mt-1 bg-zinc-800/50 p-1.5 rounded-lg ${item.color} shrink-0 h-fit border border-zinc-700/50 group-hover:scale-110 transition-transform`}>
+                  <div className={`mt-1 bg-zinc-800/50 p-1.5 rounded-lg ${item.color} shrink-0 h-fit border border-zinc-700/50 group-hover:scale-110 transition-all duration-300`}>
                     <CheckCircle2 size={18} />
                   </div>
                   <div>
                     <h4 className="text-white font-bold mb-1.5 text-lg break-keep">{item.title}</h4>
-                    <p className="text-zinc-500 text-sm leading-relaxed break-keep">{item.desc}</p>
+                    <p className="text-zinc-500 text-sm leading-relaxed break-keep opacity-80">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -135,16 +135,16 @@ export const Contact: React.FC = () => {
 
             <div className="space-y-6 border-t border-zinc-800/50 pt-10">
               <div className="flex items-center gap-5">
-                <div className="w-11 h-11 rounded-xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg">
-                  <Mail size={20} />
+                <div className="w-12 h-12 rounded-2xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg border border-zinc-700/50">
+                  <Mail size={22} />
                 </div>
                 <div>
                   <div className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1">{t.contact.email}</div>
                   <div className="flex flex-col gap-0.5">
-                    <a href="mailto:roman@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors text-sm md:text-base">
+                    <a href="mailto:roman@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors text-sm md:text-base font-medium">
                       roman@geonix.co.kr
                     </a>
-                    <a href="mailto:geonix_official@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors text-sm md:text-base">
+                    <a href="mailto:geonix_official@geonix.co.kr" className="text-zinc-300 hover:text-white hover:underline transition-colors text-sm md:text-base font-medium">
                       geonix_official@geonix.co.kr
                     </a>
                   </div>
@@ -152,37 +152,37 @@ export const Contact: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-5">
-                <div className="w-11 h-11 rounded-xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg">
-                  <Phone size={20} />
+                <div className="w-12 h-12 rounded-2xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg border border-zinc-700/50">
+                  <Phone size={22} />
                 </div>
                 <div>
                   <div className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1">{t.contact.phone}</div>
-                  <div className="text-zinc-300 text-sm md:text-base">-</div>
+                  <div className="text-zinc-300 text-sm md:text-base font-medium">-</div>
                 </div>
               </div>
 
               <div className="flex items-center gap-5">
-                <div className="w-11 h-11 rounded-xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg">
-                  <MapPin size={20} />
+                <div className="w-12 h-12 rounded-2xl bg-zinc-800 flex items-center justify-center text-white shrink-0 shadow-lg border border-zinc-700/50">
+                  <MapPin size={22} />
                 </div>
                 <div>
                   <div className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest mb-1">{t.contact.address}</div>
-                  <div className="text-zinc-300 text-sm md:text-base">-</div>
+                  <div className="text-zinc-300 text-sm md:text-base font-medium">-</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* RIGHT: Form */}
-          <div className="lg:w-[55%] bg-zinc-950/50 rounded-3xl p-6 md:p-10 border border-zinc-800/50 shadow-2xl">
-            <h4 className="text-xl font-bold text-white mb-8 border-b border-zinc-800 pb-4">{t.form.title}</h4>
+          <div className="lg:w-[55%] bg-zinc-950/50 rounded-[2rem] p-6 md:p-10 border border-zinc-800/50 shadow-2xl relative overflow-hidden">
+            <h4 className="text-xl font-bold text-white mb-8 border-b border-zinc-800/50 pb-5 tracking-tight">{t.form.title}</h4>
 
             <form ref={formRef} className="space-y-6" onSubmit={handleSubmit}>
               <input type="text" name="hp" className="hidden" tabIndex={-1} autoComplete="off" />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2.5">
-                  <label htmlFor="contact-name" className="text-xs font-bold text-zinc-500 uppercase tracking-wider pl-1">
+                  <label htmlFor="contact-name" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
                     {t.form.name}
                   </label>
                   <input
@@ -190,13 +190,13 @@ export const Contact: React.FC = () => {
                     name="name"
                     type="text"
                     required
-                    className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-3.5 text-white focus:border-zinc-500 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
+                    className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
                     placeholder={t.form.ph_name}
                   />
                 </div>
 
                 <div className="flex flex-col gap-2.5">
-                  <label htmlFor="contact-company" className="text-xs font-bold text-zinc-500 uppercase tracking-wider pl-1">
+                  <label htmlFor="contact-company" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
                     {t.form.company}
                   </label>
                   <input
@@ -204,14 +204,14 @@ export const Contact: React.FC = () => {
                     name="company"
                     type="text"
                     required
-                    className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-3.5 text-white focus:border-zinc-500 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
+                    className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
                     placeholder={t.form.ph_company}
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2.5">
-                <label htmlFor="contact-email" className="text-xs font-bold text-zinc-500 uppercase tracking-wider pl-1">
+                <label htmlFor="contact-email" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
                   {t.form.email}
                 </label>
                 <input
@@ -219,26 +219,26 @@ export const Contact: React.FC = () => {
                   name="email"
                   type="email"
                   required
-                  className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-3.5 text-white focus:border-zinc-500 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
+                  className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
                   placeholder="email@company.com"
                 />
               </div>
 
               <div className="flex flex-col gap-2.5">
-                <label htmlFor="contact-phone" className="text-xs font-bold text-zinc-500 uppercase tracking-wider pl-1">
+                <label htmlFor="contact-phone" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
                   {t.form.phone}
                 </label>
                 <input
                   id="contact-phone"
                   name="phone"
                   type="tel"
-                  className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-3.5 text-white focus:border-zinc-500 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
+                  className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm"
                   placeholder="010-1234-5678"
                 />
               </div>
 
               <div className="flex flex-col gap-2.5">
-                <label htmlFor="contact-details" className="text-xs font-bold text-zinc-500 uppercase tracking-wider pl-1">
+                <label htmlFor="contact-details" className="text-xs font-bold text-zinc-500 uppercase tracking-widest pl-1">
                   {t.form.details}
                 </label>
                 <textarea
@@ -246,7 +246,7 @@ export const Contact: React.FC = () => {
                   name="details"
                   required
                   rows={5}
-                  className="bg-zinc-900/50 border border-zinc-800 rounded-xl p-3.5 text-white focus:border-zinc-500 focus:outline-none transition-all placeholder:text-zinc-700 text-sm resize-none"
+                  className="bg-zinc-900/50 border border-zinc-800/50 rounded-xl p-4 text-white focus:border-zinc-500 focus:bg-zinc-900 focus:outline-none transition-all placeholder:text-zinc-700 text-sm resize-none"
                   placeholder={t.form.ph_details}
                 />
               </div>
@@ -254,16 +254,16 @@ export const Contact: React.FC = () => {
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full font-bold py-4.5 rounded-xl flex items-center justify-center gap-3 mt-6 transition-all bg-white text-zinc-950 hover:bg-zinc-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-xl active:scale-[0.98]"
+                className="w-full font-bold py-4.5 rounded-xl flex items-center justify-center gap-3 mt-6 transition-all bg-white text-zinc-950 hover:bg-zinc-200 disabled:opacity-60 disabled:cursor-not-allowed shadow-xl active:scale-[0.98] uppercase tracking-tight"
               >
-                <span className="text-base uppercase tracking-tight">{sending ? t.form.sending : t.form.submit}</span>
+                <span className="text-base">{sending ? t.form.sending : t.form.submit}</span>
                 {!sending && <ArrowRight size={20} />}
               </button>
 
-              {status === 'success' && <div className="p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-sm text-green-400 text-center animate-in fade-in slide-in-from-top-2">{t.form.success}</div>}
-              {status === 'fail' && <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-sm text-red-400 text-center animate-in fade-in slide-in-from-top-2">{t.form.fail}</div>}
+              {status === 'success' && <div className="p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-sm text-green-400 text-center animate-in fade-in slide-in-from-top-2 break-keep">{t.form.success}</div>}
+              {status === 'fail' && <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-400 text-center animate-in fade-in slide-in-from-top-2 break-keep">{t.form.fail}</div>}
 
-              <p className="text-[11px] text-zinc-600 text-center mt-6 leading-relaxed break-keep">{t.form.disclaimer}</p>
+              <p className="text-[11px] text-zinc-600 text-center mt-6 leading-relaxed break-keep opacity-80">{t.form.disclaimer}</p>
             </form>
           </div>
         </div>
