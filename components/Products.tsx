@@ -112,31 +112,31 @@ export const Products: React.FC = () => {
   const icons = [Factory, Ship, Droplets];
 
   return (
-    <section id="products" className="py-20 md:py-32 bg-zinc-950 relative">
+    <section id="products" className="py-24 md:py-36 bg-[#0A0F1A] relative border-t border-white/5">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8 break-keep leading-tight">{t.title}</h3>
-          <p className="text-zinc-400 max-w-2xl mx-auto text-base md:text-lg whitespace-pre-line break-keep leading-relaxed opacity-90">{t.desc}</p>
+        <div className="text-center mb-20 md:mb-28">
+          <h2 className="text-sm font-black text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
+          <h3 className="text-3xl md:text-5xl font-extrabold text-white mb-10 break-keep leading-tight">{t.title}</h3>
+          <p className="text-white/60 max-w-2xl mx-auto text-base md:text-lg whitespace-pre-line break-keep leading-relaxed font-medium opacity-80">{t.desc}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-16 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 max-w-6xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
               <div 
                 key={idx} 
                 onClick={() => setSelectedProduct(idx)}
-                className="bg-zinc-900/40 p-8 md:p-10 rounded-[2rem] border border-zinc-800/50 hover:border-zinc-500 transition-all duration-300 group cursor-pointer flex flex-col items-start"
+                className="bg-[#111827] p-10 rounded-[2.5rem] border border-white/5 hover:border-[#FACC15]/40 transition-all duration-500 group cursor-pointer flex flex-col items-start shadow-2xl relative overflow-hidden"
               >
-                <div className="w-14 h-14 bg-zinc-800 rounded-2xl flex items-center justify-center text-white mb-8 group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300 shadow-xl">
-                  <Icon size={26} />
+                <div className="w-16 h-16 bg-[#0A0F1A] rounded-2xl flex items-center justify-center text-[#FACC15] mb-10 group-hover:bg-[#FACC15] group-hover:text-[#0A0F1A] transition-all duration-300 border border-white/5 shadow-inner">
+                  <Icon size={30} />
                 </div>
-                <h4 className="text-xl md:text-2xl font-bold text-white mb-4 break-keep leading-tight">{item.title}</h4>
-                <p className="text-zinc-500 text-sm md:text-base leading-relaxed mb-8 break-keep opacity-80">{item.description}</p>
-                <div className="mt-auto flex items-center gap-2 text-[10px] md:text-xs font-black text-zinc-600 uppercase tracking-widest group-hover:text-white transition-colors">
+                <h4 className="text-xl md:text-2xl font-black text-white mb-6 break-keep tracking-tight">{item.title}</h4>
+                <p className="text-white/40 text-sm md:text-base leading-relaxed mb-10 break-keep font-medium group-hover:text-white/70 transition-colors">{item.description}</p>
+                <div className="mt-auto flex items-center gap-3 text-[11px] font-black text-[#FACC15] uppercase tracking-widest">
                   <span>View Details</span>
-                  <span className="group-hover:translate-x-1 transition-transform">→</span>
+                  <div className="w-8 h-[1px] bg-[#FACC15]/30 group-hover:w-12 transition-all"></div>
                 </div>
               </div>
             );
@@ -144,36 +144,36 @@ export const Products: React.FC = () => {
         </div>
       </div>
 
-      {/* --- 팝업 모달 --- */}
+      {/* --- 팝업 모달 (테마 A 고도화) --- */}
       {selectedProduct !== null && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
-          <div className="absolute inset-0 bg-zinc-950/90 backdrop-blur-md transition-opacity" onClick={() => setSelectedProduct(null)} />
-          <div className="relative bg-zinc-900 border border-zinc-800 w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl overflow-y-auto max-h-[92vh] animate-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+          <div className="absolute inset-0 bg-[#0A0F1A]/95 backdrop-blur-xl transition-opacity" onClick={() => setSelectedProduct(null)} />
+          <div className="relative bg-[#111827] border border-white/10 w-full max-w-3xl rounded-[3rem] p-8 md:p-14 shadow-[0_0_80px_rgba(0,0,0,0.5)] overflow-y-auto max-h-[90vh] animate-in zoom-in-95 duration-300">
             <button 
               onClick={() => setSelectedProduct(null)}
-              className="absolute top-8 right-8 text-zinc-500 hover:text-white transition-colors p-2 hover:bg-zinc-800 rounded-full"
+              className="absolute top-10 right-10 text-white/30 hover:text-[#FACC15] transition-colors p-3 hover:bg-white/5 rounded-full"
             >
-              <X size={24} />
+              <X size={28} />
             </button>
 
-            <div className="flex items-center gap-5 mb-10">
-              <div className="w-16 h-16 bg-zinc-800 rounded-2xl flex items-center justify-center text-white border border-zinc-700 shadow-lg">
-                {React.createElement(icons[selectedProduct], { size: 32 })}
+            <div className="flex items-center gap-6 mb-12">
+              <div className="w-20 h-20 bg-[#0A0F1A] rounded-[1.5rem] flex items-center justify-center text-[#FACC15] border border-white/10 shadow-2xl">
+                {React.createElement(icons[selectedProduct], { size: 40 })}
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight break-keep">{t.items[selectedProduct].title}</h2>
+              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter break-keep">{t.items[selectedProduct].title}</h2>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-10">
               <div>
-                <p className="text-lg md:text-xl font-bold text-white mb-4 break-keep leading-snug">{t.items[selectedProduct].details.headline}</p>
-                <p className="text-zinc-400 text-base md:text-lg leading-relaxed break-keep opacity-90">{t.items[selectedProduct].details.fullDesc}</p>
+                <p className="text-xl md:text-2xl font-black text-[#FACC15] mb-6 break-keep leading-snug">{t.items[selectedProduct].details.headline}</p>
+                <p className="text-white/60 text-base md:text-lg leading-relaxed break-keep font-medium">{t.items[selectedProduct].details.fullDesc}</p>
               </div>
 
-              <div className="space-y-4 bg-zinc-950/50 p-6 rounded-2xl border border-zinc-800/50">
+              <div className="grid gap-4 bg-[#0A0F1A]/50 p-8 rounded-[2rem] border border-white/5 shadow-inner">
                 {t.items[selectedProduct].details.features.map((feature, fIdx) => (
-                  <div key={fIdx} className="flex items-start gap-4">
-                    <CheckCircle2 className="text-zinc-400 mt-1 shrink-0" size={18} />
-                    <span className="text-zinc-300 text-sm md:text-base break-keep leading-relaxed">{feature}</span>
+                  <div key={fIdx} className="flex items-start gap-5 group">
+                    <CheckCircle2 className="text-[#FACC15] mt-1 shrink-0 group-hover:scale-110 transition-transform" size={20} />
+                    <span className="text-white/80 text-sm md:text-base break-keep leading-relaxed font-medium">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -181,9 +181,9 @@ export const Products: React.FC = () => {
 
             <button 
               onClick={() => setSelectedProduct(null)}
-              className="w-full mt-12 py-4.5 bg-white text-zinc-950 font-black rounded-2xl hover:bg-zinc-200 transition-all shadow-xl active:scale-[0.98] uppercase tracking-tighter"
+              className="w-full mt-14 py-5 bg-[#FACC15] text-[#0A0F1A] font-black rounded-2xl hover:brightness-110 transition-all shadow-2xl active:scale-[0.98] uppercase tracking-tighter text-lg"
             >
-              Close
+              Close Inquiry
             </button>
           </div>
         </div>
