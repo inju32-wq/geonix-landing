@@ -59,53 +59,53 @@ export const About: React.FC = () => {
   const icons = [Globe, ShieldCheck, TrendingUp, Users];
 
   return (
-    <section id="about" className="py-24 bg-zinc-950 relative overflow-hidden">
+    <section id="about" className="py-20 md:py-32 bg-zinc-950 relative overflow-hidden">
       {/* Decorative Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:32px_32px]"></div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-2">{t.section}</h2>
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-6">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+          <div className="max-w-2xl">
+            <h2 className="text-sm font-semibold text-zinc-500 uppercase tracking-[0.2em] mb-4">{t.section}</h2>
+            <h3 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-[1.15] break-keep">
               {t.title} <br />
               <span className="font-serif italic text-zinc-500">{t.subtitle}</span>
             </h3>
             
-            <div className="space-y-6 text-zinc-400 text-lg leading-relaxed">
-              <p>
-                <strong className="text-white block mb-2">{t.vision.title}</strong>
-                {t.vision.desc}
-              </p>
+            <div className="space-y-8 text-zinc-400 text-base md:text-lg leading-relaxed break-keep">
+              <div className="border-l-2 border-zinc-800 pl-6 py-1">
+                <strong className="text-white block text-xl mb-3">{t.vision.title}</strong>
+                <p className="opacity-80">{t.vision.desc}</p>
+              </div>
               
-              <p>
-                <strong className="text-white block mb-2">{t.mission.title}</strong>
-                {t.mission.desc}
-              </p>
+              <div className="border-l-2 border-zinc-800 pl-6 py-1">
+                <strong className="text-white block text-xl mb-3">{t.mission.title}</strong>
+                <p className="opacity-80">{t.mission.desc}</p>
+              </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 border-t border-zinc-800 pt-8 mt-8">
+            <div className="grid grid-cols-2 gap-6 md:gap-12 border-t border-zinc-900 pt-10 mt-12">
               <div>
-                <div className="text-4xl font-bold text-white mb-1">{t.stats.shipment.value}</div>
-                <div className="text-sm text-zinc-500 uppercase tracking-wide">{t.stats.shipment.label}</div>
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{t.stats.shipment.value}</div>
+                <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest leading-tight">{t.stats.shipment.label}</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-white mb-1">{t.stats.vessel.value}</div>
-                <div className="text-sm text-zinc-500 uppercase tracking-wide">{t.stats.vessel.label}</div>
+                <div className="text-3xl md:text-4xl font-bold text-white mb-2">{t.stats.vessel.value}</div>
+                <div className="text-[10px] md:text-xs text-zinc-500 uppercase tracking-widest leading-tight">{t.stats.vessel.label}</div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-10 lg:mt-0">
             {t.features.map((feature, idx) => {
               const Icon = icons[idx];
               return (
-                <div key={idx} className="p-6 rounded-2xl bg-zinc-900 border border-zinc-800 hover:border-zinc-600 transition-colors group">
-                  <div className="w-12 h-12 bg-zinc-800 rounded-lg flex items-center justify-center text-white mb-4 group-hover:bg-white group-hover:text-zinc-950 transition-colors">
-                    <Icon size={24} />
+                <div key={idx} className="p-7 rounded-2xl bg-zinc-900/50 border border-zinc-800/50 hover:border-zinc-500 transition-all duration-300 group">
+                  <div className="w-11 h-11 bg-zinc-800 rounded-xl flex items-center justify-center text-white mb-5 group-hover:bg-white group-hover:text-zinc-950 transition-colors shadow-xl">
+                    <Icon size={22} />
                   </div>
-                  <h4 className="text-xl font-semibold text-white mb-2">{feature.title}</h4>
-                  <p className="text-zinc-400 text-sm">{feature.description}</p>
+                  <h4 className="text-lg font-bold text-white mb-3 break-keep">{feature.title}</h4>
+                  <p className="text-zinc-500 text-sm leading-relaxed break-keep">{feature.description}</p>
                 </div>
               );
             })}
