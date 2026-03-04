@@ -4,7 +4,6 @@ import { useLanguage } from '../LanguageContext';
 
 export const Hero: React.FC = () => {
   const { language } = useLanguage();
-
   const content = {
     ko: {
       badge: 'Global Supply Chain Active',
@@ -23,7 +22,6 @@ export const Hero: React.FC = () => {
       cta2: 'Inquire Now'
     }
   };
-
   const t = content[language];
 
   return (
@@ -37,7 +35,7 @@ export const Hero: React.FC = () => {
       </div>
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/40 to-transparent pointer-events-none" />
       <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center">
-        <div className="max-w-3xl pt-20">
+        <div className="max-w-3xl pt-20 text-left">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8">
             <span className="w-2 h-2 rounded-full bg-[#FACC15] animate-pulse"></span>
             <span className="text-[10px] md:text-xs font-bold text-white/60 uppercase tracking-widest">{t.badge}</span>
@@ -50,13 +48,17 @@ export const Hero: React.FC = () => {
             {t.desc}
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#products" className="flex items-center justify-center gap-3 px-8 py-4 bg-[#FACC15] text-[#0A0F1A] text-base font-bold rounded-xl hover:brightness-110 transition-all shadow-lg">
+            <a href="#products" className="flex items-center justify-center gap-3 px-8 py-4 bg-[#FACC15] text-[#0A0F1A] text-base font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[#FACC15]/20">
               {t.cta1} <ArrowRight size={18} />
             </a>
             <a href="#contact" className="flex items-center justify-center gap-3 px-8 py-4 bg-white/5 border border-white/20 text-white text-base font-bold rounded-xl hover:bg-white/10 transition-all">
               {t.cta2}
             </a>
           </div>
+        </div>
+        {/* 에러 해결을 위해 ChevronDown을 실제 UI에 배치했습니다 */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/30">
+          <ChevronDown size={32} />
         </div>
       </div>
     </div>
