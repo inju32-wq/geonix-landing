@@ -1,4 +1,4 @@
-// src/components/Hero.tsx
+// src/components/Hero.tsx 수정 부분
 import React from 'react';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -11,7 +11,7 @@ export const Hero: React.FC = () => {
       badge: '글로벌 에너지 공급망 가동 중',
       title1: '산업의 동력을 공급하는',
       title2: '글로벌 자원 파트너.',
-      desc: '세계적 수준의 에너지 자원과 산업용 원자재를 최고의 정밀도와 신뢰성으로 전 세계 공급망에 일관되게 전달합니다.',
+      desc: '세계적 수준의 에너지 자원과 산업용 원자재를\n최고의 신뢰성으로 전 세계 공급망에 일관되게 전달합니다.',
       cta1: '솔루션 보기',
       cta2: '파트너십 문의'
     },
@@ -19,7 +19,7 @@ export const Hero: React.FC = () => {
       badge: 'Global Supply Chain Active',
       title1: 'Fueling Industry with',
       title2: 'Global Resource Solutions.',
-      desc: 'Consistently delivering world-class energy resources and industrial raw materials with maximum precision and reliability to the global market.',
+      desc: 'Consistently delivering world-class energy resources and industrial raw materials with maximum reliability to the global market.',
       cta1: 'View Solutions',
       cta2: 'Inquire Now'
     }
@@ -28,7 +28,7 @@ export const Hero: React.FC = () => {
   const t = content[language];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-zinc-900">
+    <div className="relative w-full h-screen overflow-hidden bg-zinc-900 font-sans">
       {/* Spline Background */}
       <div className="absolute inset-0 z-0 opacity-80">
         <iframe 
@@ -41,7 +41,7 @@ export const Hero: React.FC = () => {
         ></iframe>
       </div>
 
-      {/* Overlay Gradient for Text Readability */}
+      {/* Overlay Gradient */}
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-zinc-950/90 via-zinc-950/40 to-transparent pointer-events-none" />
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-zinc-950 via-transparent to-transparent pointer-events-none" />
 
@@ -50,29 +50,31 @@ export const Hero: React.FC = () => {
         <div className="max-w-3xl pt-20">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-800/50 border border-zinc-700 backdrop-blur-sm mb-6">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="text-xs font-medium text-zinc-300 uppercase tracking-wider">{t.badge}</span>
+            <span className="text-[10px] md:text-xs font-medium text-zinc-300 uppercase tracking-wider">{t.badge}</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+          {/* 제목: 글씨 크기를 조절하고 break-keep을 추가하여 단어 단위 줄바꿈 방지 */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.2] break-keep">
             {t.title1}<br />
-            <span className="font-serif italic text-zinc-400">{t.title2}</span>
+            <span className="font-serif italic text-zinc-400 block mt-2">{t.title2}</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-zinc-300 mb-8 max-w-xl leading-relaxed">
+          {/* 설명글: 한글 줄맞춤 최적화 (whitespace-pre-line 적용) */}
+          <p className="text-base md:text-lg text-zinc-300 mb-8 max-w-xl leading-relaxed whitespace-pre-line break-keep opacity-90">
             {t.desc}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a 
               href="#products" 
-              className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-zinc-950 font-semibold rounded hover:bg-zinc-200 transition-all transform hover:-translate-y-1"
+              className="flex items-center justify-center gap-2 px-7 py-3.5 bg-white text-zinc-950 text-sm md:text-base font-semibold rounded hover:bg-zinc-200 transition-all transform hover:-translate-y-1"
             >
               {t.cta1}
               <ArrowRight size={18} />
             </a>
             <a 
               href="#contact" 
-              className="flex items-center justify-center gap-2 px-8 py-4 bg-transparent border border-zinc-600 text-white font-semibold rounded hover:bg-zinc-800 transition-all"
+              className="flex items-center justify-center gap-2 px-7 py-3.5 bg-transparent border border-zinc-600 text-white text-sm md:text-base font-semibold rounded hover:bg-zinc-800 transition-all"
             >
               {t.cta2}
             </a>
