@@ -1,3 +1,4 @@
+// src/components/About.tsx
 import React from 'react';
 import { Globe, ShieldCheck, TrendingUp, Users } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
@@ -8,25 +9,25 @@ export const About: React.FC = () => {
   const content = {
     ko: {
       section: '회사 소개',
-      title: '글로벌 자원,',
-      subtitle: '정직과 신뢰로 전달합니다.',
+      title: '글로벌 산업 자원,',
+      subtitle: '무결한 신뢰로 연결합니다.',
       vision: {
         title: '우리의 비전',
-        desc: '지오니스는 단순히 자원을 거래하는 것을 넘어, 산업을 일으키고 국가를 건설하며 진보를 이끄는 원동력을 제공합니다. 우리의 광범위한 네트워크는 환경 영향을 최소화하면서도 장기적인 공급망을 확보할 수 있게 합니다.'
+        desc: '지오니스는 단순히 자원을 거래하는 것을 넘어 산업을 형성하고 국가를 건설하며 진보를 견인하는 연료를 전달합니다. 광범위한 네트워크와 전문성을 통해 고객사의 엄격한 요구사항을 완벽히 충족합니다.'
       },
       mission: {
         title: '우리의 미션',
-        desc: '공급망의 모든 단계에서 정직, 투명성, 효율성을 바탕으로 운영합니다. 우리는 물류와 소싱의 혁신을 통해 고객 가치를 높이고 책임 있는 채굴 관행을 장려합니다.'
+        desc: '공급망 전 과정에서 정직과 효율성을 바탕으로 운영합니다. 에너지 생산지와 소비지를 연결하는 혁신적인 물류 체계를 구축하여 글로벌 산업의 지속 가능한 성장을 지원합니다.'
       },
       stats: {
         shipment: { value: '6-7k', label: '시간당 선적량 (Tons)' },
         vessel: { value: '400k', label: '최대 선박 규모 (DWT)' }
       },
       features: [
-        { title: "글로벌 네트워크", description: "러시아, 모잠비크, 인도네시아, 탄자니아 등 전 세계 주요 자원 보유국에서 소싱합니다." },
-        { title: "타협하지 않는 품질", description: "글로벌 산업 표준에 부합하는 일관된 품질의 제철 및 발전용 석탄을 공급합니다." },
-        { title: "시장 인텔리전스", description: "철강사의 엄격한 요구사항을 충족시키는 제품을 제안하는 깊이 있는 산업 전문성을 보유하고 있습니다." },
-        { title: "장기적 파트너십", description: "전 세계 광산 및 산업 소비자와 강력한 동맹 관계를 구축하고 있습니다." }
+        { title: "전략적 소싱 네트워크", description: "러시아, 인도네시아 등 주요 자원 기지와의 강력한 파트너십을 통해 안정적인 공급을 보장합니다." },
+        { title: "통합 공급망 관리", description: "광산에서 항구까지 이어지는 독자적인 물류 체계로 불확실성을 최소화하고 정시 배송을 실현합니다." },
+        { title: "산업 인텔리전스", description: "LNG, 철강재, 정밀 화학 원료 등 각 산업 분야에 최적화된 고품질 제품만을 선별합니다." },
+        { title: "책임 있는 공급 관행", description: "환경 영향을 고려한 투명한 운영 절차를 준수하여 장기적인 비즈니스 동맹을 구축합니다." }
       ]
     },
     en: {
@@ -35,21 +36,21 @@ export const About: React.FC = () => {
       subtitle: 'Delivered with Integrity.',
       vision: {
         title: 'Our Vision',
-        desc: 'Geonix goes beyond trading resources; we power industries, build nations, and drive progress. Our extensive network secures long-term supply chains while minimizing environmental impact.'
+        desc: 'Geonix goes beyond trading; we deliver the fuel that forges industries, builds nations, and drives progress. Our extensive network meets the stringent requirements of global industrial consumers.'
       },
       mission: {
         title: 'Our Mission',
-        desc: 'We operate with honesty, transparency, and efficiency at every stage of the supply chain. Through innovation in logistics and sourcing, we enhance customer value and promote responsible mining practices.'
+        desc: 'We operate with integrity and efficiency across the entire supply chain. By connecting producers and consumers with speed, we enhance value and ensure consistent delivery excellence.'
       },
       stats: {
         shipment: { value: '6-7k', label: 'Loading Rate (Tons/Hr)' },
         vessel: { value: '400k', label: 'Max Vessel Size (DWT)' }
       },
       features: [
-        { title: "Global Network", description: "Sourcing from major resource-rich regions including Russia, Mozambique, Indonesia, and Tanzania." },
-        { title: "Uncompromising Quality", description: "Supplying consistent quality metallurgical and thermal coal meeting global industrial standards." },
-        { title: "Market Intelligence", description: "Deep industry expertise to propose products that meet strict steelmaker requirements." },
-        { title: "Long-term Partnership", description: "Building strong alliances with global mines and industrial consumers." }
+        { title: "Strategic Sourcing", description: "Strong associations with global resource hubs including Russia and Indonesia to ensure steady supply." },
+        { title: "Integrated Logistics", description: "Seamless transportation from source to customer, minimizing bottlenecks through infrastructure control." },
+        { title: "Industry Intelligence", description: "Supplying high-grade LNG, coal, and chemicals that meet exact international standards." },
+        { title: "Sustainable Growth", description: "Guided by responsible practices and transparency to secure long-term reliable supply chains." }
       ]
     }
   };
