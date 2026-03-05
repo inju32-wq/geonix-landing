@@ -6,11 +6,11 @@ export const Products: React.FC = () => {
   const { language } = useLanguage();
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
 
-  // 1. 이미지 URL 설정 (실제 이미지 경로로 변경 가능)
+  // Unsplash에서 직접 복사하신 다이렉트 이미지 주소를 적용했습니다.
   const productImages = [
-    "https://images.unsplash.com/photo-1517089152318-42ec560349c0?q=80&w=1200", // 광물 및 석탄
-    "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200", // 천연가스 (LNG)
-    "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=1200"  // 팜오일 글리세린
+    "https://images.unsplash.com/photo-1517089152318-42ec560349c0?auto=format&fit=crop&q=80&w=1200", // 광물 및 석탄 (기존 유지)
+    "https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?q=80&w=1200&auto=format&fit=crop", // LNG (보내주신 주소 적용)
+    "https://images.unsplash.com/photo-1562615821-68d590f1c4d5?q=80&w=1200&auto=format&fit=crop"  // 팜오일 글리세린 (보내주신 주소 적용)
   ];
 
   const content = {
@@ -55,7 +55,7 @@ export const Products: React.FC = () => {
                   <Icon size={28} />
                 </div>
                 <h4 className="text-xl font-black text-[#2A2A2A] mb-4 break-keep tracking-tight">{item.title}</h4>
-                <p className="text-zinc-500 text-sm leading-relaxed mb-8 break-keep">{item.description}</p>
+                <p className="text-zinc-500 text-sm leading-relaxed mb-8 break-keep font-medium">{item.description}</p>
                 <span className="mt-auto text-[11px] font-black text-[#FACC15] uppercase tracking-widest">Details →</span>
               </div>
             );
@@ -70,7 +70,7 @@ export const Products: React.FC = () => {
           
           <div className="relative bg-white border border-zinc-200 w-full max-w-5xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row animate-in zoom-in-95 duration-300 max-h-[90vh]">
             
-            {/* LEFT: Text 영역 (스크롤 과부하 해결을 위해 폰트 및 간격 축소) */}
+            {/* LEFT: Text 영역 (폰트 크기 최적화 및 스크롤 제어) */}
             <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto flex flex-col">
               <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-4">
@@ -83,16 +83,14 @@ export const Products: React.FC = () => {
               </div>
 
               <div className="flex-1">
-                {/* 폰트 크기 및 간격 최적화 */}
                 <p className="text-lg font-black text-[#2A2A2A] mb-4 leading-snug break-keep">{t.items[selectedProduct].details.headline}</p>
-                <p className="text-zinc-500 text-sm md:text-base mb-8 leading-relaxed break-keep font-medium">{t.items[selectedProduct].details.fullDesc}</p>
+                <p className="text-zinc-500 text-sm md:text-base mb-8 leading-relaxed break-keep font-medium opacity-90">{t.items[selectedProduct].details.fullDesc}</p>
                 
                 <div className="grid gap-3 bg-zinc-50 p-6 rounded-2xl border border-zinc-100 mb-8">
                   {t.items[selectedProduct].details.features.map((feature, fIdx) => (
                     <div key={fIdx} className="flex items-start gap-3">
-                      {/* 에러가 떴던 CheckCircle2 아이콘을 여기서 사용합니다 */}
                       <CheckCircle2 className="text-[#FACC15] mt-1 shrink-0" size={18} />
-                      <span className="text-zinc-600 text-sm font-medium leading-relaxed">{feature}</span>
+                      <span className="text-zinc-600 text-sm font-medium leading-relaxed break-keep">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -101,14 +99,15 @@ export const Products: React.FC = () => {
               <button onClick={() => setSelectedProduct(null)} className="w-full py-4 bg-[#2A2A2A] text-white font-black rounded-xl hover:bg-black transition-all shadow-xl uppercase tracking-tighter text-sm">Close Window</button>
             </div>
 
-            {/* RIGHT: Image 영역 (이미지 삽입 아이디어 반영) */}
-            <div className="hidden md:block w-1/2 relative">
+            {/* RIGHT: Image 영역 (데스크탑에서 노출되는 웅장한 산업 이미지) */}
+            <div className="hidden md:block w-1/2 relative bg-zinc-100">
               <img 
                 src={productImages[selectedProduct]} 
                 alt={t.items[selectedProduct].title}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover shadow-inner"
+                loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white/10" />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white/5" />
             </div>
           </div>
         </div>
