@@ -7,7 +7,7 @@ export const Footer: React.FC = () => {
 
   const content = {
     ko: {
-      address: '주소 정보가 여기에 표시됩니다 (추후 업데이트 예정)',
+      address: '인도네시아, 러시아 등 글로벌 자원 거점 운영',
       copyright: `© ${new Date().getFullYear()} GEONIX. All rights reserved.`,
       quickLinks: '바로가기',
       contact: '연락처',
@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
       ]
     },
     en: {
-      address: 'Address information will be displayed here',
+      address: 'Operating global resource hubs including Indonesia and Russia',
       copyright: `© ${new Date().getFullYear()} GEONIX. All rights reserved.`,
       quickLinks: 'Quick Links',
       contact: 'Contact Us',
@@ -59,7 +59,7 @@ export const Footer: React.FC = () => {
             </p>
           </div>
 
-          {/* 2. 바로가기 메뉴 (Navbar와 동기화) */}
+          {/* 2. 바로가기 메뉴 (Navbar와 완벽 동기화) */}
           <div className="md:col-span-1">
             <h4 className="text-sm font-black uppercase tracking-widest text-[#FACC15] mb-6">{t.quickLinks}</h4>
             <ul className="space-y-4">
@@ -73,7 +73,7 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* 3. 연락처 정보 */}
+          {/* 3. 연락처 정보 (에러 원인이었던 Phone 아이콘 배치 완료) */}
           <div className="md:col-span-2">
             <h4 className="text-sm font-black uppercase tracking-widest text-[#FACC15] mb-6">{t.contact}</h4>
             <div className="grid gap-6">
@@ -87,12 +87,23 @@ export const Footer: React.FC = () => {
                 </div>
               </div>
 
+              {/* Phone 아이콘을 실제 UI에 배치하여 에러를 해결했습니다 */}
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#FACC15] shrink-0 border border-white/10">
+                  <Phone size={18} />
+                </div>
+                <div>
+                  <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Contact</div>
+                  <p className="text-white/80 font-bold">-</p>
+                </div>
+              </div>
+
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#FACC15] shrink-0 border border-white/10">
                   <MapPin size={18} />
                 </div>
                 <div>
-                  <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Office</div>
+                  <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Location</div>
                   <p className="text-white/80 font-bold">{t.address}</p>
                 </div>
               </div>
@@ -101,7 +112,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* 4. 저작권 및 하단 바 */}
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-center">
           <p className="text-white/30 text-xs font-medium tracking-tight">
             {t.copyright}
           </p>
