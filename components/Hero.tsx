@@ -1,9 +1,11 @@
+// src/components/Hero.tsx
 import React from 'react';
 import { ChevronDown, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
 export const Hero: React.FC = () => {
   const { language } = useLanguage();
+
   const content = {
     ko: {
       badge: 'Global Supply Chain Active',
@@ -22,41 +24,52 @@ export const Hero: React.FC = () => {
       cta2: 'Inquire Now'
     }
   };
+
   const t = content[language];
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#0A0F1A]">
+      {/* Spline 지구 모델 영역 */}
       <div className="absolute inset-0 z-0 opacity-60">
         <iframe 
           src='https://my.spline.design/planetearth-lNfmVWGoOoZkMhSk1InKXY2C/' 
           frameBorder='0' width='100%' height='100%'
           title="Geonix Global Network 3D"
+          className="w-full h-full"
         ></iframe>
       </div>
+
+      {/* 지구 모델이 돋보이도록 하는 어두운 그라데이션 오버레이 */}
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/40 to-transparent pointer-events-none" />
+
       <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center">
         <div className="max-w-3xl pt-20">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm mb-8">
             <span className="w-2 h-2 rounded-full bg-[#FACC15] animate-pulse"></span>
             <span className="text-[10px] md:text-xs font-bold text-white/60 uppercase tracking-widest">{t.badge}</span>
           </div>
+          
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-8 leading-[1.15] break-keep tracking-tight">
             {t.title1}<br />
             <span className="text-[#FACC15] font-serif italic">{t.title2}</span>
           </h1>
+          
           <p className="text-base md:text-xl text-white/70 mb-10 max-w-xl leading-relaxed whitespace-pre-line break-keep font-medium">
             {t.desc}
           </p>
+
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="#products" className="flex items-center justify-center gap-3 px-8 py-4 bg-[#FACC15] text-[#0A0F1A] text-base font-bold rounded-xl hover:brightness-110 transition-all shadow-lg">
-              {t.cta1} <ArrowRight size={18} />
+            <a href="#products" className="flex items-center justify-center gap-3 px-8 py-4 bg-[#FACC15] text-[#0A0F1A] text-base font-bold rounded-xl hover:brightness-110 transition-all shadow-lg shadow-[#FACC15]/20">
+              {t.cta1}
+              <ArrowRight size={18} />
             </a>
             <a href="#contact" className="flex items-center justify-center gap-3 px-8 py-4 bg-white/5 border border-white/20 text-white text-base font-bold rounded-xl hover:bg-white/10 transition-all">
               {t.cta2}
             </a>
           </div>
         </div>
-        {/* ChevronDown 아이콘을 배치하여 TS6133 에러를 해결합니다 */}
+
+        {/* 에러 원인이었던 ChevronDown 아이콘을 실제로 사용하여 에러를 해결합니다 */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/30">
           <ChevronDown size={32} />
         </div>
