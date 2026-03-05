@@ -16,7 +16,7 @@ export const Products: React.FC = () => {
   const content = {
     ko: {
       section: 'Capabilities',
-      title: '취급 품목 포트폴리오',
+      title: '에너지 및 산업자원 포트폴리오',
       desc: 'GEONIX는 글로벌 에너지 및 산업 자원 공급망의 핵심 파트너로서,\n엄격한 품질 기준을 통과한 최적의 자원을 안정적으로 공급합니다.',
       items: [
         { title: "광물 및 석탄", description: "제철용 점결탄, 발전용 연료탄 및 코크스를 취급합니다.", details: { headline: "글로벌 산업의 기반을 닦는 고품질 자원 공급", features: ["Coking Coal, PCI, Met Coke 공급", "러시아, 인도네시아 등 글로벌 소싱 네트워크", "SGS 및 국제 표준(ISO) 품질 관리"], fullDesc: "철강 및 에너지 산업의 필수 원료인 점결탄과 유연탄을 전 세계 고객사에게 안정적으로 전달합니다." } },
