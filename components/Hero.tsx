@@ -29,17 +29,20 @@ export const Hero: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#0A0F1A]">
-      {/* Spline 지구 모델 영역 */}
-      <div className="absolute inset-0 z-0 opacity-60">
+      {/* 1. Spline 영역: overflow-hidden으로 내부 로고를 자릅니다 */}
+      <div className="absolute inset-0 z-0 opacity-60 overflow-hidden">
         <iframe 
           src='https://my.spline.design/planetearth-lNfmVWGoOoZkMhSk1InKXY2C/' 
-          frameBorder='0' width='100%' height='100%'
+          frameBorder='0' 
           title="Geonix Global Network 3D"
-          className="w-full h-full"
+          /* 2. 중요: 높이를 100%보다 크게 설정(80px 추가)하여 하단 로고를 아래로 밀어냅니다 */
+          style={{ width: '100%', height: 'calc(100% + 80px)', border: 'none' }}
+          className="w-full"
         ></iframe>
       </div>
 
-      {/* 지구 모델이 돋보이도록 하는 어두운 그라데이션 오버레이 */}
+      {/* 3. 하단 로고를 더 확실히 가리기 위해 어두운 그라데이션을 보강합니다 */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#0A0F1A] via-transparent to-transparent pointer-events-none h-full" />
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#0A0F1A] via-[#0A0F1A]/40 to-transparent pointer-events-none" />
 
       <div className="relative z-20 container mx-auto px-6 h-full flex flex-col justify-center">
@@ -69,7 +72,6 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* 에러 원인이었던 ChevronDown 아이콘을 실제로 사용하여 에러를 해결합니다 */}
         <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-white/30">
           <ChevronDown size={32} />
         </div>
