@@ -14,21 +14,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #09090b; /* Zinc 950 */
-        color: #f4f4f5; /* Zinc 100 */
-      }
-      .font-serif {
-        font-family: 'Playfair Display', serif;
-      }
-      .spline-container iframe {
-        border: none;
-        width: 100%;
-        height: 100%;
-      }
-    </style>
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #09090b; /* Zinc 950 */
+    color: #f4f4f5; /* Zinc 100 */
+    margin: 0;
+    padding: 0;
+  }
+  .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Spline 로고(워터마크)를 가리기 위한 최적화 설정 */
+  .spline-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* 화면 전체 높이 고정 */
+    overflow: hidden; /* 영역 밖(로고 부분)을 숨김 */
+  }
+
+  .spline-container iframe {
+    border: none;
+    width: 100%;
+    /* 높이를 100%보다 살짝 크게 하여 로고가 있는 하단부를 화면 밖으로 밀어냅니다 */
+    height: calc(100% + 60px); 
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+</style>
 
     <script type="importmap">
     {
