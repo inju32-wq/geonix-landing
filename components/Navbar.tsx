@@ -1,132 +1,73 @@
+// src/components/Navbar.tsx
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Anchor } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
 export const Navbar: React.FC = () => {
+  const { language } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { language, setLanguage } = useLanguage();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Navbar.tsx 내부 navLabels 부분만 교체하세요
-const navLabels = {
-  ko: {
-    about: '회사 소개',
-    services: '핵심 서비스',
-    products: '에너지 및 산업 자원', // '취급 품목'에서 변경
-    infrastructure: '물류 인프라',
-    sustainability: '지속 가능성',
-    contact: '문의하기'
-  },
-  en: {
-    about: 'About Us',
-    services: 'Services',
-    products: 'Energy & Resources', // 'Products'에서 변경
-    infrastructure: 'Logistics',
-    sustainability: 'Sustainability',
-    contact: 'Contact'
-  }
-};
+  const menuItems = {
+    ko: [
+      { name: '회사소개', href: '#about' },
+      { name: '핵심역량', href: '#products' },
+      { name: '서비스', href: '#services' },
+      { name: '운영시스템', href: '#infrastructure' },
+      { name: 'ESG', href: '#sustainability' },
+      { name: '문의하기', href: '#contact' },
+    ],
+    en: [
+      { name: 'About', href: '#about' },
+      { name: 'Products', href: '#products' },
+      { name: 'Services', href: '#services' },
+      { name: 'Operations', href: '#infrastructure' },
+      { name: 'ESG', href: '#sustainability' },
+      { name: 'Contact', href: '#contact' },
+    ]
+  };
 
-  const t = navLabels[language];
-
-  const navItems = [
-    { label: t.about, href: '#about' },
-    { label: t.services, href: '#services' },
-    { label: t.products, href: '#products' },
-    { label: t.infrastructure, href: '#infrastructure' },
-    { label: t.sustainability, href: '#sustainability' },
-    { label: t.contact, href: '#contact' },
-  ];
+  const currentMenu = menuItems[language];
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800 py-4' : 'bg-transparent py-6'
-      }`}
-    >
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-[#0A0F1A]/90 backdrop-blur-md py-3' : 'bg-transparent py-5'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <div className="bg-white text-zinc-950 p-1.5 rounded">
-            <Anchor size={20} />
-          </div>
-          <span className="text-2xl font-bold tracking-tight text-white">GEONIX</span>
-        </div>
+        {/* 로고 영역: public 폴더를 기준으로 경로 설정 */}
+        <a href="/" className="flex items-center">
+          <img 
+            src="/images/geonix-logo.png" 
+            alt="GEONIX Logo" 
+            className="h-10 md:h-12 w-auto object-contain transition-transform hover:scale-105"
+          />
+        </a>
 
-        {/* Desktop Nav */}
+        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-zinc-300 hover:text-white transition-colors uppercase tracking-wider"
-            >
-              {item.label}
+          {currentMenu.map((item) => (
+            <a key={item.href} href={item.href} className="text-sm font-bold text-white/70 hover:text-[#FACC15] transition-colors uppercase tracking-widest">
+              {item.name}
             </a>
           ))}
-          
-          {/* Language Toggle */}
-          <div className="flex items-center gap-2 border-l border-zinc-700 pl-6 ml-2">
-             <button 
-               onClick={() => setLanguage('ko')}
-               className={`text-xs font-bold transition-colors ${language === 'ko' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
-             >
-               KOR
-             </button>
-             <span className="text-zinc-700">|</span>
-             <button 
-               onClick={() => setLanguage('en')}
-               className={`text-xs font-bold transition-colors ${language === 'en' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
-             >
-               ENG
-             </button>
-          </div>
         </div>
 
         {/* Mobile Toggle */}
-        <div className="flex items-center gap-4 md:hidden">
-          <div className="flex items-center gap-2">
-             <button 
-               onClick={() => setLanguage('ko')}
-               className={`text-xs font-bold ${language === 'ko' ? 'text-white' : 'text-zinc-500'}`}
-             >
-               KO
-             </button>
-             <span className="text-zinc-700">/</span>
-             <button 
-               onClick={() => setLanguage('en')}
-               className={`text-xs font-bold ${language === 'en' ? 'text-white' : 'text-zinc-500'}`}
-             >
-               EN
-             </button>
-          </div>
-          <button
-            className="text-white"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X /> : <Menu />}
-          </button>
-        </div>
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden text-white">
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
 
-      {/* Mobile Nav */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-zinc-900 border-b border-zinc-800 p-6 flex flex-col gap-4">
-          {navItems.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-zinc-300 hover:text-white text-lg font-medium"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              {item.label}
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="absolute top-full left-0 w-full bg-[#0A0F1A] border-b border-white/10 flex flex-col p-6 gap-4 md:hidden animate-in slide-in-from-top duration-300">
+          {currentMenu.map((item) => (
+            <a key={item.href} href={item.href} onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-white hover:text-[#FACC15]">
+              {item.name}
             </a>
           ))}
         </div>
