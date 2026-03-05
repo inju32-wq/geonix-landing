@@ -96,7 +96,7 @@ export const Products: React.FC = () => {
                 </div>
               </div>
 
-              <button onClick={() => setSelectedProduct(null)} className="w-full py-4 bg-[#2A2A2A] text-white font-black rounded-xl hover:bg-black transition-all shadow-xl uppercase tracking-tighter text-sm">Close Window</button>
+              <button onClick={() => setSelectedProduct(null)} className="w-full py-4 bg-[#2A2A2A] text-white font-black rounded-xl hover:bg-black transition-all shadow-xl uppercase tracking-tighter text-sm">Close</button>
             </div>
 
             {/* RIGHT: Image 영역 (데스크탑에서 노출되는 웅장한 산업 이미지) */}
