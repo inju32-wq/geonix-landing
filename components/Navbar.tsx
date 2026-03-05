@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
   const menuItems = {
     ko: [
       { name: '회사소개', href: '#about' },
-      { name: '핵심역량', href: '#products' },
+      { name: '에너지 및 산업자원', href: '#products' },
       { name: '서비스', href: '#services' },
       { name: '운영시스템', href: '#infrastructure' },
       { name: 'ESG', href: '#sustainability' },
@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
     ],
     en: [
       { name: 'About', href: '#about' },
-      { name: 'Products', href: '#products' },
+      { name: 'Portfolio', href: '#products' },
       { name: 'Services', href: '#services' },
       { name: 'Operations', href: '#infrastructure' },
       { name: 'ESG', href: '#sustainability' },
