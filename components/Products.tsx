@@ -6,6 +6,13 @@ export const Products: React.FC = () => {
   const { language } = useLanguage();
   const [selectedProduct, setSelectedProduct] = useState<number | null>(null);
 
+  // 각 제품에 어울리는 대표 이미지 URL 설정
+  const productImages = [
+    "https://images.unsplash.com/photo-1517089152318-42ec560349c0?q=80&w=1200", // 광물 및 석탄
+    "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1200", // 천연가스 (LNG)
+    "https://images.unsplash.com/photo-1581093588401-fbb62a02f120?q=80&w=1200"  // 팜오일 글리세린
+  ];
+
   const content = {
     ko: {
       section: 'Capabilities',
@@ -43,7 +50,7 @@ export const Products: React.FC = () => {
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
-              <div key={idx} onClick={() => setSelectedProduct(idx)} className="bg-white p-10 rounded-[2.5rem] border border-zinc-200 hover:border-[#FACC15] transition-all cursor-pointer shadow-sm hover:shadow-2xl flex flex-col items-start text-left">
+              <div key={idx} onClick={() => setSelectedProduct(idx)} className="bg-white p-10 rounded-[2.5rem] border border-zinc-200 hover:border-[#FACC15] transition-all cursor-pointer shadow-sm hover:shadow-2xl flex flex-col items-start text-left group">
                 <div className="w-14 h-14 bg-zinc-50 rounded-2xl flex items-center justify-center text-zinc-400 mb-8 group-hover:bg-[#2A2A2A] group-hover:text-white transition-all">
                   <Icon size={28} />
                 </div>
@@ -56,23 +63,80 @@ export const Products: React.FC = () => {
         </div>
       </div>
 
+      {/* --- 개선된 2컬럼 팝업 모달 --- */}
       {selectedProduct !== null && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-[#2A2A2A]/40 backdrop-blur-md" onClick={() => setSelectedProduct(null)} />
-          <div className="relative bg-white border border-zinc-200 w-full max-w-3xl rounded-[3rem] p-8 md:p-14 shadow-2xl overflow-y-auto max-h-[90vh] animate-in zoom-in-95 duration-300">
-            <button onClick={() => setSelectedProduct(null)} className="absolute top-10 right-10 text-zinc-300 hover:text-[#2A2A2A] transition-colors p-3 hover:bg-zinc-50 rounded-full"><X size={28} /></button>
-            <div className="flex items-center gap-6 mb-12">
-              <div className="w-16 h-16 bg-zinc-50 rounded-2xl flex items-center justify-center text-[#2A2A2A]">{React.createElement(icons[selectedProduct], { size: 32 })}</div>
-              <h2 className="text-3xl font-black text-[#2A2A2A] tracking-tighter">{t.items[selectedProduct].title}</h2>
+          
+          <div className="relative bg-white border border-zinc-200 w-full max-w-5xl rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col md:flex-row animate-in zoom-in-95 duration-300 max-h-[90vh]">
+            
+            {/* LEFT: Text Content Area */}
+            <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto flex flex-col">
+              <button 
+                onClick={() => setSelectedProduct(null)} 
+                className="md:hidden absolute top-6 right-6 text-zinc-400 hover:text-[#2A2A2A]"
+              >
+                <X size={24} />
+              </button>
+              
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-12 h-12 bg-zinc-50 rounded-xl flex items-center justify-center text-[#2A2A2A]">
+                  {React.createElement(icons[selectedProduct], { size: 28 })}
+                </div>
+                <h2 className="text-2xl font-black text-[#2A2A2A] tracking-tighter">{t.items[selectedProduct].title}</h2>
+              </div>
+
+              {/* 가독성을 위해 폰트 크기 및 간격 미세 조정 */}
+              <div className="flex-1">
+                <p className="text-lg md:text-xl font-black text-[#2A2A2A] mb-4 leading-snug break-keep">
+                  {t.items[selectedProduct].details.headline}
+                </p>
+                <p className="text-zinc-500 text-sm md:text-base mb-8 leading-relaxed break-keep font-medium">
+                  {t.items[selectedProduct].details.fullDesc}
+                </p>
+                
+                <div className="grid gap-3 bg-zinc-50 p-6 rounded-2xl border border-zinc-100 mb-8">
+                  {t.items[selectedProduct].details.features.map((feature, fIdx) => (
+                    <div key={fIdx} className="flex items-start gap-3">
+                      <CheckCircle2 className="text-[#FACC15] mt-1 shrink-0" size={18} />
+                      <span className="text-zinc-600 text-sm font-medium">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setSelectedProduct(null)} 
+                className="w-full py-4 bg-[#2A2A2A] text-white font-black rounded-xl hover:bg-black transition-all shadow-xl uppercase tracking-tighter text-sm"
+              >
+                Close
+              </button>
             </div>
-            <p className="text-xl font-black text-[#2A2A2A] mb-6 leading-snug break-keep">{t.items[selectedProduct].details.headline}</p>
-            <p className="text-zinc-500 text-lg mb-8 leading-relaxed break-keep">{t.items[selectedProduct].details.fullDesc}</p>
-            <div className="grid gap-4 bg-zinc-50 p-8 rounded-[2rem] border border-zinc-100 mb-10">
-              {t.items[selectedProduct].details.features.map((feature, fIdx) => (
-                <div key={fIdx} className="flex items-start gap-4"><CheckCircle2 className="text-[#FACC15] mt-1 shrink-0" size={20} /><span className="text-zinc-600 font-medium">{feature}</span></div>
-              ))}
+
+            {/* RIGHT: Image Content Area (Desktop only) */}
+            <div className="hidden md:block w-1/2 relative min-h-[500px]">
+              <img 
+                src={productImages[selectedProduct]} 
+                alt={t.items[selectedProduct].title}
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-white/5" />
+              <button 
+                onClick={() => setSelectedProduct(null)} 
+                className="absolute top-8 right-8 text-white bg-black/20 backdrop-blur-md p-2 rounded-full hover:bg-black/50 transition-all"
+              >
+                <X size={24} />
+              </button>
             </div>
-            <button onClick={() => setSelectedProduct(null)} className="w-full py-5 bg-[#2A2A2A] text-white font-black rounded-2xl hover:bg-black transition-all shadow-xl uppercase tracking-tighter text-lg">Close</button>
+
+            {/* Mobile Image (Optional: 상단에 배치하고 싶을 경우) */}
+            <div className="md:hidden w-full h-48 relative shrink-0">
+               <img 
+                src={productImages[selectedProduct]} 
+                alt={t.items[selectedProduct].title}
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       )}
