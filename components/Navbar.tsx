@@ -40,28 +40,23 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-3' : 'bg-white py-5'
+      isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-2' : 'bg-white py-3'
     }`}>
-      <div className="container mx-auto px-6 flex justify-between items-center">
+      <div className="container mx-auto px-6 flex justify-between items-center h-16 md:h-20">
         
-// src/components/Navbar.tsx 내부 로고 영역 수정
+        {/* 1. 로고 영역: 부모 컨테이너의 높이를 고정하여 Navbar가 늘어나는 것을 방지했습니다. */}
+        <a href="/" className="flex items-center h-full">
+          <img 
+            src="/images/geonix-logo_widthwise.png" 
+            alt="GEONIX Logo" 
+            /* h-12(모바일), md:h-16(데스크탑)으로 로고를 크게 키우되, 
+               max-h-full을 통해 Navbar 높이를 넘지 않도록 제한했습니다. */
+            className="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105 block"
+          />
+        </a>
 
-{/* 로고 영역 */}
-<a href="/" className="flex items-center gap-2">
-  <img 
-    src="/images/geonix-logo_widthwise.png" 
-    alt="GEONIX Logo" 
-    /* 문제를 해결하기 위한 수정 포인트:
-       1. h- 를 직접 키우는 대신, 모바일/데스크탑별 최적 높이를 설정했습니다.
-       2. h-8(모바일) / md:h-12(데스크탑) 정도로 키워 가독성을 높였습니다. 
-       3. w-auto 와 object-contain 으로 비율 뒤틀림을 방지했습니다.
-    */
-    className="h-8 md:h-12 w-auto object-contain transition-transform hover:scale-105"
-  />
-</a>
-
-        {/* 2. 데스크탑 메뉴 (Dark Text) */}
-        <div className="hidden md:flex items-center gap-10">
+        {/* 2. 데스크탑 메뉴 */}
+        <div className="hidden md:flex items-center gap-10 h-full">
           <div className="flex items-center gap-8">
             {currentMenu.map((item) => (
               <a 
@@ -97,7 +92,7 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* 모바일 메뉴 오버레이 (White) */}
+      {/* 모바일 메뉴 오버레이 */}
       {isMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-white border-b border-zinc-100 flex flex-col p-6 gap-4 md:hidden animate-in slide-in-from-top duration-300 shadow-xl">
           {currentMenu.map((item) => (
