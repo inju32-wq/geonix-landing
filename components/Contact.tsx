@@ -1,5 +1,6 @@
+// src/components/Contact.tsx
 import React, { useRef, useState } from 'react';
-import { Mail, Phone, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react'; // Phone, MapPin 제거
 import { useLanguage } from '../LanguageContext';
 
 export const Contact: React.FC = () => {
@@ -18,7 +19,7 @@ export const Contact: React.FC = () => {
         { title: '전문가 1:1 매칭 (Expert Consultation)', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.' },
         { title: '24시간 내 신속 응답 (Fast Response)', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.' },
       ],
-      contact: { email: '이메일', phone: '연락처', address: '주소' },
+      contact: { email: '이메일' },
       form: { 
         title: '상담 신청서 작성', 
         name: '담당자 성명', 
@@ -45,7 +46,7 @@ export const Contact: React.FC = () => {
         { title: '1:1 Expert Matching', desc: 'A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.' },
         { title: 'Fast Response Within 24 Hours', desc: 'Our representative will contact you directly within 24 business hours.' },
       ],
-      contact: { email: 'Email', phone: 'Phone', address: 'Address' },
+      contact: { email: 'Email' },
       form: { 
         title: 'Fill out Inquiry Form', 
         name: 'Contact Name', 
@@ -67,14 +68,12 @@ export const Contact: React.FC = () => {
 
   const t = content[language];
 
-  // ✅ 이전 코드의 정상 작동하던 로직 그대로 적용
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus(null);
     if (!formRef.current) return;
 
     const formData = new FormData(formRef.current);
-
     const name = String(formData.get('name') || '').trim();
     const company = String(formData.get('company') || '').trim();
     const phone = String(formData.get('phone') || '').trim();
@@ -89,14 +88,14 @@ export const Contact: React.FC = () => {
 
     setSending(true);
     try {
-      // ✅ 이전 코드와 동일한 API 엔드포인트 및 페이로드 구조
+      // ✅ 이전 코드의 작동하던 API 구조 그대로 복구
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name,
           email,
-          message: details, // 서버 템플릿용 필드명
+          message: details,
           company,
           website: '',
           phone,
@@ -123,7 +122,6 @@ export const Contact: React.FC = () => {
       <div className="container mx-auto px-8 md:px-12">
         <div className="flex flex-col lg:flex-row gap-20 lg:gap-32 items-start">
           
-          {/* Left Side: Info */}
           <div className="lg:w-[40%] text-left">
             <div className="inline-flex items-center gap-3 mb-10">
               <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
@@ -161,12 +159,9 @@ export const Contact: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Side: Form */}
           <div className="lg:w-[60%] w-full bg-[#F8FAFC] rounded-sm p-10 md:p-16 border border-zinc-100 shadow-sm">
             <h4 className="text-xl font-black text-[#1A1A1A] mb-12 tracking-tighter uppercase">{t.form.title}</h4>
             <form ref={formRef} className="space-y-10" onSubmit={handleSubmit}>
-              
-              {/* honeypot */}
               <input type="text" name="hp" className="hidden" tabIndex={-1} autoComplete="off" />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
