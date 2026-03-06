@@ -44,15 +44,21 @@ export const Navbar: React.FC = () => {
     }`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         
-        {/* 1. 가로형 로고 영역: 파일명을 geonix-logo_widthwise.png로 수정했습니다 */}
-        <a href="/" className="flex items-center">
-          <img 
-            src="/images/geonix-logo_widthwise.png" 
-            alt="GEONIX Logo" 
-            /* 가로형 로고이므로 높이(h-8)와 너비(w-auto)를 가로 버전에 최적화했습니다 */
-            className="h-10 md:h-20 w-auto object-contain transition-transform hover:scale-105"
-          />
-        </a>
+// src/components/Navbar.tsx 내부 로고 영역 수정
+
+{/* 로고 영역 */}
+<a href="/" className="flex items-center gap-2">
+  <img 
+    src="/images/geonix-logo_widthwise.png" 
+    alt="GEONIX Logo" 
+    /* 문제를 해결하기 위한 수정 포인트:
+       1. h- 를 직접 키우는 대신, 모바일/데스크탑별 최적 높이를 설정했습니다.
+       2. h-8(모바일) / md:h-12(데스크탑) 정도로 키워 가독성을 높였습니다. 
+       3. w-auto 와 object-contain 으로 비율 뒤틀림을 방지했습니다.
+    */
+    className="h-8 md:h-12 w-auto object-contain transition-transform hover:scale-105"
+  />
+</a>
 
         {/* 2. 데스크탑 메뉴 (Dark Text) */}
         <div className="hidden md:flex items-center gap-10">
