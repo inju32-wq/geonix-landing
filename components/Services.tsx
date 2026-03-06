@@ -34,19 +34,42 @@ export const Services: React.FC = () => {
   const icons = [Globe, ShieldCheck, Ship, Handshake];
 
   return (
-    <section id="services" className="py-24 md:py-36 bg-white">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
-        <h3 className="text-3xl md:text-5xl font-extrabold text-[#2A2A2A] mb-10 break-keep leading-tight">{t.title}</h3>
-        <p className="text-zinc-500 max-w-2xl mx-auto text-lg mb-20 whitespace-pre-line break-keep font-medium">{t.desc}</p>
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
+    <section id="services" className="py-24 md:py-40 bg-[#F8FAFC]">
+      <div className="container mx-auto px-8 md:px-12 text-center">
+        {/* Section Badge */}
+        <div className="inline-flex items-center justify-center gap-3 mb-10">
+          <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
+          <span className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.3em]">{t.section}</span>
+          <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
+        </div>
+
+        {/* Title: Downsized and font-black */}
+        <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1A1A1A] mb-8 break-keep leading-tight tracking-tighter">
+          {t.title}
+        </h3>
+        
+        {/* Description: text-sm ~ lg로 변경 및 대비 완화 */}
+        <p className="text-zinc-500/60 max-w-2xl mx-auto text-sm md:text-base lg:text-lg mb-20 whitespace-pre-line break-keep font-medium tracking-tight">
+          {t.desc}
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
-              <div key={idx} className="bg-[#F8FAFC] p-10 md:p-12 rounded-[2.5rem] border border-zinc-100 hover:shadow-xl transition-all flex flex-col items-start text-left">
-                <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-[#2A2A2A] mb-8 shadow-sm"><Icon size={28} /></div>
-                <h4 className="text-xl md:text-2xl font-bold text-[#2A2A2A] mb-4 break-keep">{item.title}</h4>
-                <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep">{item.description}</p>
+              <div key={idx} className="group bg-white p-10 md:p-12 rounded-sm border border-zinc-100 hover:border-zinc-200 transition-all duration-300 flex flex-col items-start text-left shadow-sm hover:shadow-md">
+                {/* Icon Container: Refined size */}
+                <div className="w-12 h-12 bg-[#F8FAFC] flex items-center justify-center text-[#1A1A1A] mb-10 rounded-sm group-hover:bg-[#FACC15] group-hover:text-white transition-colors">
+                  <Icon size={22} />
+                </div>
+                
+                <h4 className="text-lg md:text-xl font-black text-[#1A1A1A] mb-5 break-keep tracking-tight">
+                  {item.title}
+                </h4>
+                
+                <p className="text-zinc-500/80 text-sm md:text-base leading-relaxed break-keep font-medium">
+                  {item.description}
+                </p>
               </div>
             );
           })}
