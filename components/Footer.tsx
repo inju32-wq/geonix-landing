@@ -41,7 +41,7 @@ export const Footer: React.FC = () => {
     <footer className="bg-[#0A0F1A] text-white py-12 md:py-16 border-t border-white/5 relative">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
-          {/* 로고 영역 - Navbar 높이와 맞춘 h-20/md:h-[120px] 설정 */}
+          {/* 로고 영역: Navbar 높이 연동 및 가시성 극대화 */}
           <div className="shrink-0 flex items-center h-full min-h-[80px]"> 
             <a href="/">
               <img 
@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
             </a>
           </div>
 
-          {/* 정보 영역 */}
+          {/* 정보 영역: 메뉴 하단에 연락처 배치 */}
           <div className="flex flex-col items-start lg:items-end gap-6">
             <nav className="flex flex-wrap gap-x-8 gap-y-2">
               {t.menu.map((item) => (
@@ -76,7 +76,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* 하단 영역 */}
+        {/* 하단 영역: 약관 링크 및 카피라이트 */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white/20 text-[10px] font-medium tracking-widest uppercase order-2 md:order-1">
             {t.copyright}
@@ -94,65 +94,97 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* 약관 팝업 모달 */}
+      {/* 팝업 모달: PDF 모든 내용 반영 및 국/영문 대응 */}
       {modalType && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/85 backdrop-blur-md" onClick={() => setModalType(null)} />
-          <div className="relative bg-white text-[#2A2A2A] w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[85vh]">
-            <button onClick={() => setModalType(null)} className="absolute top-8 right-8 text-zinc-300 hover:text-black transition-colors">
+          <div className="relative bg-white text-[#2A2A2A] w-full max-w-3xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[85vh]">
+            <button onClick={() => setModalType(null)} className="absolute top-8 right-8 text-zinc-300 hover:text-black">
               <X size={28} />
             </button>
             <h3 className="text-2xl font-black mb-8 tracking-tighter">
               {modalType === 'privacy' ? t.privacy : t.terms}
             </h3>
             
-            <div className="overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar flex-1">
+            <div className="overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar flex-1 space-y-8">
               {language === 'ko' ? (
-                /* --- 국문 모달 내용 --- */
+                /* --- [국문] 개인정보처리방침 / 이용약관 --- */
                 modalType === 'privacy' ? (
                   <div className="space-y-6">
                     <p>지오니스는 「개인정보 보호법」 등 관련 법령을 준수하며 이용자의 개인정보 보호에 최선을 다합니다.</p>
-                    <div className="space-y-4">
-                      <p><strong>1. 처리 목적:</strong> 홈페이지 문의 접수 및 답변, 고객 상담</p>
-                      <p><strong>2. 수집 항목:</strong> 성명, 이메일 주소, 문의내용(필수), 회사명, 연락처(선택)</p>
-                      <p><strong>3. 보유 기간:</strong> 문의 처리 완료 후 1년</p>
-                    </div>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">1. 개인정보의 처리 목적</h4>
+                      <p>• 홈페이지 문의사항 접수 및 답변, 고객 상담 및 요청사항 처리, 서비스 관련 커뮤니케이션</p>
+                    </section>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">2. 처리하는 개인정보의 항목</h4>
+                      <p>• 필수항목: 성명, 이메일 주소, 문의 내용</p>
+                      <p>• 선택항목: 회사명, 연락처</p>
+                    </section>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">3. 개인정보의 처리 및 보유 기간</h4>
+                      <p>• 원칙적으로 개인정보 수집 및 이용 목적이 달성된 후 지체 없이 파기합니다. 단, 문의 기록은 처리 완료 후 1년간 보관합니다.</p>
+                    </section>
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    <p>본 약관은 지오니스(이하 "회사")가 제공하는 홈페이지 서비스 이용과 관련하여 회사와 이용자 간의 권리·의무를 규정합니다.</p>
-                    <div>
-                      <p className="font-bold text-zinc-900 mb-1">제5조 (지적재산권)</p>
-                      <p>홈페이지에 게시된 모든 콘텐츠(로고, 이미지, 텍스트 등)에 대한 저작권은 회사에 귀속되며, 무단 복제 및 배포를 금합니다.</p>
-                    </div>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">제1조 (목적)</h4>
+                      <p>본 약관은 지오니스가 제공하는 홈페이지 서비스 이용과 관련하여 회사와 이용자 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+                    </section>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">제5조 (지적재산권)</h4>
+                      <p>홈페이지에 게시된 모든 콘텐츠(로고, 이미지, 텍스트, 3D 모델 등)에 대한 저작권 및 기타 지적재산권은 회사에 귀속됩니다. 이용자는 회사의 사전 승인 없이 이를 복제하거나 상업적으로 이용할 수 없습니다.</p>
+                    </section>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">제7조 (책임의 제한)</h4>
+                      <p>회사는 천재지변 또는 불가항력으로 인하여 서비스를 제공할 수 없는 경우 서비스 제공에 관한 책임이 면제됩니다.</p>
+                    </section>
                   </div>
                 )
               ) : (
-                /* --- 영문 모달 내용 (English Version) --- */
-                modalType === 'privacy' ? (
-                  <div className="space-y-6 text-left">
-                    <p>GEONIX complies with relevant laws such as the Personal Information Protection Act and is committed to protecting user privacy.</p>
-                    <div className="space-y-4">
-                      <p><strong>1. Purpose:</strong> Handling inquiries, customer consultation</p>
-                      <p><strong>2. Items:</strong> Name, Email, Inquiry details (Required), Company, Contact (Optional)</p>
-                      <p><strong>3. Retention:</strong> 1 year after handling the inquiry</p>
-                    </div>
+                /* --- [영문] Privacy Policy / Terms of Service --- */
+                <div className="space-y-6">
+                  {modalType === 'privacy' ? (
+                    <>
+                      <p>GEONIX complies with the Personal Information Protection Act and is committed to protecting user privacy.</p>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">1. Purpose of Processing</h4>
+                        <p>Handling inquiries, customer consultation, and business communication.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">2. Items Collected</h4>
+                        <p>• Required: Name, Email address, Inquiry content</p>
+                        <p>• Optional: Company name, Contact information</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">3. Retention Period</h4>
+                        <p>In principle, personal information is destroyed immediately after the purpose is achieved. Inquiry records are kept for 1 year.</p>
+                      </section>
+                    </>
+                  ) : (
+                    <>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 1 (Purpose)</h4>
+                        <p>These terms govern the use of the GEONIX website and define the rights and obligations between the Company and the User.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 5 (Intellectual Property)</h4>
+                        <p>All content including logos, images, text, and 3D models are the property of GEONIX. Unauthorized reproduction or commercial use is strictly prohibited.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 7 (Limitation of Liability)</h4>
+                        <p>The Company shall be released from liability for service interruption caused by natural disasters or force majeure.</p>
+                      </section>
+                    </>
+                  )}
+                  {/* 최하단 국문 우선 원칙 문구 (영문 버전 전용) */}
+                  <div className="mt-12 p-5 bg-zinc-50 rounded-2xl border border-zinc-100">
+                    <p className="text-xs text-zinc-400 italic leading-relaxed">
+                      "In case of any discrepancy between the Korean and English versions, the Korean version shall prevail."
+                    </p>
                   </div>
-                ) : (
-                  <div className="space-y-6 text-left">
-                    <p>These Terms of Service govern the use of the GEONIX website and define the rights and obligations between the Company and the User.</p>
-                    <div>
-                      <p className="font-bold text-zinc-900 mb-1">Article 5 (Intellectual Property)</p>
-                      <p>All content on this website (logos, images, text, etc.) is the property of GEONIX. Unauthorized reproduction or distribution is prohibited.</p>
-                    </div>
-                    {/* 요청하신 국문 우선 조항 추가 */}
-                    <div className="mt-8 p-4 bg-zinc-50 rounded-xl border border-zinc-100">
-                      <p className="text-xs text-zinc-400 italic">
-                        "In case of any discrepancy between the Korean and English versions, the Korean version shall prevail."
-                      </p>
-                    </div>
-                  </div>
-                )
+                </div>
               )}
             </div>
             <button onClick={() => setModalType(null)} className="w-full mt-10 py-4 bg-[#0A0F1A] text-white font-black rounded-xl hover:bg-black transition-all">Close</button>
