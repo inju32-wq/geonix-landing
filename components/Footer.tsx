@@ -50,7 +50,7 @@ export const Footer: React.FC = () => {
               <img 
                 src="/images/geonix-logo_widthwise_White.png" 
                 alt="GEONIX Logo" 
-                className="h-14 md:h-18 w-auto object-contain brightness-110 transition-transform hover:scale-105"
+                className="h-16 md:h-20 w-auto object-contain brightness-110 transition-transform hover:scale-105"
               />
             </a>
           </div>
