@@ -16,16 +16,16 @@ export const Navbar: React.FC = () => {
   const menuItems = {
     ko: [
       { name: '회사소개', href: '#about' },
-      { name: '에너지 및 산업자원', href: '#products' },
       { name: '서비스', href: '#services' },
+      { name: '에너지 및 산업자원', href: '#products' },
       { name: '운영시스템', href: '#infrastructure' },
       { name: 'ESG', href: '#sustainability' },
       { name: '문의하기', href: '#contact' },
     ],
     en: [
       { name: 'About', href: '#about' },
-      { name: 'Portfolio', href: '#products' },
       { name: 'Services', href: '#services' },
+      { name: 'Portfolio', href: '#products' },
       { name: 'Operations', href: '#infrastructure' },
       { name: 'ESG', href: '#sustainability' },
       { name: 'Contact', href: '#contact' },
