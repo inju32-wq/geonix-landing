@@ -6,7 +6,7 @@ export const Operations: React.FC = () => {
   const { language } = useLanguage();
   const content = {
     ko: {
-      section: '운영 인프라',
+      section: 'Operational Infrastructure',
       title: '체계적인 글로벌 운영 시스템',
       desc: '지오니스는 비즈니스 성공을 위한 검증된 프로세스와 체계적인 운영 시스템을 보유하고 있습니다.\n복잡한 국제 무역 환경 속에서도 안정성과 신뢰를 보장합니다.',
       items: [
@@ -33,24 +33,39 @@ export const Operations: React.FC = () => {
   const icons = [Users, FileCheck, Globe2, Activity];
 
   return (
-    <section id="infrastructure" className="py-24 md:py-36 bg-[#F9FAFB] border-y border-zinc-100">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16 md:mb-24">
-          <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-4">{t.section}</h2>
-          <h3 className="text-3xl md:text-5xl font-extrabold text-[#2A2A2A] mb-8 break-keep leading-tight">{t.title}</h3>
-          <p className="text-zinc-500 text-base md:text-lg max-w-3xl mx-auto whitespace-pre-line break-keep font-medium opacity-90">{t.desc}</p>
+    <section id="infrastructure" className="py-24 md:py-40 bg-white border-y border-zinc-100">
+      <div className="container mx-auto px-8 md:px-12">
+        <div className="text-center mb-20 md:mb-28">
+          {/* Section Badge */}
+          <div className="inline-flex items-center justify-center gap-3 mb-10">
+            <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
+            <span className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.3em]">{t.section}</span>
+            <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
+          </div>
+
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1A1A1A] mb-10 tracking-tighter leading-tight break-keep">
+            {t.title}
+          </h3>
+          <p className="text-zinc-500/60 text-sm md:text-lg max-w-3xl mx-auto whitespace-pre-line break-keep font-medium tracking-tight">
+            {t.desc}
+          </p>
         </div>
-        <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-6xl mx-auto">
+
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
-              <div key={idx} className="bg-white p-8 md:p-10 rounded-[2.5rem] border border-zinc-200 flex flex-col sm:flex-row gap-6 md:gap-8 hover:border-[#FACC15]/50 transition-all duration-300 shadow-sm group">
-                <div className="shrink-0 w-14 h-14 md:w-16 md:h-16 bg-zinc-50 rounded-2xl flex items-center justify-center border border-zinc-100 group-hover:bg-[#2A2A2A] group-hover:text-white transition-colors text-zinc-400">
-                  <Icon size={28} />
+              <div key={idx} className="group bg-[#F8FAFC] p-10 md:p-12 rounded-sm border border-transparent hover:border-zinc-200 hover:bg-white transition-all duration-300 flex flex-col sm:flex-row gap-8 shadow-sm hover:shadow-md">
+                <div className="shrink-0 w-12 h-12 bg-white rounded-sm flex items-center justify-center border border-zinc-50 group-hover:bg-[#1A1A1A] group-hover:text-white transition-colors text-[#1A1A1A] shadow-sm">
+                  <Icon size={20} />
                 </div>
                 <div>
-                  <h4 className="text-xl font-bold text-[#2A2A2A] mb-3 break-keep">{item.title}</h4>
-                  <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep font-medium">{item.description}</p>
+                  <h4 className="text-lg md:text-xl font-black text-[#1A1A1A] mb-4 tracking-tighter break-keep">
+                    {item.title}
+                  </h4>
+                  <p className="text-zinc-500/80 text-sm md:text-base leading-relaxed break-keep font-medium">
+                    {item.description}
+                  </p>
                 </div>
               </div>
             );
