@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// 에러의 원인이었던 Phone 아이콘을 아래 UI에서 사용하여 에러를 방지합니다.
 import { Mail, Phone, MapPin, Globe, X } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
@@ -9,11 +8,8 @@ export const Footer: React.FC = () => {
 
   const content = {
     ko: {
-      description: '지오니스는 신뢰와 투명성을 바탕으로 글로벌 에너지 자원과 산업 원자재의 가치를 연결하는 전략적 파트너입니다.',
       address: '인도네시아, 러시아 등 글로벌 자원 거점 운영',
       copyright: `© ${new Date().getFullYear()} GEONIX. All rights reserved.`,
-      quickLinks: '바로가기',
-      contact: '연락처',
       privacy: '개인정보처리방침',
       terms: '이용약관',
       menu: [
@@ -26,11 +22,8 @@ export const Footer: React.FC = () => {
       ]
     },
     en: {
-      description: 'GEONIX is a strategic partner connecting the value of global energy resources and industrial raw materials based on trust and transparency.',
       address: 'Operating global resource hubs including Indonesia and Russia',
       copyright: `© ${new Date().getFullYear()} GEONIX. All rights reserved.`,
-      quickLinks: 'Quick Links',
-      contact: 'Contact Us',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
       menu: [
@@ -47,120 +40,91 @@ export const Footer: React.FC = () => {
   const t = content[language];
 
   return (
-    <footer className="bg-[#0A0F1A] text-white py-16 md:py-24 border-t border-white/5 relative">
+    <footer className="bg-[#0A0F1A] text-white py-12 md:py-20 border-t border-white/5 relative">
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+        {/* 상단 영역: 로고와 메뉴/연락처를 가로로 길게 배치 */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-12 pb-12 border-b border-white/5">
           
-          <div className="md:col-span-1">
-            <a href="/" className="inline-block mb-6">
-              {/* 요청하신 흰색 가로형 로고 파일명을 적용했습니다. */}
+          {/* 1. 로고 영역: 사이즈를 더 크게 키웠습니다. */}
+          <div className="shrink-0">
+            <a href="/">
               <img 
                 src="/images/geonix-logo_widthwise_White.png" 
                 alt="GEONIX Logo" 
-                className="h-8 md:h-10 w-auto object-contain brightness-110"
+                className="h-12 md:h-16 w-auto object-contain brightness-110"
               />
             </a>
-            <p className="text-white/50 text-sm leading-relaxed break-keep">
-              {t.description}
-            </p>
           </div>
 
-          <div className="md:col-span-1">
-            <h4 className="text-sm font-black uppercase tracking-widest text-[#FACC15] mb-6">{t.quickLinks}</h4>
-            <ul className="space-y-4">
-              {t.menu.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className="text-white/60 hover:text-white text-sm transition-colors">
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* 2. 가로형 메뉴: '바로가기' 타이틀을 삭제하고 메뉴를 한 줄로 나열했습니다. */}
+          <nav className="flex flex-wrap gap-x-8 gap-y-4">
+            {t.menu.map((item) => (
+              <a key={item.href} href={item.href} className="text-sm font-bold text-white/50 hover:text-[#FACC15] transition-colors uppercase tracking-tight">
+                {item.name}
+              </a>
+            ))}
+          </nav>
 
-          <div className="md:col-span-2">
-            <h4 className="text-sm font-black uppercase tracking-widest text-[#FACC15] mb-6">{t.contact}</h4>
-            <div className="grid gap-6">
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#FACC15] shrink-0 border border-white/10">
-                  <Mail size={18} />
-                </div>
-                <div>
-                  <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Email</div>
-                  <a href="mailto:roman@geonix.co.kr" className="text-white/80 hover:text-[#FACC15] font-bold transition-colors">roman@geonix.co.kr</a>
-                </div>
-              </div>
-
-              {/* Phone 아이콘을 이곳에 배치하여 TS6133 에러를 해결했습니다. */}
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#FACC15] shrink-0 border border-white/10">
-                  <Phone size={18} />
-                </div>
-                <div>
-                  <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Contact</div>
-                  <p className="text-white/80 font-bold tracking-tighter">-</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#FACC15] shrink-0 border border-white/10">
-                  <MapPin size={18} />
-                </div>
-                <div>
-                  <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Location</div>
-                  <p className="text-white/80 font-bold leading-tight">{t.address}</p>
-                </div>
-              </div>
+          {/* 3. 가로형 연락처: '연락처' 타이틀을 삭제하고 아이콘 기반으로 가로 배치했습니다. */}
+          <div className="flex flex-wrap items-center gap-8 text-sm">
+            <div className="flex items-center gap-3 group">
+              <Mail size={18} className="text-[#FACC15]" />
+              <a href="mailto:roman@geonix.co.kr" className="text-white/60 group-hover:text-white transition-colors font-medium">roman@geonix.co.kr</a>
+            </div>
+            <div className="flex items-center gap-3">
+              <Phone size={18} className="text-[#FACC15]" />
+              <span className="text-white/60 font-medium">-</span>
             </div>
           </div>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-white/30 text-xs font-medium tracking-tight order-2 md:order-1">
-            {t.copyright}
-          </p>
+        {/* 하단 영역: 주소, 약관, 저작권 */}
+        <div className="mt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-4 text-white/40 text-xs">
+            <MapPin size={14} className="shrink-0" />
+            <p>{t.address}</p>
+          </div>
           
-          <div className="flex items-center gap-6 text-xs font-bold order-1 md:order-2">
-            <button onClick={() => setModalType('privacy')} className="text-white/40 hover:text-white transition-colors">
-              {t.privacy}
-            </button>
-            <button onClick={() => setModalType('terms')} className="text-white/40 hover:text-white transition-colors">
-              {t.terms}
-            </button>
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4 text-xs font-bold text-white/30">
+              <button onClick={() => setModalType('privacy')} className="hover:text-white transition-colors">{t.privacy}</button>
+              <button onClick={() => setModalType('terms')} className="hover:text-white transition-colors">{t.terms}</button>
+            </div>
+            <p className="text-white/20 text-[10px] font-medium tracking-widest uppercase">
+              {t.copyright}
+            </p>
             <div className="flex items-center gap-2 text-white/20">
               <Globe size={14} />
-              <span className="uppercase tracking-widest">{language}</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">{language}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 약관 팝업(모달) */}
+      {/* 약관 팝업 UI */}
       {modalType && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setModalType(null)} />
-          <div className="relative bg-white text-[#2A2A2A] w-full max-w-2xl rounded-[2rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300">
-            <button onClick={() => setModalType(null)} className="absolute top-6 right-6 text-zinc-400 hover:text-black">
-              <X size={24} />
-            </button>
-            <h3 className="text-2xl font-black mb-6">{modalType === 'privacy' ? t.privacy : t.terms}</h3>
-            <div className="h-64 overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar">
+          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setModalType(null)} />
+          <div className="relative bg-white text-[#2A2A2A] w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300">
+            <button onClick={() => setModalType(null)} className="absolute top-8 right-8 text-zinc-300 hover:text-black transition-colors"><X size={28} /></button>
+            <h3 className="text-2xl font-black mb-8 tracking-tighter">{modalType === 'privacy' ? t.privacy : t.terms}</h3>
+            <div className="h-60 overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar">
               {modalType === 'privacy' ? (
                 <div className="space-y-4">
-                  <p>1. 개인정보 수집 목적: 고객 문의 응대 및 서비스 안내</p>
-                  <p>2. 수집 항목: 성함, 이메일, 연락처</p>
-                  <p>3. 보유 기간: 목적 달성 시까지 또는 관계 법령에 따름</p>
+                  <p className="font-bold">지오니스는 개인정보를 소중히 다룹니다.</p>
+                  <p>1. 수집 항목: 이름, 이메일, 연락처 등</p>
+                  <p>2. 이용 목적: 비즈니스 문의 응대 및 서비스 제공</p>
+                  <p>3. 보유 기간: 법정 기간 준수 및 목적 달성 후 즉시 파기</p>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <p>제 1조: 본 약관은 지오니스 사이트 이용 조건 및 절차를 규정합니다.</p>
-                  <p>제 2조: 콘텐츠의 무단 복제 및 상업적 이용을 금합니다.</p>
+                  <p>지오니스 서비스 이용에 대한 약관입니다.</p>
+                  <p>제 1조: 본 약관은 서비스 이용 조건 및 절차를 규정합니다.</p>
+                  <p>제 2조: 사이트 내 모든 자산의 저작권은 지오니스에 있습니다.</p>
                 </div>
               )}
             </div>
-            <button onClick={() => setModalType(null)} className="w-full mt-8 py-4 bg-[#0A0F1A] text-white font-bold rounded-xl">
-              닫기 Close
-            </button>
+            <button onClick={() => setModalType(null)} className="w-full mt-10 py-4 bg-[#2A2A2A] text-white font-black rounded-xl hover:bg-black transition-all">닫기 Close</button>
           </div>
         </div>
       )}
