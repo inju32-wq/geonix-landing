@@ -39,15 +39,47 @@ export const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formRef.current) return;
-    setSending(true);
     setStatus(null);
+    if (!formRef.current) return;
 
-    setTimeout(() => {
-      setStatus('success');
+    // 1. 데이터 추출 (이전 코드 로직 복구)
+    const formData = new FormData(formRef.current);
+    const name = String(formData.get('name') || '').trim();
+    const company = String(formData.get('company') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const details = String(formData.get('details') || '').trim();
+    const hp = String(formData.get('hp') || ''); // 보안(스팸방지) 필드
+
+    // 2. 필수값 검증
+    if (!name || !company || !email || !details) {
+      setStatus('fail');
+      return;
+    }
+
+    setSending(true);
+
+    // 3. 실제 API 전송 로직 (fetch 복구)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message: details, company, hp }),
+      });
+
+      const data = await res.json();
+      
+      if (data.ok) {
+        setStatus('success');
+        formRef.current.reset(); // 성공 시 폼 초기화
+      } else {
+        setStatus('fail');
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      setStatus('fail');
+    } finally {
       setSending(false);
-      formRef.current?.reset();
-    }, 1500);
+    }
   };
 
   return (
@@ -104,6 +136,10 @@ export const Contact: React.FC = () => {
           <div className="lg:w-[60%] w-full bg-[#F8FAFC] rounded-sm p-10 md:p-16 border border-zinc-100 shadow-sm">
             <h4 className="text-xl font-black text-[#1A1A1A] mb-12 tracking-tighter uppercase">{t.form.title}</h4>
             <form ref={formRef} className="space-y-10" onSubmit={handleSubmit}>
+              
+              {/* 보안(HoneyPot) 필드: 실제 사용자는 보지 못하지만 봇은 입력하게 되어 필터링 가능 */}
+              <input type="text" name="hp" className="hidden" tabIndex={-1} autoComplete="off" />
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div className="flex flex-col gap-3">
                   <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.name}</label>
