@@ -41,6 +41,7 @@ export const Footer: React.FC = () => {
     <footer className="bg-[#0A0F1A] text-white py-12 md:py-16 border-t border-white/5 relative">
       <div className="container mx-auto px-6">
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
+          {/* 로고 영역 */}
           <div className="shrink-0 flex items-center h-full min-h-[80px]"> 
             <a href="/">
               <img 
@@ -51,6 +52,7 @@ export const Footer: React.FC = () => {
             </a>
           </div>
 
+          {/* 메뉴 및 연락처 */}
           <div className="flex flex-col items-start lg:items-end gap-6">
             <nav className="flex flex-wrap gap-x-8 gap-y-2">
               {t.menu.map((item) => (
@@ -74,6 +76,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
+        {/* 하단 링크 영역 */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white/20 text-[10px] font-medium tracking-widest uppercase order-2 md:order-1">
             {t.copyright}
@@ -91,27 +94,28 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* 약관 팝업 모달: 파일 전문 반영 */}
+      {/* 모달 팝업 */}
       {modalType && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/85 backdrop-blur-md" onClick={() => setModalType(null)} />
-          <div className="relative bg-white text-[#2A2A2A] w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
-            <button onClick={() => setModalType(null)} className="absolute top-8 right-8 text-zinc-300 hover:text-black transition-colors">
+          <div className="relative bg-white text-[#2A2A2A] w-full max-w-3xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
+            <button onClick={() => setModalType(null)} className="absolute top-8 right-8 text-zinc-300 hover:text-black">
               <X size={28} />
             </button>
-            <h3 className="text-2xl font-black mb-8 tracking-tighter">
+            <h3 className="text-2xl font-black mb-8 tracking-tighter uppercase">
               {modalType === 'privacy' ? t.privacy : t.terms}
             </h3>
             
-            <div className="overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar flex-1">
+            <div className="overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar flex-1 space-y-8">
               {language === 'ko' ? (
-                /* --- [국문 전문] --- */
+                /* ---------------- 국문 전문 (생략 없이 모두 포함) ---------------- */
                 modalType === 'privacy' ? (
                   <div className="space-y-6">
+                    <p>지오니스(이하 "회사")는 「개인정보 보호법」 등 관련 법령을 준수하며, 이용자의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리하기 위하여 다음과 같이 개인정보처리방침을 수립·공개합니다.</p>
                     <section>
                       <h4 className="font-bold text-zinc-900 mb-2">1. 개인정보의 처리 목적</h4>
-                      <p>회사는 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
-                      <ul className="list-disc ml-5 mt-2">
+                      <p>회사는 다음의 목적을 위하여 개인정보를 처리합니다. 처리한 개인정보는 아래 목적 이외의 용도로는 사용되지 않으며, 이용 목적이 변경될 경우 사전 동의를 받습니다.</p>
+                      <ul className="list-disc ml-5 mt-2 space-y-1">
                         <li>홈페이지 문의사항 접수 및 답변</li>
                         <li>고객 상담 및 요청사항 처리</li>
                         <li>회사 서비스 및 사업 관련 커뮤니케이션</li>
@@ -120,114 +124,158 @@ export const Footer: React.FC = () => {
                     <section>
                       <h4 className="font-bold text-zinc-900 mb-2">2. 처리하는 개인정보의 항목</h4>
                       <p>회사는 다음의 개인정보 항목을 처리하고 있습니다.</p>
-                      <ul className="list-disc ml-5 mt-2">
+                      <ul className="list-disc ml-5 mt-2 space-y-1">
                         <li>필수항목: 성명, 이메일 주소, 문의 내용</li>
                         <li>선택항목: 회사명, 연락처</li>
-                        <li>인터넷 서비스 이용 과정에서 IP주소, 쿠키, 서비스 이용 기록, 방문 기록 등이 생성되어 수집될 수 있습니다.</li>
+                        <li>※ 서비스 이용 과정에서 IP 주소, 접속 로그, 쿠키 등이 자동으로 생성·수집될 수 있습니다.</li>
                       </ul>
                     </section>
                     <section>
                       <h4 className="font-bold text-zinc-900 mb-2">3. 개인정보의 처리 및 보유 기간</h4>
-                      <p>회사는 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다. 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.</p>
-                      <p>• 홈페이지 문의 기록: 문의 처리 완료 후 1년</p>
+                      <p>회사는 개인정보 수집·이용 목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다. 다만, 관계 법령에 따라 보존할 필요가 있는 경우에는 해당 기간 동안 보관합니다.</p>
+                      <ul className="list-disc ml-5 mt-2 space-y-1">
+                        <li>문의 기록: 문의 처리 완료 후 1년</li>
+                        <li>관련 법령에 따른 보존이 필요한 경우: 해당 법령에서 정한 기간</li>
+                      </ul>
                     </section>
                     <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">4. 개인정보의 제3자 제공 및 위탁</h4>
-                      <p>회사는 원칙적으로 정보주체의 개인정보를 수집·이용 목적으로 명시한 범위 내에서 처리하며, 정보주체의 사전 동의 없이는 본래의 범위를 초과하여 처리하거나 제3자에게 제공하지 않습니다. 회사는 원활한 업무 처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
+                      <h4 className="font-bold text-zinc-900 mb-2">4. 개인정보의 제3자 제공</h4>
+                      <p>회사는 이용자의 개인정보를 원칙적으로 외부에 제공하지 않습니다. 다만, 이용자가 사전에 동의한 경우나 법령에 따라 제공이 요구되는 경우에는 예외로 합니다.</p>
                     </section>
                     <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">5. 정보주체와 법정대리인의 권리·의무 및 행사방법</h4>
-                      <p>정보주체는 회사에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.</p>
+                      <h4 className="font-bold text-zinc-900 mb-2">5. 개인정보 처리의 위탁</h4>
+                      <p>회사는 원활한 개인정보 업무 처리를 위하여 개인정보 처리 업무를 위탁할 수 있으며, 위탁 시 관계 법령에 따라 개인정보가 안전하게 관리될 수 있도록 필요한 사항을 규정하고 관리·감독합니다.</p>
                     </section>
                     <section>
                       <h4 className="font-bold text-zinc-900 mb-2">6. 개인정보 보호책임자</h4>
-                      <p>회사는 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
                       <p>• 이메일: geonix_official@geonix.co.kr</p>
-                      <p>• 시행 일자: 2026년 2월 13일</p>
                     </section>
                   </div>
                 ) : (
                   <div className="space-y-6">
+                    <p>본 약관은 지오니스(이하 "회사")가 제공하는 홈페이지 서비스 이용과 관련하여 회사와 이용자 간의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.</p>
                     <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">제1조 (목적)</h4>
-                      <p>본 약관은 지오니스(이하 "회사")가 운영하는 웹사이트(이하 "사이트")에서 제공하는 인터넷 관련 서비스(이하 "서비스")를 이용함에 있어 회사와 이용자의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.</p>
+                      <h4 className="font-bold text-zinc-900 mb-2">제1조 (정의)</h4>
+                      <p>① "서비스"란 회사가 홈페이지를 통해 제공하는 모든 정보 및 콘텐츠를 의미합니다.</p>
+                      <p>② "이용자"란 본 약관에 따라 회사가 제공하는 서비스를 이용하는 자를 의미합니다.</p>
                     </section>
                     <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">제2조 (약관의 명시와 개정)</h4>
-                      <p>회사는 본 약관의 내용을 이용자가 쉽게 알 수 있도록 사이트의 초기 서비스 화면에 게시합니다. 회사는 「전자상거래 등에서의 소비자보호에 관한 법률」 등 관련 법령을 위배하지 않는 범위에서 본 약관을 개정할 수 있습니다.</p>
+                      <h4 className="font-bold text-zinc-900 mb-2">제2조 (약관의 효력 및 변경)</h4>
+                      <p>본 약관은 홈페이지에 게시함으로써 효력이 발생합니다. 회사는 필요한 경우 관련 법령을 위반하지 않는 범위 내에서 본 약관을 변경할 수 있으며, 변경 사항은 홈페이지를 통해 공지합니다.</p>
                     </section>
                     <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">제3조 (서비스의 제공 및 변경)</h4>
-                      <p>회사는 사이트를 통하여 회사 사업 영역에 대한 정보 제공, 문의 접수 및 답변 등의 서비스를 제공합니다.</p>
+                      <h4 className="font-bold text-zinc-900 mb-2">제3조 (서비스의 제공)</h4>
+                      <p>회사는 회사 및 사업 관련 정보 제공, 제품 및 서비스 소개, 문의 및 상담 응대 등의 서비스를 제공합니다.</p>
                     </section>
                     <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">제4조 (서비스의 중단)</h4>
-                      <p>회사는 컴퓨터 등 정보통신설비의 보수점검·교체 및 고장, 통신의 두절 등의 사유가 발생한 경우에는 서비스의 제공을 일시적으로 중단할 수 있습니다.</p>
-                    </section>
-                    <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">제5조 (지적재산권의 귀속 및 이용제한)</h4>
-                      <p>회사가 작성한 저작물에 대한 저작권 기타 지적재산권은 회사에 귀속됩니다. 이용자는 사이트를 이용함으로써 얻은 정보 중 회사에게 지적재산권이 귀속된 정보를 회사의 사전 승낙 없이 복제, 송신, 출판, 배포, 방송 기타 방법에 의하여 영리목적으로 이용하거나 제3자에게 이용하게 하여서는 안 됩니다.</p>
-                    </section>
-                    <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">제6조 (이용자의 의무)</h4>
-                      <p>이용자는 다음 행위를 하여서는 안 됩니다:</p>
-                      <ul className="list-disc ml-5 mt-2">
-                        <li>타인의 정보 도용</li>
-                        <li>회사가 게시한 정보의 변경</li>
-                        <li>회사 또는 제3자의 지적재산권에 대한 침해</li>
-                        <li>기타 불법적이거나 부적절한 행위</li>
+                      <h4 className="font-bold text-zinc-900 mb-2">제4조 (이용자의 의무)</h4>
+                      <ul className="list-disc ml-5 space-y-1">
+                        <li>허위 정보의 제공 금지</li>
+                        <li>회사 또는 제3자의 지적재산권 침해 금지</li>
+                        <li>서비스 운영을 방해하는 행위 금지</li>
+                        <li>관련 법령을 위반하는 행위 금지</li>
                       </ul>
                     </section>
                     <section>
-                      <h4 className="font-bold text-zinc-900 mb-2">제7조 (면책조항)</h4>
-                      <p>회사는 천재지변 또는 이에 준하는 불가항력으로 인하여 서비스를 제공할 수 없는 경우에는 서비스 제공에 관한 책임이 면제됩니다. 회사는 이용자의 귀책사유로 인한 서비스 이용의 장애에 대하여는 책임을 지지 않습니다.</p>
+                      <h4 className="font-bold text-zinc-900 mb-2">제5조 (지적재산권)</h4>
+                      <p>홈페이지에 게시된 모든 콘텐츠에 대한 저작권은 회사에 귀속됩니다. 이용자는 회사의 사전 동의 없이 이를 복제, 배포, 전송할 수 없습니다.</p>
+                    </section>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">제6조 (서비스 이용 제한)</h4>
+                      <p>회사는 이용자가 본 약관을 위반한 경우 사전 통지 없이 서비스 이용을 제한할 수 있습니다.</p>
+                    </section>
+                    <section>
+                      <h4 className="font-bold text-zinc-900 mb-2">제7조 (책임의 제한)</h4>
+                      <p>회사는 천재지변 또는 이에 준하는 불가항력으로 인하여 서비스를 제공할 수 없는 경우에는 서비스 제공에 관한 책임이 면제됩니다.</p>
                     </section>
                   </div>
                 )
               ) : (
-                /* --- [영문 전문 반영] --- */
+                /* ---------------- 영문 전문 (국문과 1:1 대응 번역) ---------------- */
                 <div className="space-y-6">
                   {modalType === 'privacy' ? (
-                    <>
-                      <p>GEONIX complies with relevant laws such as the Personal Information Protection Act and is committed to protecting user privacy.</p>
+                    <div className="space-y-6">
+                      <p>GEONIX (hereinafter referred to as the "Company") complies with the Personal Information Protection Act and other relevant laws, and establishes this Privacy Policy to protect users' personal information and efficiently handle related grievances.</p>
                       <section>
-                        <h4 className="font-bold text-zinc-900 mb-2">1. Purpose of Processing</h4>
-                        <p>Handling inquiries, customer consultation, and business communication.</p>
-                      </section>
-                      <section>
-                        <h4 className="font-bold text-zinc-900 mb-2">2. Items Collected</h4>
-                        <ul className="list-disc ml-5 mt-2">
-                          <li>Required: Name, Email address, Inquiry content</li>
-                          <li>Optional: Company name, Contact information</li>
+                        <h4 className="font-bold text-zinc-900 mb-2">1. Purpose of Processing Personal Information</h4>
+                        <p>The Company processes personal information for the following purposes. Information will not be used for any other purpose than those listed below, and prior consent will be obtained if the purpose changes.</p>
+                        <ul className="list-disc ml-5 mt-2 space-y-1">
+                          <li>Receiving and responding to website inquiries</li>
+                          <li>Handling customer consultation and requests</li>
+                          <li>Communication regarding company services and business</li>
                         </ul>
                       </section>
                       <section>
-                        <h4 className="font-bold text-zinc-900 mb-2">3. Retention Period</h4>
-                        <p>Personal information is kept for 1 year after handling the inquiry.</p>
+                        <h4 className="font-bold text-zinc-900 mb-2">2. Items of Personal Information Processed</h4>
+                        <p>The Company processes the following items:</p>
+                        <ul className="list-disc ml-5 mt-2 space-y-1">
+                          <li>Required: Name, Email address, Inquiry details</li>
+                          <li>Optional: Company name, Contact information</li>
+                          <li>※ IP addresses, access logs, and cookies may be automatically generated and collected during service use.</li>
+                        </ul>
                       </section>
                       <section>
-                        <h4 className="font-bold text-zinc-900 mb-2">4. Protection Officer</h4>
+                        <h4 className="font-bold text-zinc-900 mb-2">3. Processing and Retention Period</h4>
+                        <p>The Company destroys personal information without delay once the purpose is achieved. However, information required by law will be stored for the period specified by the relevant legislation.</p>
+                        <ul className="list-disc ml-5 mt-2 space-y-1">
+                          <li>Inquiry records: 1 year after completion of the inquiry</li>
+                          <li>Retention required by law: Period specified by the relevant law</li>
+                        </ul>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">4. Provision of Information to Third Parties</h4>
+                        <p>In principle, the Company does not provide personal information to external parties except when prior consent is obtained or required by law.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">5. Outsourcing of Processing</h4>
+                        <p>The Company may outsource personal information processing for efficient business handling, ensuring the safety of management and supervision according to relevant laws.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">6. Privacy Officer</h4>
                         <p>• Email: geonix_official@geonix.co.kr</p>
                       </section>
-                    </>
+                    </div>
                   ) : (
-                    <>
+                    <div className="space-y-6">
+                      <p>These Terms of Service govern the use of the website services provided by GEONIX (hereinafter the "Company") and define the rights, obligations, and responsibilities between the Company and the User.</p>
                       <section>
-                        <h4 className="font-bold text-zinc-900 mb-2">Article 1 (Purpose)</h4>
-                        <p>These terms define the rights and obligations between the Company and the User for the services provided through the GEONIX website.</p>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 1 (Definitions)</h4>
+                        <p>1. "Service" refers to all information and content provided by the Company through the website.</p>
+                        <p>2. "User" refers to a person who uses the services provided by the Company in accordance with these terms.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 2 (Effect and Modification of Terms)</h4>
+                        <p>These terms become effective upon posting. The Company may modify these terms within the scope of relevant laws, and changes will be announced on the website.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 3 (Provision of Services)</h4>
+                        <p>The Company provides services such as information about the company and business, introduction of products/services, and responses to inquiries.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 4 (User Obligations)</h4>
+                        <ul className="list-disc ml-5 space-y-1">
+                          <li>Prohibition of providing false information</li>
+                          <li>Prohibition of infringing intellectual property of the Company or third parties</li>
+                          <li>Prohibition of interfering with service operations</li>
+                          <li>Prohibition of violating relevant laws</li>
+                        </ul>
                       </section>
                       <section>
                         <h4 className="font-bold text-zinc-900 mb-2">Article 5 (Intellectual Property)</h4>
-                        <p>All content created by the Company including logos, images, text, and 3D models are the intellectual property of GEONIX. Unauthorized use is strictly prohibited.</p>
+                        <p>Copyright for all content on the website belongs to the Company. Users may not copy, distribute, or transmit content without prior consent.</p>
+                      </section>
+                      <section>
+                        <h4 className="font-bold text-zinc-900 mb-2">Article 6 (Restriction of Use)</h4>
+                        <p>The Company may restrict service use without prior notice if a user violates these terms.</p>
                       </section>
                       <section>
                         <h4 className="font-bold text-zinc-900 mb-2">Article 7 (Limitation of Liability)</h4>
-                        <p>The Company shall be released from liability for service interruptions caused by force majeure or natural disasters.</p>
+                        <p>The Company is exempt from liability for service interruption caused by natural disasters or force majeure.</p>
                       </section>
-                    </>
+                    </div>
                   )}
-                  {/* 국문 우선 원칙 문구 (영문 전용) */}
-                  <div className="mt-12 p-5 bg-zinc-50 rounded-2xl border border-zinc-100">
+                  {/* 국문 우선 원칙 회색 박스 */}
+                  <div className="mt-12 p-6 bg-zinc-50 rounded-2xl border border-zinc-100">
                     <p className="text-xs text-zinc-400 italic leading-relaxed">
                       "In case of any discrepancy between the Korean and English versions, the Korean version shall prevail."
                     </p>
@@ -235,7 +283,7 @@ export const Footer: React.FC = () => {
                 </div>
               )}
             </div>
-            <button onClick={() => setModalType(null)} className="w-full mt-10 py-4 bg-[#0A0F1A] text-white font-black rounded-xl">Close</button>
+            <button onClick={() => setModalType(null)} className="w-full mt-10 py-4 bg-[#0A0F1A] text-white font-black rounded-xl hover:bg-black transition-all">Close</button>
           </div>
         </div>
       )}
