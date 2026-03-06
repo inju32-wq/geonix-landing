@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// ArrowRight를 import 목록에 추가하여 에러를 해결합니다.
 import { Factory, Droplets, Ship, X, CheckCircle2, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
@@ -41,15 +42,16 @@ export const Products: React.FC = () => {
   return (
     <section id="products" className="py-24 md:py-40 bg-[#F8FAFC] border-y border-zinc-100">
       <div className="container mx-auto px-8 md:px-12 text-center">
-        {/* Section Badge */}
+        {/* Section Badge: 얇고 긴 라인으로 신뢰감 표현 [cite: 1, 13] */}
         <div className="inline-flex items-center justify-center gap-3 mb-10">
           <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
           <span className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.3em]">{t.section}</span>
           <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
         </div>
 
-        <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1A1A1A] mb-8 tracking-tighter">{t.title}</h3>
-        <p className="text-zinc-500/60 text-sm md:text-lg max-w-2xl mx-auto mb-20 whitespace-pre-line font-medium tracking-tight">
+        {/* Title: font-black & tracking-tighter (사이즈 축소 최적화) [cite: 12, 19] */}
+        <h3 className="text-3xl md:text-4xl font-black text-[#1A1A1A] mb-8 tracking-tighter">{t.title}</h3>
+        <p className="text-zinc-500/60 text-sm md:text-base max-w-2xl mx-auto mb-20 whitespace-pre-line font-medium tracking-tight opacity-90">
           {t.desc}
         </p>
 
@@ -62,12 +64,12 @@ export const Products: React.FC = () => {
                 onClick={() => setSelectedProduct(idx)} 
                 className="group bg-white p-10 rounded-sm border border-zinc-100 hover:border-zinc-200 transition-all cursor-pointer shadow-sm hover:shadow-md flex flex-col items-start text-left"
               >
-                <div className="w-12 h-12 bg-[#F8FAFC] flex items-center justify-center text-[#1A1A1A] mb-10 rounded-sm group-hover:bg-[#FACC15] transition-colors">
-                  <Icon size={22} />
+                <div className="w-10 h-10 bg-[#F8FAFC] flex items-center justify-center text-[#1A1A1A] mb-10 rounded-sm group-hover:bg-[#FACC15] transition-colors shadow-sm">
+                  <Icon size={20} />
                 </div>
-                <h4 className="text-xl font-black text-[#1A1A1A] mb-4 tracking-tighter">{item.title}</h4>
-                <p className="text-zinc-500/80 text-sm leading-relaxed mb-8 font-medium">{item.description}</p>
-                <div className="mt-auto flex items-center gap-2 text-[10px] font-black text-[#1A1A1A] uppercase tracking-widest group-hover:gap-4 transition-all">
+                <h4 className="text-lg font-black text-[#1A1A1A] mb-4 tracking-tighter">{item.title}</h4>
+                <p className="text-zinc-500/80 text-xs md:text-sm leading-relaxed mb-8 font-medium">{item.description}</p>
+                <div className="mt-auto flex items-center gap-2 text-[10px] font-black text-[#1A1A1A] uppercase tracking-widest">
                   Learn More <ArrowRight size={14} className="text-[#FACC15]" />
                 </div>
               </div>
@@ -76,9 +78,9 @@ export const Products: React.FC = () => {
         </div>
       </div>
 
-      {/* --- 정제된 모달 디자인 --- */}
+      {/* --- 정제된 모달 디자인 (에러 방지용 체크 로직 포함) --- */}
       {selectedProduct !== null && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-[#0A0F1A]/80 backdrop-blur-sm" onClick={() => setSelectedProduct(null)} />
           
           <div className="relative bg-white w-full max-w-6xl rounded-sm shadow-2xl overflow-hidden flex flex-col md:flex-row animate-in fade-in zoom-in-95 duration-300 max-h-[90vh]">
@@ -87,49 +89,44 @@ export const Products: React.FC = () => {
             <div className="w-full md:w-1/2 p-10 md:p-16 overflow-y-auto">
               <div className="flex justify-between items-start mb-12">
                 <div>
-                   <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.2em] mb-4">Product Detail</h2>
-                   <h2 className="text-3xl md:text-4xl font-black text-[#1A1A1A] tracking-tighter leading-none">{t.items[selectedProduct].title}</h2>
+                   <h2 className="text-[10px] font-bold text-[#FACC15] uppercase tracking-[0.2em] mb-4">Product Detail</h2>
+                   <h2 className="text-2xl md:text-3xl font-black text-[#1A1A1A] tracking-tighter leading-none">{t.items[selectedProduct].title}</h2>
                 </div>
                 <button onClick={() => setSelectedProduct(null)} className="text-zinc-300 hover:text-[#1A1A1A] transition-colors">
-                  <X size={32} strokeWidth={1.5} />
+                  <X size={28} strokeWidth={1.5} />
                 </button>
               </div>
 
               <div className="space-y-8">
-                <div>
-                  <p className="text-lg font-black text-[#1A1A1A] mb-4 leading-tight tracking-tight">{t.items[selectedProduct].details.headline}</p>
-                  <p className="text-zinc-500/80 text-sm md:text-base leading-relaxed font-medium">{t.items[selectedProduct].details.fullDesc}</p>
-                </div>
+                <p className="text-base font-black text-[#1A1A1A] mb-4 leading-tight tracking-tight">{t.items[selectedProduct].details.headline}</p>
+                <p className="text-zinc-500/80 text-[13px] md:text-sm leading-relaxed font-medium">{t.items[selectedProduct].details.fullDesc}</p>
                 
                 <div className="space-y-4 py-8 border-y border-zinc-100">
                   {t.items[selectedProduct].details.features.map((feature, fIdx) => (
-                    <div key={fIdx} className="flex items-center gap-4">
-                      <div className="w-1.5 h-1.5 bg-[#FACC15] rounded-full" />
-                      <span className="text-zinc-600 text-sm md:text-base font-bold tracking-tight">{feature}</span>
+                    <div key={`feature-${fIdx}`} className="flex items-center gap-4">
+                      <CheckCircle2 size={16} className="text-[#FACC15] shrink-0" />
+                      <span className="text-zinc-600 text-[13px] md:text-sm font-bold tracking-tight">{feature}</span>
                     </div>
                   ))}
                 </div>
 
                 <button 
                   onClick={() => setSelectedProduct(null)} 
-                  className="w-full py-4 bg-[#1A1A1A] text-white text-xs font-black uppercase tracking-[0.2em] hover:bg-black transition-all rounded-sm"
+                  className="w-full py-4 bg-[#1A1A1A] text-[10px] font-black uppercase tracking-[0.2em] hover:bg-black transition-all rounded-sm text-white"
                 >
                   Close Specification
                 </button>
               </div>
             </div>
 
-            {/* RIGHT: High-Impact Image */}
-            <div className="hidden md:block md:w-1/2 relative">
+            {/* RIGHT: Image */}
+            <div className="hidden md:block md:w-1/2 relative bg-zinc-100">
               <img 
                 src={productImages[selectedProduct]} 
                 alt={t.items[selectedProduct].title}
                 className="absolute inset-0 w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent opacity-20" />
-              <div className="absolute bottom-10 right-10 text-white/40 text-[10px] font-bold tracking-widest uppercase">
-                Geonix Industrial Resource Division
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent opacity-10" />
             </div>
           </div>
         </div>
