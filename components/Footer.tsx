@@ -44,16 +44,17 @@ export const Footer: React.FC = () => {
         {/* 상단 섹션: 로고와 (메뉴 + 연락처)를 양 옆으로 배치 */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
           
-          {/* 1. 로고 영역: Navbar와 동일하게 h-20 수준으로 크게 확대 */}
-          <div className="shrink-0 flex items-center h-20">
-            <a href="/">
-              <img 
-                src="/images/geonix-logo_widthwise_White.png" 
-                alt="GEONIX Logo" 
-                className="h-16 md:h-50 w-auto object-contain brightness-110 transition-transform hover:scale-105"
-              />
-            </a>
-          </div>
+          {/* 부모 div: h-full을 주어 로고 크기에 따라 유연하게 늘어나도록 설정 */}
+<div className="shrink-0 flex items-center h-full min-h-[80px]"> 
+  <a href="/">
+    <img 
+      src="/images/geonix-logo_widthwise_White.png" 
+      alt="GEONIX Logo" 
+      /* md:h-[120px] 처럼 직접 수치를 입력하면 훨씬 크게 만들 수 있습니다 */
+      className="h-20 md:h-[120px] w-auto object-contain brightness-110 transition-transform duration-300 hover:scale-110"
+    />
+  </a>
+</div>
 
           {/* 2. 정보 영역: 메뉴(상단)와 연락처(하단)를 수직으로 정렬 */}
           <div className="flex flex-col items-start lg:items-end gap-6">
