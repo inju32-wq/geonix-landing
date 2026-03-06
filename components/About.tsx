@@ -19,8 +19,8 @@ export const About: React.FC = () => {
         desc: '공급망 전 과정에서 정직과 효율성을 바탕으로 운영합니다. 에너지 생산지와 소비지를 연결하는 혁신적인 물류 체계를 구축하여 글로벌 산업의 지속 가능한 성장을 지원합니다.'
       },
       stats: {
-        network: { value: '15+', label: '글로벌 자원 거점 (Regions)' },
-        quality: { value: '100%', label: 'SGS 품질 검증 준수 (Compliance)' }
+        network: { value: '15+', label: '글로벌 자원 거점' },
+        quality: { value: '100%', label: '품질 검증 준수' }
       },
       features: [
         { title: "전략적 소싱 네트워크", description: "러시아, 인도네시아 등 주요 자원 기지와의 강력한 파트너십을 통해 안정적인 공급을 보장합니다." },
@@ -58,49 +58,60 @@ export const About: React.FC = () => {
   const icons = [Globe, ShieldCheck, TrendingUp, Users];
 
   return (
-    <section id="about" className="py-24 md:py-36 bg-[#F8FAFC] border-y border-zinc-100">
-      <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+    <section id="about" className="py-24 md:py-40 bg-white border-y border-zinc-100">
+      <div className="container mx-auto px-8 md:px-12">
+        <div className="grid lg:grid-cols-2 gap-20 items-start">
           <div className="max-w-2xl">
-            <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
-            <h3 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-[#2A2A2A] mb-10 break-keep leading-[1.2]">
+            {/* Section Badge */}
+            <div className="inline-flex items-center gap-3 mb-10">
+              <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
+              <span className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.3em]">{t.section}</span>
+            </div>
+
+            {/* Title: Downsized and font-black */}
+            <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1A1A1A] mb-12 break-keep leading-[1.15] tracking-tighter">
               {t.title} <br />
-              <span className="text-zinc-400 font-serif italic">{t.subtitle}</span>
+              <span className="text-zinc-400">{t.subtitle}</span>
             </h3>
             
-            <div className="space-y-10 text-zinc-600 text-lg leading-relaxed break-keep">
-              <div className="border-l-4 border-[#FACC15] pl-8">
-                <strong className="text-[#2A2A2A] block text-xl mb-3 font-bold">{t.vision.title}</strong>
-                <p>{t.vision.desc}</p>
+            {/* Vision & Mission: Refined spacing and colors */}
+            <div className="space-y-12 text-zinc-500 font-medium leading-relaxed break-keep">
+              <div className="pl-8 relative">
+                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#FACC15]"></div>
+                <strong className="text-[#1A1A1A] block text-lg mb-3 font-black tracking-tight">{t.vision.title}</strong>
+                <p className="text-sm md:text-base text-zinc-500/80">{t.vision.desc}</p>
               </div>
-              <div className="border-l-4 border-zinc-200 pl-8">
-                <strong className="text-[#2A2A2A] block text-xl mb-3 font-bold">{t.mission.title}</strong>
-                <p>{t.mission.desc}</p>
+              <div className="pl-8 relative">
+                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-zinc-200"></div>
+                <strong className="text-[#1A1A1A] block text-lg mb-3 font-black tracking-tight">{t.mission.title}</strong>
+                <p className="text-sm md:text-base text-zinc-500/80">{t.mission.desc}</p>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 border-t border-zinc-200 pt-12 mt-16">
+            {/* Stats: Minimalist line divider */}
+            <div className="grid grid-cols-2 gap-12 border-t border-zinc-100 pt-12 mt-16">
               <div>
-                <div className="text-4xl md:text-5xl font-black text-[#2A2A2A] mb-2">{t.stats.network.value}</div>
-                <div className="text-[11px] text-zinc-400 uppercase font-bold tracking-widest">{t.stats.network.label}</div>
+                <div className="text-4xl md:text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter">{t.stats.network.value}</div>
+                <div className="text-[10px] text-zinc-400 uppercase font-bold tracking-widest">{t.stats.network.label}</div>
               </div>
               <div>
-                <div className="text-4xl md:text-5xl font-black text-[#2A2A2A] mb-2">{t.stats.quality.value}</div>
-                <div className="text-[11px] text-zinc-400 uppercase font-bold tracking-widest">{t.stats.quality.label}</div>
+                <div className="text-4xl md:text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter">{t.stats.quality.value}</div>
+                <div className="text-[10px] text-zinc-400 uppercase font-bold tracking-widest">{t.stats.quality.label}</div>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {/* Features Grid: Professional card style (rounded-sm) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
             {t.features.map((feature, idx) => {
               const Icon = icons[idx];
               return (
-                <div key={idx} className="p-8 rounded-3xl bg-white border border-zinc-100 hover:border-[#FACC15]/40 transition-all shadow-sm">
-                  <div className="w-12 h-12 bg-zinc-50 rounded-2xl flex items-center justify-center text-zinc-400 mb-6 group-hover:bg-[#FACC15]">
-                    <Icon size={24} />
+                <div key={idx} className="p-8 rounded-sm bg-[#F8FAFC] border border-transparent hover:border-zinc-200 transition-all duration-300">
+                  <div className="w-10 h-10 flex items-center justify-center text-[#1A1A1A] mb-8 bg-white shadow-sm rounded-sm">
+                    <Icon size={20} />
                   </div>
-                  <h4 className="text-xl font-bold text-[#2A2A2A] mb-4">{feature.title}</h4>
-                  <p className="text-zinc-500 text-sm leading-relaxed break-keep">{feature.description}</p>
+                  <h4 className="text-base font-black text-[#1A1A1A] mb-4 tracking-tight">{feature.title}</h4>
+                  <p className="text-zinc-500/80 text-[13px] leading-relaxed break-keep font-medium">{feature.description}</p>
                 </div>
               );
             })}
