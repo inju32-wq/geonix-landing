@@ -51,7 +51,7 @@ export const Navbar: React.FC = () => {
             alt="GEONIX Logo" 
             /* h-12(모바일), md:h-16(데스크탑)으로 로고를 크게 키우되, 
                max-h-full을 통해 Navbar 높이를 넘지 않도록 제한했습니다. */
-            className="h-12 md:h-20 w-auto object-contain transition-transform hover:scale-105 block"
+            className="h-12 md:h-30 w-auto object-contain transition-transform hover:scale-105 block"
           />
         </a>
 
