@@ -30,22 +30,44 @@ export const Sustainability: React.FC = () => {
 
   const t = content[language];
   const icons = [Leaf, ShieldCheck, Heart];
-  const iconColors = ["text-green-600", "text-[#FACC15]", "text-red-500"];
 
   return (
-    <section id="sustainability" className="py-24 md:py-36 bg-[#F0FDF4] border-y border-zinc-100">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-sm font-bold text-[#FACC15] uppercase tracking-[0.3em] mb-6">{t.section}</h2>
-        <h3 className="text-3xl md:text-5xl font-extrabold text-[#2A2A2A] mb-10 break-keep leading-tight">{t.title}</h3>
-        <p className="text-zinc-500 text-lg max-w-3xl mx-auto mb-20 whitespace-pre-line break-keep font-medium">{t.desc}</p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-6xl mx-auto">
+    <section id="sustainability" className="py-24 md:py-40 bg-white border-y border-zinc-100">
+      <div className="container mx-auto px-8 md:px-12 text-center">
+        {/* Section Badge: 포스코 스타일의 얇은 가로선 적용 */}
+        <div className="inline-flex items-center justify-center gap-3 mb-10">
+          <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
+          <span className="text-[10px] md:text-xs font-bold text-zinc-400 uppercase tracking-[0.3em]">{t.section}</span>
+          <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
+        </div>
+
+        {/* Title: font-black & tracking-tighter 적용 */}
+        <h3 className="text-3xl md:text-4xl lg:text-5xl font-black text-[#1A1A1A] mb-10 tracking-tighter leading-tight break-keep">
+          {t.title}
+        </h3>
+        
+        {/* Description: 텍스트 대비 완화 (white/60 수준의 zinc) */}
+        <p className="text-zinc-500/60 text-sm md:text-lg max-w-3xl mx-auto mb-20 whitespace-pre-line break-keep font-medium tracking-tight">
+          {t.desc}
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
           {t.items.map((item, idx) => {
             const Icon = icons[idx];
             return (
-              <div key={idx} className="p-10 rounded-[2.5rem] bg-white border border-zinc-100 shadow-sm hover:shadow-xl transition-all flex flex-col items-center">
-                <div className={`w-20 h-20 bg-zinc-50 rounded-3xl flex items-center justify-center mb-10 shadow-inner ${iconColors[idx]}`}><Icon size={36} /></div>
-                <h4 className="text-xl font-bold text-[#2A2A2A] mb-4 break-keep tracking-tight">{item.title}</h4>
-                <p className="text-zinc-500 text-sm md:text-base leading-relaxed break-keep">{item.description}</p>
+              <div key={idx} className="group p-10 md:p-12 rounded-sm bg-[#F8FAFC] border border-transparent hover:border-zinc-200 transition-all duration-300 flex flex-col items-center shadow-sm">
+                {/* Icon: 무채색 톤으로 정제 */}
+                <div className="w-16 h-16 bg-white rounded-sm flex items-center justify-center mb-10 shadow-sm text-[#1A1A1A] group-hover:bg-[#FACC15] transition-colors">
+                  <Icon size={24} />
+                </div>
+                
+                <h4 className="text-lg md:text-xl font-black text-[#1A1A1A] mb-5 break-keep tracking-tighter">
+                  {item.title}
+                </h4>
+                
+                <p className="text-zinc-500/80 text-sm md:text-base leading-relaxed break-keep font-medium">
+                  {item.description}
+                </p>
               </div>
             );
           })}
