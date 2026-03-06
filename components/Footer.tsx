@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, Globe, X } from 'lucide-react'; // MapPin 제거
+import { Mail, Phone, Globe, X } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
 export const Footer: React.FC = () => {
@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
 
   const content = {
     ko: {
-      copyright: `© ${new Date().getFullYear()} GEONIX. All rights reserved.`,
+      copyright: `© ${new Date().getFullYear()} GEONIX. ALL RIGHTS RESERVED.`,
       privacy: '개인정보처리방침',
       terms: '이용약관',
       menu: [
@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
       ]
     },
     en: {
-      copyright: `© ${new Date().getFullYear()} GEONIX. All rights reserved.`,
+      copyright: `© ${new Date().getFullYear()} GEONIX. ALL RIGHTS RESERVED.`,
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
       menu: [
@@ -41,24 +41,22 @@ export const Footer: React.FC = () => {
     <footer className="bg-[#0A0F1A] text-white py-12 md:py-16 border-t border-white/5 relative">
       <div className="container mx-auto px-6">
         
-        {/* 상단 섹션: 로고와 (메뉴 + 연락처)를 양 옆으로 배치 */}
+        {/* 상단 섹션: 로고와 (메뉴 + 연락처) */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10">
           
-          {/* 부모 div: h-full을 주어 로고 크기에 따라 유연하게 늘어나도록 설정 */}
-<div className="shrink-0 flex items-center h-full min-h-[80px]"> 
-  <a href="/">
-    <img 
-      src="/images/geonix-logo_widthwise_White.png" 
-      alt="GEONIX Logo" 
-      /* md:h-[120px] 처럼 직접 수치를 입력하면 훨씬 크게 만들 수 있습니다 */
-      className="h-20 md:h-[120px] w-auto object-contain brightness-110 transition-transform duration-300 hover:scale-110"
-    />
-  </a>
-</div>
+          {/* 로고 영역: h-full과 min-h를 통해 로고 크기 확보 */}
+          <div className="shrink-0 flex items-center h-full min-h-[80px]"> 
+            <a href="/">
+              <img 
+                src="/images/geonix-logo_widthwise_White.png" 
+                alt="GEONIX Logo" 
+                className="h-20 md:h-[120px] w-auto object-contain brightness-110 transition-transform duration-300 hover:scale-110"
+              />
+            </a>
+          </div>
 
-          {/* 2. 정보 영역: 메뉴(상단)와 연락처(하단)를 수직으로 정렬 */}
+          {/* 정보 영역: 메뉴 아래에 연락처 배치 */}
           <div className="flex flex-col items-start lg:items-end gap-6">
-            {/* 메뉴 한 줄 나열 */}
             <nav className="flex flex-wrap gap-x-8 gap-y-2">
               {t.menu.map((item) => (
                 <a key={item.href} href={item.href} className="text-sm font-bold text-white/70 hover:text-[#FACC15] transition-colors uppercase tracking-tight">
@@ -67,7 +65,6 @@ export const Footer: React.FC = () => {
               ))}
             </nav>
 
-            {/* 연락처 한 줄 나열 (ABOUT US 메뉴 아래 위치하도록 설정) */}
             <div className="flex flex-wrap items-center gap-x-10 gap-y-2">
               <div className="flex items-center gap-3 group">
                 <Mail size={18} className="text-[#FACC15]" />
@@ -83,7 +80,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* 하단 섹션: 약관 및 저작권 (위치 정보 MapPin 삭제) */}
+        {/* 하단 섹션: 약관 및 저작권 */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-8 order-2 md:order-1">
             <p className="text-white/20 text-[10px] font-medium tracking-widest uppercase">
@@ -108,32 +105,77 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* 약관 팝업 모달 */}
+      {/* 약관 팝업 모달: PDF 내용을 실제 상세히 반영했습니다 */}
       {modalType && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setModalType(null)} />
-          <div className="relative bg-white text-[#2A2A2A] w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300">
-            <button onClick={() => setModalType(null)} className="absolute top-8 right-8 text-zinc-300 hover:text-black">
+          <div className="absolute inset-0 bg-black/85 backdrop-blur-md" onClick={() => setModalType(null)} />
+          <div className="relative bg-white text-[#2A2A2A] w-full max-w-2xl rounded-[2.5rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300 flex flex-col max-h-[85vh]">
+            <button onClick={() => setModalType(null)} className="absolute top-8 right-8 text-zinc-300 hover:text-black transition-colors">
               <X size={28} />
             </button>
-            <h3 className="text-2xl font-black mb-8">{modalType === 'privacy' ? t.privacy : t.terms}</h3>
-            <div className="h-60 overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar">
+            <h3 className="text-2xl font-black mb-8 tracking-tighter">{modalType === 'privacy' ? t.privacy : t.terms}</h3>
+            
+            <div className="overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar flex-1">
               {modalType === 'privacy' ? (
-                <div className="space-y-4">
-                  <p>지오니스는 글로벌 자원 트레이딩 기업으로서 귀하의 개인정보를 안전하게 보호합니다.</p>
-                  <p>1. 수집 항목: 성함, 이메일, 연락처</p>
-                  <p>2. 이용 목적: 비즈니스 파트너십 문의 대응</p>
-                  <p>3. 보유 기간: 관련 법령 및 회사 내부 규정에 따름</p>
+                <div className="space-y-6 text-justify">
+                  <p>지오니스(이하 "회사")는 「개인정보 보호법」 등 관련 법령을 준수하며, 이용자의 개인정보 보호 및 고충 처리를 위해 다음과 같은 방침을 수립·공개합니다.</p>
+                  
+                  <div>
+                    <p className="font-bold text-zinc-900 mb-2">1. 개인정보의 처리 목적</p>
+                    <p>회사는 다음 목적을 위해 개인정보를 처리하며, 목적 외 용도로는 사용하지 않습니다.</p>
+                    <ul className="list-disc ml-5 mt-2 space-y-1">
+                      <li>홈페이지 문의사항 접수 및 답변</li>
+                      <li>고객 상담 및 요청사항 처리</li>
+                      <li>회사 서비스 및 사업 관련 커뮤니케이션</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-bold text-zinc-900 mb-2">2. 처리하는 개인정보의 항목</p>
+                    <p><span className="font-semibold">• 필수항목:</span> 성명, 이메일 주소, 문의 내용</p>
+                    <p><span className="font-semibold">• 선택항목:</span> 회사명, 연락처</p>
+                    <p>※ 서비스 이용 과정에서 IP 주소, 접속 로그, 쿠키 등이 자동 생성·수집될 수 있습니다.</p>
+                  </div>
+
+                  <div>
+                    <p className="font-bold text-zinc-900 mb-2">3. 처리 및 보유 기간</p>
+                    <p>회사는 수집·이용 목적이 달성된 후에는 해당 정보를 지체 없이 파기합니다.</p>
+                    <p><span className="font-semibold">• 문의 기록:</span> 문의 처리 완료 후 1년</p>
+                  </div>
+
+                  <div>
+                    <p className="font-bold text-zinc-900 mb-2">4. 개인정보의 제3자 제공 및 위탁</p>
+                    <p>회사는 원칙적으로 개인정보를 외부에 제공하지 않으나, 이용자의 동의가 있거나 법령에 따른 경우에만 예외적으로 제공합니다. 현재 원활한 업무 처리를 위해 전문 업체에 위탁 운영 중입니다.</p>
+                  </div>
+
+                  <div>
+                    <p className="font-bold text-zinc-900 mb-2">5. 정보주체의 권리·의무 및 행사방법</p>
+                    <p>이용자는 언제든지 자신의 개인정보에 대해 열람, 정정, 삭제, 처리정지 요구 등의 권리를 행사할 수 있습니다.</p>
+                  </div>
+
+                  <div>
+                    <p className="font-bold text-zinc-900 mb-2">6. 개인정보 보호책임자 및 상담</p>
+                    <p>• 이메일: geonix_official@geonix.co.kr</p>
+                    <p>• 개인정보 관련 고충 사항은 위 연락처로 문의해 주시기 바랍니다.</p>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <p>본 약관은 지오니스 웹사이트 이용에 관한 제반 사항을 규정합니다.</p>
-                  <p>사이트 내 모든 기업 로고 및 콘텐츠의 지식재산권은 지오니스에 귀속됩니다.</p>
+                  <p className="font-bold text-zinc-900 underline underline-offset-4">제 1조 (목적)</p>
+                  <p>본 약관은 지오니스가 운영하는 웹사이트에서 제공하는 서비스의 이용 조건 및 절차를 규정함을 목적으로 합니다.</p>
+                  <p className="font-bold text-zinc-900 underline underline-offset-4">제 2조 (지식재산권)</p>
+                  <p>사이트 내 게시된 모든 로고, 이미지, 텍스트 및 3D 모델의 저작권은 지오니스에 귀속됩니다. 무단 복제 및 상업적 활용을 금지합니다.</p>
+                  <p className="font-bold text-zinc-900 underline underline-offset-4">제 3조 (이용자의 의무)</p>
+                  <p>이용자는 본 사이트를 이용함에 있어 관계 법령 및 본 약관을 준수하여야 하며, 기타 타인의 권리를 침해하는 행위를 해서는 안 됩니다.</p>
                 </div>
               )}
             </div>
-            <button onClick={() => setModalType(null)} className="w-full mt-10 py-4 bg-[#0A0F1A] text-white font-black rounded-xl hover:scale-[1.02] transition-transform">
-              Close
+            
+            <button 
+              onClick={() => setModalType(null)} 
+              className="w-full mt-10 py-4 bg-[#0A0F1A] text-white font-black rounded-xl hover:bg-black transition-all"
+            >
+              닫기 Close
             </button>
           </div>
         </div>
