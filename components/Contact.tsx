@@ -14,68 +14,104 @@ export const Contact: React.FC = () => {
       title: '비즈니스 파트너십 문의',
       desc: '원자재 수급 계획부터 물류 최적화까지,\n귀사의 비즈니스 성공을 위한 맞춤형 솔루션을 제안해 드립니다.\n지금 바로 문의해 보세요.',
       bullets: [
-        { title: '철저한 비밀 유지', desc: '모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.' },
-        { title: '전문가 1:1 매칭', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.' },
-        { title: '신속한 응답 서비스', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.' },
+        { title: '철저한 비밀 유지 (Confidentiality)', desc: '모든 상담 내용과 기업 정보는 엄격한 보안 하에 관리됩니다.' },
+        { title: '전문가 1:1 매칭 (Expert Consultation)', desc: '문의 분야에 최적화된 전담 매니저가 배정되어 상세 상담을 지원합니다.' },
+        { title: '24시간 내 신속 응답 (Fast Response)', desc: '영업일 기준 24시간 이내에 담당자가 직접 연락드립니다.' },
       ],
       contact: { email: '이메일', phone: '연락처', address: '주소' },
-      form: { title: '상담 신청서 작성', name: '성함', company: '회사명', email: '이메일', details: '문의 내용', submit: '문의하기', sending: '전송 중...', success: '문의가 성공적으로 접수되었습니다.', fail: '전송에 실패했습니다. 다시 시도해주세요.', ph_details: '관심 품목, 물량 등을 적어주세요.' }
+      form: { 
+        title: '상담 신청서 작성', 
+        name: '담당자 성명', 
+        company: '회사명', 
+        email: '이메일 주소', 
+        phone: '연락처',
+        details: '문의 내용', 
+        submit: '문의하기 (Send Inquiry)', 
+        sending: '전송 중...', 
+        success: '문의가 성공적으로 접수되었습니다.', 
+        fail: '전송에 실패했습니다. 다시 시도해주세요.', 
+        ph_details: '관심 품목, 예상 물량, 도착항 등 구체적인 내용을 적어주시면 더 정확한 상담이 가능합니다.',
+        ph_name: '홍길동',
+        ph_company: '지오니스',
+        disclaimer: '본 양식을 통해 수집된 정보는 상담 목적으로만 사용됩니다.'
+      }
     },
     en: {
       section: 'Get in Touch',
       title: 'Business Partnership Inquiry',
       desc: 'From raw material sourcing to logistics optimization,\nwe propose customized solutions for your business success.\nContact us today.',
       bullets: [
-        { title: 'Strict Confidentiality', desc: 'All consultations are managed under strict security.' },
-        { title: '1:1 Expert Matching', desc: 'Dedicated managers support detailed consultations.' },
-        { title: 'Fast Response', desc: 'Representative will contact you within 24 business hours.' },
+        { title: 'Strict Confidentiality', desc: 'All consultations and corporate information are managed under strict security.' },
+        { title: '1:1 Expert Matching', desc: 'A dedicated manager optimized for your inquiry area is assigned to support detailed consultations.' },
+        { title: 'Fast Response Within 24 Hours', desc: 'Our representative will contact you directly within 24 business hours.' },
       ],
       contact: { email: 'Email', phone: 'Phone', address: 'Address' },
-      form: { title: 'Inquiry Form', name: 'Name', company: 'Company', email: 'Email', details: 'Details', submit: 'Send Inquiry', sending: 'Sending...', success: 'Inquiry sent successfully!', fail: 'Failed to send. Please try again.', ph_details: 'Please provide items, volume, etc.' }
+      form: { 
+        title: 'Fill out Inquiry Form', 
+        name: 'Contact Name', 
+        company: 'Company Name', 
+        email: 'Email Address', 
+        phone: 'Phone Number',
+        details: 'Inquiry Details', 
+        submit: 'Send Inquiry', 
+        sending: 'Sending...', 
+        success: 'Inquiry sent successfully!', 
+        fail: 'Failed to send. Please try again.', 
+        ph_details: 'Please provide details like interested items, expected volume, and destination port for a more accurate consultation.',
+        ph_name: 'HONG GILDONG',
+        ph_company: 'Geonix Co.',
+        disclaimer: 'Information collected via this form is used for consultation purposes only.'
+      }
     }
   };
 
   const t = content[language];
 
+  // ✅ 이전 코드의 정상 작동하던 로직 그대로 적용
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus(null);
     if (!formRef.current) return;
 
-    // 1. 데이터 추출 (이전 코드 로직 복구)
     const formData = new FormData(formRef.current);
+
     const name = String(formData.get('name') || '').trim();
     const company = String(formData.get('company') || '').trim();
+    const phone = String(formData.get('phone') || '').trim();
     const email = String(formData.get('email') || '').trim();
     const details = String(formData.get('details') || '').trim();
-    const hp = String(formData.get('hp') || ''); // 보안(스팸방지) 필드
+    const hp = String(formData.get('hp') || '');
 
-    // 2. 필수값 검증
     if (!name || !company || !email || !details) {
       setStatus('fail');
       return;
     }
 
     setSending(true);
-
-    // 3. 실제 API 전송 로직 (fetch 복구)
     try {
+      // ✅ 이전 코드와 동일한 API 엔드포인트 및 페이로드 구조
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message: details, company, hp }),
+        body: JSON.stringify({
+          name,
+          email,
+          message: details, // 서버 템플릿용 필드명
+          company,
+          website: '',
+          phone,
+          hp,
+        }),
       });
 
       const data = await res.json();
-      
       if (data.ok) {
         setStatus('success');
-        formRef.current.reset(); // 성공 시 폼 초기화
+        formRef.current.reset();
       } else {
         setStatus('fail');
       }
-    } catch (error) {
-      console.error("Submission error:", error);
+    } catch {
       setStatus('fail');
     } finally {
       setSending(false);
@@ -87,7 +123,7 @@ export const Contact: React.FC = () => {
       <div className="container mx-auto px-8 md:px-12">
         <div className="flex flex-col lg:flex-row gap-20 lg:gap-32 items-start">
           
-          {/* Left Side: Information */}
+          {/* Left Side: Info */}
           <div className="lg:w-[40%] text-left">
             <div className="inline-flex items-center gap-3 mb-10">
               <span className="w-8 h-[1.5px] bg-[#FACC15]"></span>
@@ -112,23 +148,16 @@ export const Contact: React.FC = () => {
             </div>
 
             <div className="space-y-8 border-t border-zinc-100 pt-12">
-              {[
-                { icon: Mail, label: t.contact.email, value: 'roman@geonix.co.kr', href: 'mailto:roman@geonix.co.kr' },
-                { icon: Phone, label: t.contact.phone, value: '-', href: null },
-                { icon: MapPin, label: t.contact.address, value: '-', href: null }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-6">
-                  <div className="w-10 h-10 rounded-sm bg-[#F8FAFC] flex items-center justify-center text-[#1A1A1A] border border-zinc-50 shadow-sm"><item.icon size={18} /></div>
-                  <div>
-                    <div className="text-[9px] text-zinc-400 uppercase font-black tracking-widest mb-1">{item.label}</div>
-                    {item.href ? (
-                      <a href={item.href} className="text-[#1A1A1A] font-bold text-sm hover:text-[#FACC15] transition-colors">{item.value}</a>
-                    ) : (
-                      <div className="text-[#1A1A1A] font-bold text-sm">{item.value}</div>
-                    )}
+              <div className="flex items-center gap-6">
+                <div className="w-10 h-10 rounded-sm bg-[#F8FAFC] flex items-center justify-center text-[#1A1A1A] border border-zinc-50 shadow-sm"><Mail size={18} /></div>
+                <div>
+                  <div className="text-[9px] text-zinc-400 uppercase font-black tracking-widest mb-1">{t.contact.email}</div>
+                  <div className="flex flex-col gap-1">
+                    <a href="mailto:roman@geonix.co.kr" className="text-[#1A1A1A] font-bold text-sm hover:text-[#FACC15] transition-colors">roman@geonix.co.kr</a>
+                    <a href="mailto:geonix_official@geonix.co.kr" className="text-[#1A1A1A] font-bold text-sm hover:text-[#FACC15] transition-colors">geonix_official@geonix.co.kr</a>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
 
@@ -137,26 +166,34 @@ export const Contact: React.FC = () => {
             <h4 className="text-xl font-black text-[#1A1A1A] mb-12 tracking-tighter uppercase">{t.form.title}</h4>
             <form ref={formRef} className="space-y-10" onSubmit={handleSubmit}>
               
-              {/* 보안(HoneyPot) 필드: 실제 사용자는 보지 못하지만 봇은 입력하게 되어 필터링 가능 */}
+              {/* honeypot */}
               <input type="text" name="hp" className="hidden" tabIndex={-1} autoComplete="off" />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div className="flex flex-col gap-3">
                   <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.name}</label>
-                  <input name="name" required className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors" />
+                  <input name="name" required placeholder={t.form.ph_name} className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors" />
                 </div>
                 <div className="flex flex-col gap-3">
                   <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.company}</label>
-                  <input name="company" required className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors" />
+                  <input name="company" required placeholder={t.form.ph_company} className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors" />
                 </div>
               </div>
-              <div className="flex flex-col gap-3">
-                <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.email}</label>
-                <input name="email" type="email" required className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors" />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="flex flex-col gap-3">
+                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.email}</label>
+                  <input name="email" type="email" required placeholder="email@company.com" className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors" />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.phone}</label>
+                  <input name="phone" placeholder="010-0000-0000" className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors" />
+                </div>
               </div>
+
               <div className="flex flex-col gap-3">
                 <label className="text-[10px] font-black text-zinc-400 uppercase tracking-widest pl-1">{t.form.details}</label>
-                <textarea name="details" required rows={4} className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors resize-none" placeholder={t.form.ph_details} />
+                <textarea name="details" required rows={4} placeholder={t.form.ph_details} className="bg-transparent border-b border-zinc-200 py-3 text-sm text-[#1A1A1A] outline-none focus:border-[#FACC15] transition-colors resize-none" />
               </div>
               
               <button disabled={sending} type="submit" className="group w-full font-black py-5 bg-[#1A1A1A] text-white hover:bg-black disabled:opacity-60 transition-all rounded-sm flex items-center justify-center gap-4 uppercase tracking-[0.2em] text-xs">
@@ -166,6 +203,8 @@ export const Contact: React.FC = () => {
 
               {status === 'success' && <div className="p-4 bg-zinc-900 text-white text-xs font-bold text-center animate-in fade-in slide-in-from-top-2 tracking-tight">{t.form.success}</div>}
               {status === 'fail' && <div className="p-4 bg-red-600 text-white text-xs font-bold text-center animate-in fade-in slide-in-from-top-2 tracking-tight">{t.form.fail}</div>}
+              
+              <p className="text-[10px] text-zinc-400 text-center tracking-tight">{t.form.disclaimer}</p>
             </form>
           </div>
         </div>
