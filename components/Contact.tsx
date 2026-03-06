@@ -82,8 +82,8 @@ export const Contact: React.FC = () => {
             <div className="space-y-8 border-t border-zinc-100 pt-12">
               {[
                 { icon: Mail, label: t.contact.email, value: 'roman@geonix.co.kr', href: 'mailto:roman@geonix.co.kr' },
-                { icon: Phone, label: t.contact.phone, value: '+82 2 759 2114', href: null },
-                { icon: MapPin, label: t.contact.address, value: 'Songdo, Incheon, Republic of Korea', href: null }
+                { icon: Phone, label: t.contact.phone, value: '-', href: null },
+                { icon: MapPin, label: t.contact.address, value: '-', href: null }
               ].map((item, i) => (
                 <div key={i} className="flex items-center gap-6">
                   <div className="w-10 h-10 rounded-sm bg-[#F8FAFC] flex items-center justify-center text-[#1A1A1A] border border-zinc-50 shadow-sm"><item.icon size={18} /></div>
