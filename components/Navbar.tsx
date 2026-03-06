@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
         {/* 로고 영역 */}
         <a href="/" className="flex items-center">
           <img 
-            src="/images/geonix-logo.png" 
+            src="/images/geonix-logo_widthwise.png" 
             alt="GEONIX Logo" 
             className="h-10 md:h-12 w-auto object-contain transition-transform hover:scale-105"
           />
