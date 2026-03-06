@@ -14,8 +14,8 @@ export const Footer: React.FC = () => {
       address: '(21998) 인천광역시 연수구 컨벤시아대로 165 (포스코타워 송도)',
       menu: [
         { name: '회사소개', href: '#about' },
-        { name: '포트폴리오', href: '#products' },
         { name: '서비스', href: '#services' },
+        { name: '포트폴리오', href: '#products' },
         { name: 'ESG 경영', href: '#sustainability' },
         { name: '문의하기', href: '#contact' },
       ]
@@ -27,8 +27,8 @@ export const Footer: React.FC = () => {
       address: '165, Convensia-daero, Yeonsu-gu, Incheon, Republic of Korea',
       menu: [
         { name: 'About Us', href: '#about' },
-        { name: 'Portfolio', href: '#products' },
         { name: 'Services', href: '#services' },
+        { name: 'Portfolio', href: '#products' },
         { name: 'Sustainability', href: '#sustainability' },
         { name: 'Contact', href: '#contact' },
       ]
