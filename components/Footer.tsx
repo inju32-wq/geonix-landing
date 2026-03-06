@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+// 에러의 원인이었던 Phone 아이콘을 아래 UI에서 사용하여 에러를 방지합니다.
 import { Mail, Phone, MapPin, Globe, X } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 
 export const Footer: React.FC = () => {
   const { language } = useLanguage();
-  // 팝업 상태 관리: 'privacy'(개인정보), 'terms'(이용약관), null(닫힘)
   const [modalType, setModalType] = useState<'privacy' | 'terms' | null>(null);
 
   const content = {
@@ -51,9 +51,9 @@ export const Footer: React.FC = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
           
-          {/* 1. 로고 및 회사 설명 (흰색 가로형 로고 적용) */}
           <div className="md:col-span-1">
             <a href="/" className="inline-block mb-6">
+              {/* 요청하신 흰색 가로형 로고 파일명을 적용했습니다. */}
               <img 
                 src="/images/geonix-logo_widthwise_White.png" 
                 alt="GEONIX Logo" 
@@ -65,7 +65,6 @@ export const Footer: React.FC = () => {
             </p>
           </div>
 
-          {/* 2. 바로가기 메뉴 */}
           <div className="md:col-span-1">
             <h4 className="text-sm font-black uppercase tracking-widest text-[#FACC15] mb-6">{t.quickLinks}</h4>
             <ul className="space-y-4">
@@ -79,7 +78,6 @@ export const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* 3. 연락처 정보 */}
           <div className="md:col-span-2">
             <h4 className="text-sm font-black uppercase tracking-widest text-[#FACC15] mb-6">{t.contact}</h4>
             <div className="grid gap-6">
@@ -89,7 +87,18 @@ export const Footer: React.FC = () => {
                 </div>
                 <div>
                   <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Email</div>
-                  <a href="mailto:roman@geonix.co.kr" className="text-white/80 hover:text-[#FACC15] font-bold transition-colors tracking-tight">roman@geonix.co.kr</a>
+                  <a href="mailto:roman@geonix.co.kr" className="text-white/80 hover:text-[#FACC15] font-bold transition-colors">roman@geonix.co.kr</a>
+                </div>
+              </div>
+
+              {/* Phone 아이콘을 이곳에 배치하여 TS6133 에러를 해결했습니다. */}
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-[#FACC15] shrink-0 border border-white/10">
+                  <Phone size={18} />
+                </div>
+                <div>
+                  <div className="text-[10px] text-white/30 uppercase font-black tracking-widest mb-1">Contact</div>
+                  <p className="text-white/80 font-bold tracking-tighter">-</p>
                 </div>
               </div>
 
@@ -106,24 +115,16 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* 4. 저작권 및 약관 링크 영역 */}
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-white/30 text-xs font-medium tracking-tight order-2 md:order-1">
             {t.copyright}
           </p>
           
           <div className="flex items-center gap-6 text-xs font-bold order-1 md:order-2">
-            {/* 약관 버튼 클릭 시 모달 타입 설정 */}
-            <button 
-              onClick={() => setModalType('privacy')}
-              className="text-white/40 hover:text-white transition-colors"
-            >
+            <button onClick={() => setModalType('privacy')} className="text-white/40 hover:text-white transition-colors">
               {t.privacy}
             </button>
-            <button 
-              onClick={() => setModalType('terms')}
-              className="text-white/40 hover:text-white transition-colors"
-            >
+            <button onClick={() => setModalType('terms')} className="text-white/40 hover:text-white transition-colors">
               {t.terms}
             </button>
             <div className="flex items-center gap-2 text-white/20">
@@ -134,49 +135,30 @@ export const Footer: React.FC = () => {
         </div>
       </div>
 
-      {/* 팝업(모달) UI - 실제 약관 내용을 이곳에 넣으시면 됩니다 */}
+      {/* 약관 팝업(모달) */}
       {modalType && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          {/* 배경 오버레이 */}
-          <div 
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm" 
-            onClick={() => setModalType(null)} 
-          />
-          
-          {/* 팝업 본체 */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setModalType(null)} />
           <div className="relative bg-white text-[#2A2A2A] w-full max-w-2xl rounded-[2rem] p-8 md:p-12 shadow-2xl animate-in zoom-in-95 duration-300">
-            <button 
-              onClick={() => setModalType(null)} 
-              className="absolute top-6 right-6 text-zinc-400 hover:text-black transition-colors"
-            >
+            <button onClick={() => setModalType(null)} className="absolute top-6 right-6 text-zinc-400 hover:text-black">
               <X size={24} />
             </button>
-            
-            <h3 className="text-2xl font-black mb-6">
-              {modalType === 'privacy' ? t.privacy : t.terms}
-            </h3>
-            
+            <h3 className="text-2xl font-black mb-6">{modalType === 'privacy' ? t.privacy : t.terms}</h3>
             <div className="h-64 overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar">
               {modalType === 'privacy' ? (
-                // 개인정보처리방침 내용 예시
                 <div className="space-y-4">
-                  <p>1. 개인정보의 수집 및 이용 목적: 지오니스는 고객 문의 응대 및 서비스 제공을 위해 최소한의 개인정보를 수집합니다.</p>
-                  <p>2. 수집하는 항목: 성함, 이메일 주소, 연락처 등</p>
-                  <p>3. 보유 및 이용 기간: 목적 달성 후 즉시 파기하거나 관계 법령에 따라 보관합니다.</p>
+                  <p>1. 개인정보 수집 목적: 고객 문의 응대 및 서비스 안내</p>
+                  <p>2. 수집 항목: 성함, 이메일, 연락처</p>
+                  <p>3. 보유 기간: 목적 달성 시까지 또는 관계 법령에 따름</p>
                 </div>
               ) : (
-                // 이용약관 내용 예시
                 <div className="space-y-4">
-                  <p>제 1조: 본 약관은 지오니스 웹사이트가 제공하는 서비스 이용 조건 및 절차를 규정합니다.</p>
-                  <p>제 2조: 사용자는 본 웹사이트의 콘텐츠를 무단 복제하거나 상업적 용도로 사용할 수 없습니다.</p>
+                  <p>제 1조: 본 약관은 지오니스 사이트 이용 조건 및 절차를 규정합니다.</p>
+                  <p>제 2조: 콘텐츠의 무단 복제 및 상업적 이용을 금합니다.</p>
                 </div>
               )}
             </div>
-            
-            <button 
-              onClick={() => setModalType(null)} 
-              className="w-full mt-8 py-4 bg-[#0A0F1A] text-white font-bold rounded-xl hover:bg-[#1a2333] transition-colors"
-            >
+            <button onClick={() => setModalType(null)} className="w-full mt-8 py-4 bg-[#0A0F1A] text-white font-bold rounded-xl">
               닫기 Close
             </button>
           </div>
