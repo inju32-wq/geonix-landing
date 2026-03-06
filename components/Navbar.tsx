@@ -50,7 +50,7 @@ export const Navbar: React.FC = () => {
             src="/images/geonix-logo_widthwise.png" 
             alt="GEONIX Logo" 
             /* 가로형 로고이므로 높이(h-8)와 너비(w-auto)를 가로 버전에 최적화했습니다 */
-            className="h-7 md:h-9 w-auto object-contain transition-transform hover:scale-105"
+            className="h-10 md:h-20 w-auto object-contain transition-transform hover:scale-105"
           />
         </a>
 
