@@ -37,12 +37,12 @@ export const Products: React.FC = () => {
           } 
         },
         { 
-          title: "팜오일 글리세린", 
-          description: "100% 식물 유래 성분의 고순도 프리미엄 원료를\n글로벌 규격에 맞춰 공급합니다.", 
+          title: "CPO(팜원유) / 글리세린", 
+          description: "인도네시아와 말레이시아의 우수한 팜 자원을 기반으로\n산업용 원유와 고순도 정제 원료를 공급합니다.", 
           details: { 
-            headline: "99.7% 이상의 초고순도 정제 글리세린", 
-            features: ["말레이시아산 최상급 팜유 기반", "USP, BP, EP 글로벌 약전 기준 충족", "Halal, Kosher, RSPO 인증 완료"], 
-            fullDesc: "투명한 성상과 높은 안정성을 지닌 99.7% 이상의 초고순도 글리세린을 공급합니다." 
+            headline: "지속 가능한 팜 자원 및 99.7% 초고순도 정제 글리세린", 
+            features: ["인도네시아 및 말레이시아산 최상급 원료", "CPO(Crude Palm Oil) 및 고순도 Refined Glycerin", "USP, BP, EP 및 Halal, Kosher, RSPO 인증", "식품, 제약, 화장품 및 바이오 에너지용"], 
+            fullDesc: "동남아시아 최대 생산지인 인도네시아와 말레이시아의 네트워크를 통해 지속 가능한 CPO와 글로벌 약전 기준을 충족하는 99.7% 이상의 고순도 글리세린을 안정적으로 공급합니다." 
           } 
         }
       ]
@@ -54,7 +54,7 @@ export const Products: React.FC = () => {
       items: [
         { title: "Minerals & Coal", description: "Handling Coking Coal, Thermal Coal, and Met Coke with consistent reliability.", details: { headline: "Global Sourcing & Integrity in Resource Delivery", features: ["High-grade Coking Coal & PCI", "Strong associations with global mines", "Stringent ISO quality control"], fullDesc: "We deliver the fuel that forges industries and drives progress globally." } },
         { title: "Liquefied Natural Gas (LNG)", description: "Leading the era of carbon neutrality through Arctic route innovation.", details: { headline: "Arctic Route Innovation & Strategic Hubs", features: ["Key energy hub projects", "Utilizing Northern Sea Route (NSR)", "Low-cost production models"], fullDesc: "We realize uninterrupted energy supply even in harsh environments." } },
-        { title: "Refined Glycerin", description: "Supplying 100% vegetable-based high-purity solutions to global markets.", details: { headline: "Premium 99.7% Purity Vegetable Glycerin", features: ["Pure Malaysian Palm Kernel Source", "Compliance with USP, BP, EP grades", "Halal and Kosher certified"], fullDesc: "Our Refined Glycerin ensures maximum stability and purity for global industries." } }
+        { title: "CPO / Refined Glycerin", description: "Supplying premium crude palm oil and high-purity glycerin from Indonesia and Malaysia.", details: { headline: "Sustainable Palm Resources & 99.7% Purity Solutions", features: ["Premium sourcing from Indonesia & Malaysia", "Crude Palm Oil (CPO) & Refined Glycerin", "Compliance with USP, BP, EP grades", "Halal, Kosher, and RSPO certified"], fullDesc: "Leveraging strong networks in Indonesia and Malaysia, we provide sustainable CPO and 99.7% high-purity refined glycerin that meets the highest international standards for various industrial applications." } }
       ]
     }
   };
