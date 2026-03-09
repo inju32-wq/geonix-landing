@@ -70,7 +70,10 @@ export const Footer: React.FC = () => {
               </div>
               <div className="flex items-center gap-3 group">
                 <Phone size={18} className="text-[#FACC15]" />
-                <span className="text-sm text-white/50 font-medium">-</span>
+                {/* 전화번호와 클릭 시 자동 연결 기능 적용 */}
+                <a href="tel:+79146639898" className="text-sm text-white/50 group-hover:text-white transition-colors font-medium">
+                  +7 914 663 98 98
+                </a>
               </div>
             </div>
           </div>
@@ -108,7 +111,7 @@ export const Footer: React.FC = () => {
             
             <div className="overflow-y-auto text-sm text-zinc-500 leading-relaxed pr-4 custom-scrollbar flex-1 space-y-8">
               {language === 'ko' ? (
-                /* ---------------- 국문 전문 (생략 없이 모두 포함) ---------------- */
+                /* ---------------- 국문 전문 ---------------- */
                 modalType === 'privacy' ? (
                   <div className="space-y-6">
                     <p>지오니스(이하 "회사")는 「개인정보 보호법」 등 관련 법령을 준수하며, 이용자의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리하기 위하여 다음과 같이 개인정보처리방침을 수립·공개합니다.</p>
@@ -191,7 +194,7 @@ export const Footer: React.FC = () => {
                   </div>
                 )
               ) : (
-                /* ---------------- 영문 전문 (국문과 1:1 대응 번역) ---------------- */
+                /* ---------------- 영문 전문 ---------------- */
                 <div className="space-y-6">
                   {modalType === 'privacy' ? (
                     <div className="space-y-6">
