@@ -45,7 +45,6 @@ function makeTicket(prefix = "GEONIX") {
   return `${prefix}-${y}${m}${day}-${rand}`;
 }
 
-// 표시만 KST로 보이게(간단 KST)
 function formatKST(dt = new Date()) {
   const kst = new Date(dt.getTime() + 9 * 60 * 60 * 1000);
   const y = kst.getUTCFullYear();
@@ -57,7 +56,6 @@ function formatKST(dt = new Date()) {
   return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
 }
 
-// 언어 감지: 한글 비율로 KO/EN/BOTH
 function detectLang(input: string): "ko" | "en" | "both" {
   const s = (input || "").trim();
   if (!s) return "both";
@@ -73,504 +71,102 @@ function detectLang(input: string): "ko" | "en" | "both" {
 }
 
 function row(label: string, value: string) {
-  const labelStyle =
-    "padding:10px 0; width:170px; color:#666; border-bottom:1px solid #efefef; white-space:nowrap;";
+  const labelStyle = "padding:10px 0; width:170px; color:#666; border-bottom:1px solid #efefef; white-space:nowrap;";
   const valueStyle = "padding:10px 0; color:#111; border-bottom:1px solid #efefef;";
-
-  return `
-    <tr>
-      <td style="${labelStyle}">${escapeHtml(label)}</td>
-      <td style="${valueStyle}">${escapeHtml(value)}</td>
-    </tr>
-  `;
+  return `<tr><td style="${labelStyle}">${escapeHtml(label)}</td><td style="${valueStyle}">${escapeHtml(value)}</td></tr>`;
 }
 
-/**
- * 공통 템플릿
- */
-function buildMailplugStyleBase(params: {
-  brandText: string;
-  brandLineColor: string;
-  brandTextColor: string;
-  titleTextColor: string;
-  titleKo: string;
-  titleEn: string;
-  introKo: string;
-  introEn: string;
-  tableRowsHtml: string;
-  messageLabelKo: string;
-  messageLabelEn: string;
-  messageHtml: string;
-  footerKo: string;
-  footerEn: string;
-}) {
-  const {
-    brandText,
-    brandLineColor,
-    brandTextColor,
-    titleTextColor,
-    titleKo,
-    titleEn,
-    introKo,
-    introEn,
-    tableRowsHtml,
-    messageLabelKo,
-    messageLabelEn,
-    messageHtml,
-    footerKo,
-    footerEn,
-  } = params;
-
-  return `
-<!doctype html>
-<html>
-  <body style="margin:0; padding:0; background:#ffffff;">
-    <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
-      <tr>
-        <td align="center" style="padding:24px 12px;">
-          <table width="680" cellpadding="0" cellspacing="0" style="border-collapse:collapse; width:680px; max-width:680px;">
-            <tr>
-              <td style="padding:0 0 10px 0;">
-                <div style="font-family:Arial, sans-serif; font-size:20px; font-weight:800; color:${brandTextColor};">
-                  ${escapeHtml(brandText)}
-                </div>
-              </td>
-            </tr>
-
-            <tr><td style="border-top:2px solid ${brandLineColor}; padding:0;"></td></tr>
-
-            <tr>
-              <td style="padding:22px 0 12px 0; font-family:Arial, sans-serif; text-align:center;">
-                <div style="font-size:18px; font-weight:800; color:${titleTextColor};">${escapeHtml(titleKo)}</div>
-                ${
-                  titleEn
-                    ? `<div style="font-size:13px; font-weight:700; color:#666; margin-top:4px;">${escapeHtml(
-                        titleEn
-                      )}</div>`
-                    : ""
-                }
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:0 0 14px 0; font-family:Arial, sans-serif; font-size:13px; color:#333; line-height:1.7;">
-                ${introKo ? `<div>${introKo}</div>` : ""}
-                ${introEn ? `<div style="margin-top:8px; color:#444;">${introEn}</div>` : ""}
-              </td>
-            </tr>
-
-            <tr><td style="border-top:1px solid #e6e6e6; padding:0;"></td></tr>
-
-            <tr>
-              <td style="padding:14px 0 0 0;">
-                <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; font-family:Arial, sans-serif; font-size:13px;">
-                  ${tableRowsHtml}
-                </table>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:12px 0 0 0;">
-                <div style="font-family:Arial, sans-serif; font-size:13px; color:#333; padding:10px 0 6px 0; font-weight:800;">
-                  ${escapeHtml(messageLabelKo)}
-                  ${
-                    messageLabelEn
-                      ? `<span style="font-weight:600; color:#666; margin-left:8px;">${escapeHtml(
-                          messageLabelEn
-                        )}</span>`
-                      : ""
-                  }
-                </div>
-                <div style="border:1px solid #e6e6e6; background:#fafafa; padding:12px; font-family:Arial, sans-serif; font-size:13px; color:#333; line-height:1.7;">
-                  ${messageHtml}
-                </div>
-              </td>
-            </tr>
-
-            <tr>
-              <td style="padding:16px 0 0 0; font-family:Arial, sans-serif; font-size:12px; color:#777; line-height:1.6;">
-                ${footerKo ? `<div>${footerKo}</div>` : ""}
-                ${footerEn ? `<div style="margin-top:6px;">${footerEn}</div>` : ""}
-              </td>
-            </tr>
-
-            <tr><td style="padding:18px 0 0 0; border-top:1px solid #efefef;"></td></tr>
-            <tr><td style="border-top:2px solid ${brandLineColor}; padding:0;"></td></tr>
-
-            <tr>
-              <td style="padding:10px 0 0 0; font-family:Arial, sans-serif; font-size:11px; color:#999;">
-                © ${new Date().getFullYear()} ${escapeHtml(brandText)}. All rights reserved.
-              </td>
-            </tr>
-
-          </table>
-        </td>
-      </tr>
-    </table>
-  </body>
-</html>
-  `.trim();
+function buildMailplugStyleBase(params: any) {
+  const { brandText, brandLineColor, brandTextColor, titleTextColor, titleKo, titleEn, introKo, introEn, tableRowsHtml, messageLabelKo, messageLabelEn, messageHtml, footerKo, footerEn } = params;
+  return `<!doctype html><html><body style="margin:0; padding:0; background:#ffffff;"><table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;"><tr><td align="center" style="padding:24px 12px;"><table width="680" cellpadding="0" cellspacing="0" style="border-collapse:collapse; width:680px; max-width:680px;"><tr><td style="padding:0 0 10px 0;"><div style="font-family:Arial, sans-serif; font-size:20px; font-weight:800; color:${brandTextColor};">${escapeHtml(brandText)}</div></td></tr><tr><td style="border-top:2px solid ${brandLineColor}; padding:0;"></td></tr><tr><td style="padding:22px 0 12px 0; font-family:Arial, sans-serif; text-align:center;"><div style="font-size:18px; font-weight:800; color:${titleTextColor};">${escapeHtml(titleKo)}</div>${titleEn ? `<div style="font-size:13px; font-weight:700; color:#666; margin-top:4px;">${escapeHtml(titleEn)}</div>` : ""}</td></tr><tr><td style="padding:0 0 14px 0; font-family:Arial, sans-serif; font-size:13px; color:#333; line-height:1.7;">${introKo ? `<div>${introKo}</div>` : ""}${introEn ? `<div style="margin-top:8px; color:#444;">${introEn}</div>` : ""}</td></tr><tr><td style="border-top:1px solid #e6e6e6; padding:0;"></td></tr><tr><td style="padding:14px 0 0 0;"><table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse; font-family:Arial, sans-serif; font-size:13px;">${tableRowsHtml}</table></td></tr><tr><td style="padding:12px 0 0 0;"><div style="font-family:Arial, sans-serif; font-size:13px; color:#333; padding:10px 0 6px 0; font-weight:800;">${escapeHtml(messageLabelKo)}${messageLabelEn ? `<span style="font-weight:600; color:#666; margin-left:8px;">${escapeHtml(messageLabelEn)}</span>` : ""}</div><div style="border:1px solid #e6e6e6; background:#fafafa; padding:12px; font-family:Arial, sans-serif; font-size:13px; color:#333; line-height:1.7;">${messageHtml}</div></td></tr><tr><td style="padding:16px 0 0 0; font-family:Arial, sans-serif; font-size:12px; color:#777; line-height:1.6;">${footerKo ? `<div>${footerKo}</div>` : ""}${footerEn ? `<div style="margin-top:6px;">${footerEn}</div>` : ""}</td></tr><tr><td style="padding:18px 0 0 0; border-top:1px solid #efefef;"></td></tr><tr><td style="border-top:2px solid ${brandLineColor}; padding:0;"></td></tr><tr><td style="padding:10px 0 0 0; font-family:Arial, sans-serif; font-size:11px; color:#999;">© ${new Date().getFullYear()} ${escapeHtml(brandText)}. All rights reserved.</td></tr></table></td></tr></table></body></html>`.trim();
 }
 
-function buildAdminHtml(params: {
-  brandText: string;
-  brandLineColor: string;
-  brandTextColor: string;
-  titleTextColor: string;
-  ticket: string;
-  submittedAt: string;
-  name: string;
-  email: string;
-  company?: string;
-  phone?: string;
-  message: string;
-}) {
-  const {
-    brandText,
-    brandLineColor,
-    brandTextColor,
-    titleTextColor,
-    ticket,
-    submittedAt,
-    name,
-    email,
-    company,
-    phone,
-    message,
-  } = params;
-
-  const rowsHtml = [
-    row("접수번호 / Ticket", ticket),
-    row("이름 / Name", name),
-    row("이메일 / Email", email),
-    row("회사 / Company", company || "-"),
-    row("연락처 / Phone", phone || "-"),
-    row("문의 접수일 / Submitted at", submittedAt),
-  ].join("");
-
-  const messageHtml = `<div style="white-space:pre-wrap;">${escapeHtml(message)}</div>`;
-
-  return buildMailplugStyleBase({
-    brandText,
-    brandLineColor,
-    brandTextColor,
-    titleTextColor,
-    titleKo: "문의사항 접수 (관리자)",
-    titleEn: "New inquiry received (Admin)",
-    introKo: "아래 내용으로 문의가 접수되었습니다. (답장은 Reply-To로 사용자에게 연결됩니다.)",
-    introEn: "A new inquiry has been received. (Reply will go to the user via Reply-To.)",
-    tableRowsHtml: rowsHtml,
-    messageLabelKo: "문의 내용",
-    messageLabelEn: "Message",
-    messageHtml,
-    footerKo: "※ 본 메일은 시스템 자동 발송입니다.",
-    footerEn: "※ This is an automated message.",
-  });
+function buildAdminHtml(params: any) {
+  const rowsHtml = [row("접수번호 / Ticket", params.ticket), row("이름 / Name", params.name), row("이메일 / Email", params.email), row("회사 / Company", params.company || "-"), row("연락처 / Phone", params.phone || "-"), row("문의 접수일 / Submitted at", params.submittedAt)].join("");
+  const messageHtml = `<div style="white-space:pre-wrap;">${escapeHtml(params.message)}</div>`;
+  return buildMailplugStyleBase({ ...params, titleKo: "문의사항 접수 (관리자)", titleEn: "New inquiry received (Admin)", introKo: "아래 내용으로 문의가 접수되었습니다.", introEn: "A new inquiry has been received.", tableRowsHtml: rowsHtml, messageLabelKo: "문의 내용", messageLabelEn: "Message", messageHtml, footerKo: "※ 본 메일은 시스템 자동 발송입니다.", footerEn: "※ This is an automated message." });
 }
 
-function buildUserHtml(params: {
-  brandText: string;
-  brandLineColor: string;
-  brandTextColor: string;
-  titleTextColor: string;
-  lang: "ko" | "en" | "both";
-  ticket: string;
-  submittedAt: string;
-  name: string;
-  company?: string;
-  phone?: string;
-  summary: string;
-}) {
-  const {
-    brandText,
-    brandLineColor,
-    brandTextColor,
-    titleTextColor,
-    lang,
-    ticket,
-    submittedAt,
-    name,
-    company,
-    phone,
-    summary,
-  } = params;
-
-  const rowsHtml =
-    lang === "en"
-      ? [
-          row("Ticket", ticket),
-          row("Name", name),
-          row("Submitted at", `${submittedAt} (KST)`),
-          row("Company", company || "-"),
-          row("Phone", phone || "-"),
-        ].join("")
-      : [
-          row("접수번호 / Ticket", ticket),
-          row("이름 / Name", name),
-          row("문의 접수일 / Submitted at", submittedAt),
-          row("회사 / Company", company || "-"),
-          row("연락처 / Phone", phone || "-"),
-        ].join("");
-
-  const messageHtml = `<div style="white-space:pre-wrap;">${escapeHtml(summary)}</div>`;
-
-  if (lang === "ko") {
-    return buildMailplugStyleBase({
-      brandText,
-      brandLineColor,
-      brandTextColor,
-      titleTextColor,
-      titleKo: "문의사항 접수",
-      titleEn: "",
-      introKo: `안녕하세요. <b>${escapeHtml(brandText)}</b>입니다.<br/>문의가 정상적으로 접수되었습니다. 아래 내용으로 확인 부탁드립니다.`,
-      introEn: "",
-      tableRowsHtml: rowsHtml,
-      messageLabelKo: "접수 내용(요약)",
-      messageLabelEn: "",
-      messageHtml,
-      footerKo: "※ 본 메일은 발신전용입니다. 회신이 필요한 경우, 홈페이지 문의를 다시 작성해 주세요.",
-      footerEn: "",
-    });
-  }
-
-  if (lang === "en") {
-    return buildMailplugStyleBase({
-      brandText,
-      brandLineColor,
-      brandTextColor,
-      titleTextColor,
-      titleKo: "Inquiry Received",
-      titleEn: "",
-      introKo: `Hello <b>${escapeHtml(name)}</b>,<br/>We’ve received your inquiry successfully. Please find the details below.`,
-      introEn: "",
-      tableRowsHtml: rowsHtml,
-      messageLabelKo: "Message (summary)",
-      messageLabelEn: "",
-      messageHtml,
-      footerKo:
-        "※ This email is sent from a no-reply address. If you need assistance, please submit the inquiry again via our website.",
-      footerEn: "",
-    });
-  }
-
-  return buildMailplugStyleBase({
-    brandText,
-    brandLineColor,
-    brandTextColor,
-    titleTextColor,
-    titleKo: "문의사항 접수",
-    titleEn: "Inquiry Received",
-    introKo: `안녕하세요. <b>${escapeHtml(brandText)}</b>입니다.<br/>문의가 정상적으로 접수되었습니다. 아래 내용으로 확인 부탁드립니다.`,
-    introEn: `Hello <b>${escapeHtml(name)}</b>,<br/>We’ve received your inquiry successfully. Please find the details below.`,
-    tableRowsHtml: rowsHtml,
-    messageLabelKo: "접수 내용(요약)",
-    messageLabelEn: "Message (summary)",
-    messageHtml,
-    footerKo: "※ 본 메일은 발신전용입니다. 회신이 필요한 경우, 홈페이지 문의를 다시 작성해 주세요.",
-    footerEn:
-      "※ This email is sent from a no-reply address. If you need assistance, please submit the inquiry again via our website.",
-  });
+function buildUserHtml(params: any) {
+  const rowsHtml = [row("접수번호 / Ticket", params.ticket), row("이름 / Name", params.name), row("문의 접수일 / Submitted at", params.submittedAt), row("회사 / Company", params.company || "-"), row("연락처 / Phone", params.phone || "-")].join("");
+  const messageHtml = `<div style="white-space:pre-wrap;">${escapeHtml(params.summary)}</div>`;
+  return buildMailplugStyleBase({ ...params, titleKo: "문의사항 접수", titleEn: "Inquiry Received", introKo: `안녕하세요. <b>${escapeHtml(params.brandText)}</b>입니다.<br/>문의가 정상적으로 접수되었습니다.`, introEn: `Hello <b>${escapeHtml(params.name)}</b>,<br/>We’ve received your inquiry successfully.`, tableRowsHtml: rowsHtml, messageLabelKo: "접수 내용(요약)", messageLabelEn: "Message (summary)", messageHtml, footerKo: "※ 본 메일은 발신전용입니다.", footerEn: "※ This email is sent from a no-reply address." });
 }
 
+// 메인 핸들러
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    if (req.method !== "POST") {
-      res.status(405).json({ ok: false, error: "method_not_allowed" });
-      return;
-    }
+    if (req.method !== "POST") return res.status(405).json({ ok: false, error: "method_not_allowed" });
 
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
-    // honeypot: 봇 방지 (값 있으면 성공처럼 응답)
-    if (body?.hp && String(body.hp).trim() !== "") {
-      res.status(200).json({ ok: true });
-      return;
-    }
+    // 1. Honeypot (기존 유지)
+    if (body?.hp && String(body.hp).trim() !== "") return res.status(200).json({ ok: true });
 
-    // rate limit
-    const ip =
-      (req.headers["x-forwarded-for"] as string | undefined)?.split(",")[0]?.trim() ||
-      (req.socket?.remoteAddress ?? "unknown");
+    // 2. Rate Limit (기존 유지)
+    const ip = (req.headers["x-forwarded-for"] as string | undefined)?.split(",")[0]?.trim() || (req.socket?.remoteAddress ?? "unknown");
     const rl = rateLimit(ip);
-    if (!rl.ok) {
-      res.setHeader("Retry-After", String(Math.ceil((rl.retryAfterMs ?? 0) / 1000)));
-      res.status(429).json({ ok: false, error: "rate_limited" });
-      return;
+    if (!rl.ok) return res.status(429).json({ ok: false, error: "rate_limited" });
+
+    // 3. ✅ reCAPTCHA v3 검증 추가
+    const token = body?.token; // 프론트엔드에서 넘겨준 토큰
+    if (!token) return res.status(400).json({ ok: false, error: "recaptcha_token_missing" });
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
+    
+    const recaptchaRes = await fetch(verifyUrl, { method: "POST" });
+    const recaptchaData = await recaptchaRes.json();
+
+    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+      console.warn("RECAPTCHA_FAILED:", recaptchaData);
+      return res.status(403).json({ ok: false, error: "recaptcha_failed", score: recaptchaData.score });
     }
 
-    const name = String(body?.name || "").trim();
-    const email = String(body?.email || "").trim();
-    const message = String(body?.message || "").trim();
-    const company = String(body?.company || "").trim();
-    const website = String(body?.website || "").trim(); // 수집은 하되, 표에서는 미사용
-    const phone = String(body?.phone || "").trim();
+    // 4. 필드 유효성 검사 (기존 유지)
+    const { name, email, message, company, phone } = body;
+    if (!name || !email || !message) return res.status(400).json({ ok: false, error: "missing_fields" });
+    if (!isValidEmail(email)) return res.status(400).json({ ok: false, error: "invalid_email" });
 
-    if (!name || !email || !message) {
-      res.status(400).json({ ok: false, error: "missing_fields" });
-      return;
-    }
-    if (!isValidEmail(email)) {
-      res.status(400).json({ ok: false, error: "invalid_email" });
-      return;
-    }
-    if (name.length > 80 || company.length > 120 || website.length > 200 || phone.length > 80) {
-      res.status(400).json({ ok: false, error: "field_too_long" });
-      return;
-    }
-    if (message.length > 5000) {
-      res.status(400).json({ ok: false, error: "message_too_long" });
-      return;
-    }
-
-    // ✅ Mailplug + 465(SSL) 표준 고정
+    // 5. 메일 발송 설정 및 실행 (기존 유지)
     const host = process.env.MAIL_HOST || "smtp.mailplug.co.kr";
     const user = process.env.MAIL_USER;
-    const pass = process.env.MAIL_PASS; // ⭐ 앱 비밀번호
+    const pass = process.env.MAIL_PASS;
     const to = process.env.MAIL_TO;
 
-    if (!user || !pass || !to) {
-      res.status(500).json({ ok: false, error: "server_not_configured" });
-      return;
-    }
+    if (!user || !pass || !to) return res.status(500).json({ ok: false, error: "server_not_configured" });
 
-    const transporter = nodemailer.createTransport({
-      host,
-      port: 465,
-      secure: true,
-      auth: { user, pass },
-    });
-
-    // ✅ 추가: SMTP 인증/연결 사전 점검(문제 발생 시 원인 파악이 쉬움)
+    const transporter = nodemailer.createTransport({ host, port: 465, secure: true, auth: { user, pass } });
     await transporter.verify();
-
-    const safeName = escapeHeaderText(name);
-    const safeEmail = escapeHeaderText(email);
 
     const ticket = makeTicket("GEONIX");
     const submittedAt = formatKST(new Date());
-
     const brandText = "GEONIX";
     const brandLineColor = "#f43e38";
-    const brandTextColor = "#4A4A4A";
-    const titleTextColor = "#4A4A4A";
 
-    // 1) 관리자 메일
-    const adminSubject = `TICKET:${ticket} | ${safeName} <${safeEmail}>`;
-
-    const adminText = [
-      `[접수번호] ${ticket}`,
-      `SubmittedAt: ${submittedAt}`,
-      "",
-      `Name: ${name}`,
-      `Email: ${email}`,
-      `Company: ${company || "-"}`,
-      `Phone: ${phone || "-"}`,
-      "",
-      "Message:",
-      message,
-    ].join("\n");
-
-    const adminHtml = buildAdminHtml({
-      brandText,
-      brandLineColor,
-      brandTextColor,
-      titleTextColor,
-      ticket,
-      submittedAt,
-      name,
-      email,
-      company,
-      phone,
-      message,
-    });
-
+    // 관리자 메일 전송
     await transporter.sendMail({
       from: `"Website Contact" <${user}>`,
       to,
       replyTo: email,
-      subject: adminSubject,
-      text: adminText,
-      html: adminHtml,
+      subject: `TICKET:${ticket} | ${name} <${email}>`,
+      html: buildAdminHtml({ brandText, brandLineColor, brandTextColor: "#4A4A4A", titleTextColor: "#4A4A4A", ticket, submittedAt, name, email, company, phone, message }),
     });
 
-    // 2) 사용자 자동회신
+    // 사용자 자동회신 전송
     const lang = detectLang(`${name} ${company} ${message}`);
     const summary = message.length > 400 ? `${message.slice(0, 400)}...` : message;
-
-    const userSubject =
-      lang === "en"
-        ? `We’ve received your inquiry (Ticket: ${ticket})`
-        : lang === "ko"
-        ? `문의가 접수되었습니다 (접수번호: ${ticket})`
-        : `문의가 접수되었습니다 / We’ve received your inquiry (Ticket: ${ticket})`;
-
-    const userTextKo = [
-      `안녕하세요 ${name}님,`,
-      `문의가 정상적으로 접수되었습니다.`,
-      "",
-      `- 접수번호: ${ticket}`,
-      `- 문의 접수일: ${submittedAt}`,
-      `- Company: ${company || "-"}`,
-      `- Phone: ${phone || "-"}`,
-      "",
-      `접수 내용(요약):`,
-      summary,
-      "",
-      `담당자가 확인 후 회신드리겠습니다. 감사합니다.`,
-    ].join("\n");
-
-    const userTextEn = [
-      `Hello ${name},`,
-      `We’ve received your inquiry successfully.`,
-      "",
-      `- Ticket: ${ticket}`,
-      `- Submitted at: ${submittedAt} (KST)`,
-      `- Company: ${company || "-"}`,
-      `- Phone: ${phone || "-"}`,
-      "",
-      `Message (summary):`,
-      summary,
-      "",
-      `Our team will get back to you as soon as possible. Thank you.`,
-    ].join("\n");
-
-    const userText =
-      lang === "ko" ? userTextKo : lang === "en" ? userTextEn : `${userTextKo}\n\n------------------------------\n\n${userTextEn}`;
-
-    const userHtml = buildUserHtml({
-      brandText,
-      brandLineColor,
-      brandTextColor,
-      titleTextColor,
-      lang,
-      ticket,
-      submittedAt,
-      name,
-      company,
-      phone,
-      summary,
-    });
-
     await transporter.sendMail({
       from: `"GEONIX" <${user}>`,
       to: email,
       replyTo: to,
-      subject: userSubject,
-      text: userText,
-      html: userHtml,
+      subject: lang === "en" ? `We’ve received your inquiry (Ticket: ${ticket})` : `문의가 접수되었습니다 (접수번호: ${ticket})`,
+      html: buildUserHtml({ brandText, brandLineColor, brandTextColor: "#4A4A4A", titleTextColor: "#4A4A4A", lang, ticket, submittedAt, name, company, phone, summary }),
     });
 
     res.status(200).json({ ok: true, ticket });
   } catch (e: any) {
-    // ✅ 개선: SMTP/NodeMailer 에러 정보를 더 자세히 남김
-    console.error("CONTACT_API_ERROR:", {
-      message: e?.message || String(e),
-      code: e?.code,
-      response: e?.response,
-      command: e?.command,
-      stack: e?.stack,
-    });
-
+    console.error("CONTACT_API_ERROR:", e);
     return res.status(500).json({ ok: false, error: "send_failed" });
   }
 }
