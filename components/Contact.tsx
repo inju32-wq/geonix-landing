@@ -152,7 +152,6 @@ export const Contact: React.FC = () => {
                   <div className="text-[9px] text-zinc-400 uppercase font-black tracking-widest mb-1">{t.contact.email}</div>
                   <div className="flex flex-col gap-1">
                     <a href="mailto:roman@geonix.co.kr" className="text-[#1A1A1A] font-bold text-sm hover:text-[#FACC15] transition-colors">roman@geonix.co.kr</a>
-                    <a href="mailto:geonix_official@geonix.co.kr" className="text-[#1A1A1A] font-bold text-sm hover:text-[#FACC15] transition-colors">geonix_official@geonix.co.kr</a>
                   </div>
                 </div>
               </div>
