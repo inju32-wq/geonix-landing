@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import nodemailer from "nodemailer";
 
-// --- 간단 레이트리밋(서버리스 best-effort) ---
+// --- 간단 레이트리밋 ---
 const RATE_LIMIT_WINDOW_MS = 60_000;
 const RATE_LIMIT_MAX = 3;
 const ipBucket = new Map<string, { count: number; resetAt: number }>();
@@ -23,10 +23,7 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function escapeHeaderText(s: string) {
-  return String(s || "").replace(/[\r\n]+/g, " ").trim();
-}
-
+// 에러가 발생했던 함수를 실제 사용하는 로직으로 통합하거나 제거했습니다.
 function escapeHtml(s: string) {
   return String(s || "")
     .replace(/&/g, "&amp;")
@@ -63,7 +60,6 @@ function detectLang(input: string): "ko" | "en" | "both" {
   const letters = (s.match(/[A-Za-z]/g) || []).length;
   const total = hangul + letters;
   if (total === 0) return "both";
-
   const hangulRatio = hangul / total;
   if (hangulRatio >= 0.25) return "ko";
   if (hangulRatio <= 0.05) return "en";
@@ -93,42 +89,34 @@ function buildUserHtml(params: any) {
   return buildMailplugStyleBase({ ...params, titleKo: "문의사항 접수", titleEn: "Inquiry Received", introKo: `안녕하세요. <b>${escapeHtml(params.brandText)}</b>입니다.<br/>문의가 정상적으로 접수되었습니다.`, introEn: `Hello <b>${escapeHtml(params.name)}</b>,<br/>We’ve received your inquiry successfully.`, tableRowsHtml: rowsHtml, messageLabelKo: "접수 내용(요약)", messageLabelEn: "Message (summary)", messageHtml, footerKo: "※ 본 메일은 발신전용입니다.", footerEn: "※ This email is sent from a no-reply address." });
 }
 
-// 메인 핸들러
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     if (req.method !== "POST") return res.status(405).json({ ok: false, error: "method_not_allowed" });
-
     const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
-    // 1. Honeypot (기존 유지)
     if (body?.hp && String(body.hp).trim() !== "") return res.status(200).json({ ok: true });
 
-    // 2. Rate Limit (기존 유지)
     const ip = (req.headers["x-forwarded-for"] as string | undefined)?.split(",")[0]?.trim() || (req.socket?.remoteAddress ?? "unknown");
     const rl = rateLimit(ip);
     if (!rl.ok) return res.status(429).json({ ok: false, error: "rate_limited" });
 
-    // 3. ✅ reCAPTCHA v3 검증 추가
-    const token = body?.token; // 프론트엔드에서 넘겨준 토큰
+    // reCAPTCHA v3 검증
+    const token = body?.token;
     if (!token) return res.status(400).json({ ok: false, error: "recaptcha_token_missing" });
 
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`;
-    
     const recaptchaRes = await fetch(verifyUrl, { method: "POST" });
     const recaptchaData = await recaptchaRes.json();
 
     if (!recaptchaData.success || recaptchaData.score < 0.5) {
-      console.warn("RECAPTCHA_FAILED:", recaptchaData);
       return res.status(403).json({ ok: false, error: "recaptcha_failed", score: recaptchaData.score });
     }
 
-    // 4. 필드 유효성 검사 (기존 유지)
     const { name, email, message, company, phone } = body;
     if (!name || !email || !message) return res.status(400).json({ ok: false, error: "missing_fields" });
     if (!isValidEmail(email)) return res.status(400).json({ ok: false, error: "invalid_email" });
 
-    // 5. 메일 발송 설정 및 실행 (기존 유지)
     const host = process.env.MAIL_HOST || "smtp.mailplug.co.kr";
     const user = process.env.MAIL_USER;
     const pass = process.env.MAIL_PASS;
@@ -144,7 +132,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const brandText = "GEONIX";
     const brandLineColor = "#f43e38";
 
-    // 관리자 메일 전송
     await transporter.sendMail({
       from: `"Website Contact" <${user}>`,
       to,
@@ -153,7 +140,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       html: buildAdminHtml({ brandText, brandLineColor, brandTextColor: "#4A4A4A", titleTextColor: "#4A4A4A", ticket, submittedAt, name, email, company, phone, message }),
     });
 
-    // 사용자 자동회신 전송
     const lang = detectLang(`${name} ${company} ${message}`);
     const summary = message.length > 400 ? `${message.slice(0, 400)}...` : message;
     await transporter.sendMail({
