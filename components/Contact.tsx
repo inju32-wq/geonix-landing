@@ -1,10 +1,11 @@
-// src/components/Contact.tsx
 import React, { useRef, useState } from 'react';
-import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react'; // Phone, MapPin 제거
+import { Mail, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3'; // ✅ 추가된 부분
 
 export const Contact: React.FC = () => {
   const { language } = useLanguage();
+  const { executeRecaptcha } = useGoogleReCaptcha(); // ✅ 추가된 부분
   const formRef = useRef<HTMLFormElement>(null);
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<null | 'success' | 'fail'>(null);
@@ -71,6 +72,13 @@ export const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus(null);
+
+    // ✅ 리캡차 검증 가능 여부 체크
+    if (!executeRecaptcha) {
+      console.warn('ReCaptcha is not yet ready.');
+      return;
+    }
+
     if (!formRef.current) return;
 
     const formData = new FormData(formRef.current);
@@ -88,7 +96,9 @@ export const Contact: React.FC = () => {
 
     setSending(true);
     try {
-      // ✅ 이전 코드의 작동하던 API 구조 그대로 복구
+      // ✅ 구글 토큰 발급 (Action 이름은 'contact'로 설정)
+      const token = await executeRecaptcha('contact');
+
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -100,6 +110,7 @@ export const Contact: React.FC = () => {
           website: '',
           phone,
           hp,
+          token, // ✅ 백엔드로 토큰 전달
         }),
       });
 
@@ -108,9 +119,11 @@ export const Contact: React.FC = () => {
         setStatus('success');
         formRef.current.reset();
       } else {
+        console.error('API Error:', data.error);
         setStatus('fail');
       }
-    } catch {
+    } catch (err) {
+      console.error('Submit failed:', err);
       setStatus('fail');
     } finally {
       setSending(false);
