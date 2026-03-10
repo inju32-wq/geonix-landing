@@ -23,7 +23,6 @@ function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// 에러가 발생했던 함수를 실제 사용하는 로직으로 통합하거나 제거했습니다.
 function escapeHtml(s: string) {
   return String(s || "")
     .replace(/&/g, "&amp;")
@@ -86,7 +85,7 @@ function buildAdminHtml(params: any) {
 function buildUserHtml(params: any) {
   const rowsHtml = [row("접수번호 / Ticket", params.ticket), row("이름 / Name", params.name), row("문의 접수일 / Submitted at", params.submittedAt), row("회사 / Company", params.company || "-"), row("연락처 / Phone", params.phone || "-")].join("");
   const messageHtml = `<div style="white-space:pre-wrap;">${escapeHtml(params.summary)}</div>`;
-  return buildMailplugStyleBase({ ...params, titleKo: "문의사항 접수", titleEn: "Inquiry Received", introKo: `안녕하세요. <b>${escapeHtml(params.brandText)}</b>입니다.<br/>문의가 정상적으로 접수되었습니다.`, introEn: `Hello <b>${escapeHtml(params.name)}</b>,<br/>We’ve received your inquiry successfully.`, tableRowsHtml: rowsHtml, messageLabelKo: "접수 내용(요약)", messageLabelEn: "Message (summary)", messageHtml, footerKo: "※ 본 메일은 발신전용입니다.", footerEn: "※ This email is sent from a no-reply address." });
+  return buildMailplugStyleBase({ ...params, titleKo: "문의사항 접수", titleEn: "Inquiry Received", introKo: `안녕하세요. <b>${escapeHtml(params.brandText)}</b>입니다.<br/>문의가 정상적으로 접수되었습니다.`, introEn: `Hello <b>${escapeHtml(params.name)}</b>,<br/>We’ve received your inquiry successfully.`, tableRowsHtml: rowsHtml, messageLabelKo: "접수 내용(요약)", messageLabelEn: "Message (summary)", messageHtml, footerKo: "※ 본 메일은 발신전용입니다. 회신이 필요한 경우, 홈페이지 문의를 다시 작성해 주세요.", footerEn: "※ This email is sent from a no-reply address. If you need assistance, please submit the inquiry again via our website." });
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -132,21 +131,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const brandText = "GEONIX";
     const brandLineColor = "#f43e38";
 
+    // 1) 관리자 메일 전송
     await transporter.sendMail({
-      from: `"Website Contact" <${user}>`,
+      from: `"GEONIX Admin" <${user}>`,
       to,
       replyTo: email,
-      subject: `TICKET:${ticket} | ${name} <${email}>`,
+      subject: `[Admin] New inquiry from ${name} (${ticket})`,
       html: buildAdminHtml({ brandText, brandLineColor, brandTextColor: "#4A4A4A", titleTextColor: "#4A4A4A", ticket, submittedAt, name, email, company, phone, message }),
     });
 
+    // 2) 사용자 자동회신 전송 (⭐ 스팸 방지 최적화 제목)
     const lang = detectLang(`${name} ${company} ${message}`);
     const summary = message.length > 400 ? `${message.slice(0, 400)}...` : message;
+    
+    // 제목에서 무작위 코드를 제거하고 정중한 문구로 변경
+    const userSubject = lang === "en" 
+      ? `[GEONIX] Your inquiry has been received successfully` 
+      : `[GEONIX] 문의하신 내용이 정상적으로 접수되었습니다.`;
+
     await transporter.sendMail({
       from: `"GEONIX" <${user}>`,
       to: email,
       replyTo: to,
-      subject: lang === "en" ? `We’ve received your inquiry (Ticket: ${ticket})` : `문의가 접수되었습니다 (접수번호: ${ticket})`,
+      subject: userSubject,
       html: buildUserHtml({ brandText, brandLineColor, brandTextColor: "#4A4A4A", titleTextColor: "#4A4A4A", lang, ticket, submittedAt, name, company, phone, summary }),
     });
 
